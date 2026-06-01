@@ -1,0 +1,177 @@
+@use "../../styles/_variables.scss" as *;
+
+.#{$prefix}-input-number {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: $text-color;
+  font-size: $font-size-md;
+  line-height: $line-height;
+  display: inline-flex;
+  width: 90px;
+  height: $control-height-md;
+  background-color: $bg-container;
+  border: 1px solid $border-color;
+  border-radius: $border-radius-base;
+  transition: all $transition-base;
+  position: relative;
+  align-items: center;
+
+  &:hover {
+    border-color: $primary-color-hover;
+  }
+
+  &-focused,
+  &:focus-within {
+    border-color: $primary-color;
+    box-shadow: 0 0 0 2px $primary-color-outline;
+    outline: 0;
+  }
+
+  &-disabled {
+    color: $text-color-quaternary;
+    background-color: $bg-layout;
+    cursor: not-allowed;
+    border-color: $border-color;
+    box-shadow: none !important;
+
+    .#{$prefix}-input-number-input {
+      cursor: not-allowed;
+    }
+
+    .#{$prefix}-input-number-handler-wrap {
+      display: none;
+    }
+  }
+
+  &-status-error {
+    border-color: $error-color;
+    &:hover {
+      border-color: $error-color-hover;
+    }
+    &:focus-within,
+    &-focused {
+      border-color: $error-color-active;
+      box-shadow: 0 0 0 2px $error-color-outline;
+    }
+  }
+
+  // Layout structure
+  &-input-wrap {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+  }
+
+  &-input {
+    width: 100%;
+    height: $control-height-md;
+    padding: 0 $padding-inline-md;
+    text-align: left;
+    background-color: transparent;
+    border: 0;
+    border-radius: $border-radius-base;
+    outline: 0;
+    transition: all $transition-base;
+    color: inherit;
+    font-size: inherit;
+
+    &::placeholder {
+      color: $text-color-quaternary;
+    }
+  }
+
+  // Handlers (Up/Down arrows)
+  &-actions {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 22px;
+    background: $bg-container;
+    border-left: 1px solid $border-color;
+    border-radius: 0 $border-radius-base $border-radius-base 0;
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    transition: opacity $transition-fast;
+    overflow: hidden;
+  }
+
+  &:hover &-actions,
+  &-focused &-actions,
+  &:focus-within &-actions {
+    opacity: 1;
+  }
+
+  &-disabled &-actions {
+    display: none;
+  }
+
+  &-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    color: $text-color-tertiary;
+    cursor: pointer;
+    transition: all $transition-fast;
+    font-size: $font-size-sm;
+    line-height: 1;
+
+    &:hover {
+      color: $primary-color;
+      background: $fill-quaternary;
+    }
+
+    &-active {
+      background: $fill-secondary;
+    }
+
+    &-up {
+      border-bottom: 1px solid $border-color;
+    }
+
+    &-up-disabled,
+    &-down-disabled {
+      cursor: not-allowed;
+      color: $text-color-quaternary;
+      &:hover {
+        color: $text-color-quaternary;
+        background: transparent;
+      }
+    }
+  }
+
+  &-handler-up-inner,
+  &-handler-down-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  // Sizes
+  &-sm {
+    height: $control-height-sm;
+    .#{$prefix}-input-number-input {
+      height: $control-height-sm;
+      padding: 0 $padding-inline-sm;
+      font-size: $font-size-sm;
+    }
+  }
+
+  &-lg {
+    height: $control-height-lg;
+    .#{$prefix}-input-number-input {
+      height: $control-height-lg;
+      font-size: $font-size-lg;
+    }
+  }
+
+  // Without controls
+  &-controls-outside {
+    .#{$prefix}-input-number-handler-wrap {
+      display: none;
+    }
+  }
+}

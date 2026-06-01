@@ -1,0 +1,197 @@
+@use "../../styles/_variables.scss" as *;
+
+.#{$prefix}-checkbox-wrapper {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: $text-color;
+  font-size: $font-size-md;
+  font-family: $font-family;
+  line-height: $line-height;
+  list-style: none;
+  display: inline-flex;
+  align-items: baseline;
+  cursor: pointer;
+
+  & + & {
+    margin-inline-start: $spacing-sm;
+  }
+
+  &-disabled {
+    cursor: not-allowed;
+    color: $text-color-quaternary;
+  }
+
+  &-status-error {
+    .#{$prefix}-checkbox-inner {
+      border-color: $error-color !important;
+    }
+    &:hover .#{$prefix}-checkbox-inner {
+      border-color: $error-color-hover !important;
+    }
+  }
+
+  &-indeterminate {
+    .#{$prefix}-checkbox-inner {
+      background-color: $bg-container;
+      border-color: var(--#{$prefix}-checkbox-color-checked, #{$primary-color});
+
+      &::after {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 8px;
+        height: 8px;
+        background-color: var(--#{$prefix}-checkbox-color-checked, #{$primary-color});
+        border: 0;
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+        content: "";
+        transition: none;
+      }
+    }
+  }
+}
+
+.#{$prefix}-checkbox {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: $text-color;
+  font-size: $font-size-md;
+  font-family: inherit;
+  line-height: 1;
+  list-style: none;
+  position: relative;
+  line-height: 1;
+  white-space: nowrap;
+  outline: none;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+  width: 16px;
+  height: 16px;
+  border-radius: $border-radius-sm;
+
+  &-input {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    opacity: 0;
+  }
+
+  &-inner {
+    box-sizing: border-box;
+    position: relative;
+    top: 0;
+    inset-inline-start: 0;
+    display: block;
+    width: var(--#{$prefix}-checkbox-size, 16px);
+    height: var(--#{$prefix}-checkbox-size, 16px);
+    background-color: $bg-container;
+    border: 1px solid var(--#{$prefix}-checkbox-border-color, #{$border-color});
+    border-radius: var(--#{$prefix}-checkbox-border-radius, #{$border-radius-sm});
+    transition: all $transition-base;
+
+    // Checkmark inside the box
+    &::after {
+      box-sizing: border-box;
+      position: absolute;
+      top: 50%;
+      inset-inline-start: 21.5%;
+      display: table;
+      width: calc(var(--#{$prefix}-checkbox-size, 16px) * 0.35);
+      height: calc(var(--#{$prefix}-checkbox-size, 16px) * 0.57);
+      border: 2px solid var(--#{$prefix}-checkbox-check-color, #{$text-color-light-solid});
+      border-top: 0;
+      border-inline-start: 0;
+      transform: rotate(45deg) scale(0) translate(-50%, -50%);
+      opacity: 0;
+      transition:
+        all $transition-fast,
+        opacity $transition-fast;
+      content: "";
+    }
+  }
+
+  &:hover &-inner {
+    border-color: var(--#{$prefix}-checkbox-color-checked, #{$primary-color});
+  }
+
+  // Focus ring
+  &-input:focus-visible + &-inner {
+    box-shadow: 0 0 0 4px var(--#{$prefix}-primary-color-outline);
+    border-color: var(--#{$prefix}-checkbox-color-checked, #{$primary-color});
+  }
+
+  // Checked state
+  &-checked {
+    .#{$prefix}-checkbox-inner {
+      background-color: var(--#{$prefix}-checkbox-color-checked, #{$primary-color});
+      border-color: var(--#{$prefix}-checkbox-color-checked, #{$primary-color});
+
+      &::after {
+        opacity: 1;
+        transform: rotate(45deg) scale(1) translate(-50%, -50%);
+        transition: all $transition-fast;
+      }
+    }
+  }
+
+  // Disabled state
+  &-disabled {
+    cursor: not-allowed;
+
+    .#{$prefix}-checkbox-input {
+      cursor: not-allowed;
+    }
+
+    .#{$prefix}-checkbox-inner {
+      background-color: $bg-layout;
+      border-color: $border-color !important;
+
+      &::after {
+        border-color: $text-color-quaternary;
+      }
+    }
+
+    &.#{$prefix}-checkbox-checked {
+      .#{$prefix}-checkbox-inner {
+        background-color: $bg-layout;
+        border-color: $border-color !important;
+
+        &::after {
+          border-color: $text-color-quaternary;
+        }
+      }
+    }
+  }
+
+  &-wave-wrapper {
+    --#{$prefix}-wave-color: #{$primary-color};
+    --#{$prefix}-wave-spread: 8px;
+    box-sizing: border-box;
+    display: inline-flex;
+    position: relative;
+    top: 0.2em;
+    vertical-align: middle;
+    width: 16px;
+    height: 16px;
+    border-radius: $border-radius-sm;
+  }
+}
+
+.#{$prefix}-checkbox-wrapper > span + span {
+  padding-inline-start: $spacing-sm;
+  padding-inline-end: $spacing-sm;
+}
+
+// Group
+.#{$prefix}-checkbox-group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0 $spacing-xs;
+}

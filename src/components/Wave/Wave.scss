@@ -1,0 +1,39 @@
+@use "../../styles/_variables.scss" as *;
+
+/* The Wave effect color can be customized via --#{$prefix}-wave-color CSS variable 
+   set on the element itself or inherited. */
+$wave-color: var(--#{$prefix}-wave-color, var(--#{$prefix}-primary-color, #{$primary-color}));
+
+/* Wave specific configuration (Opacity, Spread, Duration) are also variables
+   that can be set at the theme level to allow global adjustments. */
+
+[data-wave-active="true"] {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: 0 0 0 0 $wave-color;
+    opacity: $wave-opacity;
+    /* stylelint-disable-next-line scale-unlimited/declaration-strict-value */
+    transition:
+      box-shadow $wave-duration cubic-bezier(0.08, 0.82, 0.17, 1),
+      opacity $wave-duration cubic-bezier(0.08, 0.82, 0.17, 1);
+    animation: #{$prefix}-wave-effect $wave-duration cubic-bezier(0.08, 0.82, 0.17, 1) forwards;
+    pointer-events: none;
+    z-index: 10;
+  }
+}
+
+@keyframes #{$prefix}-wave-effect {
+  0% {
+    box-shadow: 0 0 0 0 $wave-color;
+    opacity: $wave-opacity;
+  }
+  100% {
+    box-shadow: 0 0 0 $wave-spread $wave-color;
+    opacity: 0;
+  }
+}

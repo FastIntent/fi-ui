@@ -1,0 +1,87 @@
+@use "../../styles/_variables.scss" as *;
+
+.#{$prefix}-otp {
+  display: inline-flex;
+  gap: $spacing-sm;
+  align-items: center;
+
+  &-input {
+    width: 60px;
+    height: 60px;
+    padding: 0;
+    font-size: $font-size-heading-1;
+    font-weight: 500;
+    text-align: center;
+    color: var(--#{$prefix}-input-color-text, #{$primary-color});
+    background-color: var(--#{$prefix}-input-color-bg, #{$bg-container});
+    border: 2px solid var(--#{$prefix}-input-color-border, #{$border-color});
+    border-radius: var(--#{$prefix}-input-border-radius, 12px);
+    transition: all $transition-base;
+    outline: none;
+    box-sizing: border-box;
+
+    &::selection {
+      background: var(--#{$prefix}-primary-color-opacity-10, rgba(22, 119, 255, 0.1));
+    }
+
+    &:hover:not(:disabled) {
+      border-color: var(--#{$prefix}-input-hover-border-color, #{$primary-color-hover});
+    }
+
+    &:focus {
+      border-color: var(--#{$prefix}-input-active-border-color, #{$primary-color});
+      box-shadow: var(--#{$prefix}-input-active-shadow, 0 0 0 4px #{$primary-color-outline});
+    }
+
+    &:disabled {
+      background-color: var(--#{$prefix}-color-bg-layout, #{$bg-layout});
+      color: var(--#{$prefix}-color-text-quaternary, #{$text-color-quaternary});
+      border-color: var(--#{$prefix}-input-color-border, #{$border-color});
+      cursor: not-allowed;
+    }
+  }
+
+  // Sizes
+  &-large {
+    gap: $spacing-md;
+    .#{$prefix}-otp-input {
+      width: 72px;
+      height: 72px;
+      font-size: $font-size-heading-1;
+      border-radius: $spacing-md;
+    }
+  }
+
+  &-small {
+    gap: $spacing-sm;
+    .#{$prefix}-otp-input {
+      width: 44px;
+      height: 44px;
+      font-size: $font-size-xl;
+      border-radius: $border-radius-base;
+    }
+  }
+
+  // Validation Status
+  &-status-error {
+    .#{$prefix}-otp-input {
+      border-color: $error-color;
+      color: $error-color;
+      &:focus {
+        border-color: $error-color;
+        box-shadow: 0 0 0 4px $error-color-outline;
+      }
+    }
+  }
+
+  &-status-warning {
+    .#{$prefix}-otp-input {
+      border-color: $warning-color;
+      color: $warning-color;
+      &:focus {
+        border-color: $warning-color;
+        box-shadow: 0 0 0 2px $warning-color-outline;
+      }
+    }
+  }
+}

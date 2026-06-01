@@ -1,0 +1,108 @@
+{
+  "plugins": ["stylelint-scss", "stylelint-declaration-strict-value"],
+  "customSyntax": "postcss-scss",
+  "rules": {
+    "scale-unlimited/declaration-strict-value": [
+      [
+        "/color$/",
+        "background-color",
+        "fill",
+        "stroke",
+        "border-color",
+        "outline-color",
+        "font-size",
+        "border-radius",
+        "transition",
+        "line-height",
+        "/^(padding|margin)(-(top|right|bottom|left|inline|block|inline-start|inline-end|block-start|block-end))?$/",
+        "/^gap$/",
+        "row-gap",
+        "column-gap",
+        "font-family"
+      ],
+      {
+        "ignoreVariables": true,
+        "ignoreFunctions": true,
+        "ignoreKeywords": {
+          "": [
+            "0",
+            "none",
+            "inherit",
+            "initial",
+            "unset",
+            "revert",
+            "transparent",
+            "currentColor",
+            "currentcolor",
+            "auto",
+            "normal",
+            "1",
+            "-1"
+          ],
+          "/color$/": [
+            "transparent",
+            "currentColor",
+            "currentcolor",
+            "inherit"
+          ],
+          "background-color": ["transparent", "inherit"],
+          "/^(padding|margin)/": ["0", "auto"],
+          "gap": ["0"],
+          "row-gap": ["0"],
+          "column-gap": ["0"],
+          "line-height": ["0", "1", "normal"],
+          "font-size": ["inherit", "1em", "0"],
+          "border-radius": ["0", "50%", "9999px", "inherit"],
+          "border-color": ["transparent", "currentColor", "inherit"],
+          "transition": [
+            "none",
+            "all",
+            "color",
+            "background",
+            "background-color",
+            "border-color",
+            "border-bottom-color",
+            "box-shadow",
+            "opacity",
+            "transform",
+            "width",
+            "height",
+            "margin",
+            "padding",
+            "visibility",
+            "max-height",
+            "grid-template-rows",
+            "stroke-dashoffset",
+            "stroke",
+            "filter",
+            "left",
+            "right",
+            "top",
+            "bottom",
+            "z-index",
+            "0s"
+          ]
+        },
+        "message": "Token violation: use a $variable or var(--fi-*) instead of hardcoded \"${property}: ${value}\""
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["src/**/*.scss"],
+      "customSyntax": "postcss-scss"
+    },
+    {
+      "files": [
+        "src/styles/tokens.scss",
+        "src/styles/_variables.scss",
+        "src/styles/rtl.scss",
+        "src/styles/base.scss",
+        "src/styles/theme-amber.scss"
+      ],
+      "rules": {
+        "scale-unlimited/declaration-strict-value": null
+      }
+    }
+  ]
+}

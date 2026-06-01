@@ -1,0 +1,51 @@
+version: 2
+updates:
+  # npm (pnpm) dependencies
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+      time: '09:00'
+      timezone: 'America/Mexico_City'
+    open-pull-requests-limit: 10
+    groups:
+      storybook:
+        patterns:
+          - 'storybook'
+          - '@storybook/*'
+          - '@chromatic-com/*'
+      testing:
+        patterns:
+          - 'vitest'
+          - '@testing-library/*'
+          - 'happy-dom'
+          - 'jest-axe'
+          - '@types/jest-axe'
+      typescript:
+        patterns:
+          - 'typescript'
+          - '@typescript-eslint/*'
+          - 'typescript-eslint'
+      rc-components:
+        patterns:
+          - '@rc-component/*'
+      dnd-kit:
+        patterns:
+          - '@dnd-kit/*'
+    ignore:
+      # Major version bumps require manual review
+      - dependency-name: 'react'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'react-dom'
+        update-types: ['version-update:semver-major']
+
+  # GitHub Actions
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+      time: '09:00'
+      timezone: 'America/Mexico_City'
+    open-pull-requests-limit: 5

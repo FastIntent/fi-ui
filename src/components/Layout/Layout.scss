@@ -1,0 +1,341 @@
+@use "../../styles/_variables.scss" as *;
+
+// ─────────────────────────────────────────────
+// Layout Tokens
+// ─────────────────────────────────────────────
+:root {
+  --#{$prefix}-layout-header-height: 56px;
+  --#{$prefix}-layout-header-bg: var(--#{$prefix}-color-bg-container);
+  --#{$prefix}-layout-sider-width: 240px;
+  --#{$prefix}-layout-sider-collapsed-width: 72px;
+  --#{$prefix}-layout-sider-bg: var(--#{$prefix}-color-bg-container);
+  --#{$prefix}-layout-sider-active-bg: color-mix(
+    in srgb,
+    var(--#{$prefix}-primary-color) 8%,
+    transparent
+  );
+  --#{$prefix}-layout-sider-active-color: var(--#{$prefix}-primary-color);
+  --#{$prefix}-z-index-header: 100;
+  --#{$prefix}-z-index-sider: 90;
+}
+
+// ─────────────────────────────────────────────
+// Base Shell
+// ─────────────────────────────────────────────
+.#{$prefix}-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--#{$prefix}-color-bg-layout, #{$bg-layout});
+  font-family: var(--#{$prefix}-font-family, #{$font-family});
+  font-size: var(--#{$prefix}-font-size, #{$font-size-base});
+  color: var(--#{$prefix}-color-text, #{$text-color});
+
+  &-container {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  &-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  &-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: $spacing-lg;
+  }
+
+  &-footer {
+    padding: $spacing-md $spacing-lg;
+    text-align: center;
+    color: var(--#{$prefix}-color-text-secondary, #{$text-color-secondary});
+    font-size: var(--#{$prefix}-font-size-sm);
+    flex-shrink: 0;
+    border-top: 1px solid var(--#{$prefix}-color-border-secondary, #{$border-color-secondary});
+  }
+
+  // ─────────────────────────────────────────────
+  // Header
+  // ─────────────────────────────────────────────
+  &-header {
+    height: var(--#{$prefix}-layout-header-height);
+    line-height: var(--#{$prefix}-layout-header-height);
+    background: var(
+      --#{$prefix}-layout-header-bg,
+      var(--#{$prefix}-color-bg-container, #{$bg-container})
+    );
+    padding: 0 $spacing-md;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--#{$prefix}-color-border-secondary, #{$border-color-secondary});
+    flex-shrink: 0;
+    z-index: var(--#{$prefix}-z-index-header);
+
+    &-fixed {
+      position: sticky;
+      top: 0;
+    }
+
+    &-left {
+      display: flex;
+      align-items: center;
+      gap: $spacing-sm;
+    }
+
+    &-right {
+      display: flex;
+      align-items: center;
+      gap: $spacing-md;
+    }
+  }
+
+  &-logo {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+  }
+
+  &-collapse-trigger {
+    display: flex;
+    align-items: center;
+    padding: $spacing-xs $spacing-sm;
+    border-radius: var(--#{$prefix}-border-radius, #{$border-radius-base});
+    cursor: pointer;
+    color: var(--#{$prefix}-color-text-secondary, #{$text-color-secondary});
+    transition:
+      background-color $transition-fast,
+      color $transition-fast;
+
+    &:hover {
+      background-color: $fill-quaternary;
+      color: var(--#{$prefix}-color-text, #{$text-color});
+    }
+  }
+
+  // ─────────────────────────────────────────────
+  // Sider
+  // ─────────────────────────────────────────────
+  &-sider {
+    width: var(--#{$prefix}-layout-sider-width);
+    background: var(
+      --#{$prefix}-layout-sider-bg,
+      var(--#{$prefix}-color-bg-container, #{$bg-container})
+    );
+    border-right: 1px solid var(--#{$prefix}-color-border-secondary, #{$border-color-secondary});
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex-shrink: 0;
+    z-index: var(--#{$prefix}-z-index-sider);
+    transition: width $transition-base;
+
+    &-collapsed {
+      width: var(--#{$prefix}-layout-sider-collapsed-width);
+    }
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  // ─────────────────────────────────────────────
+  // Menu in Sider
+  // ─────────────────────────────────────────────
+  &-menu {
+    border: none !important;
+    background: transparent !important;
+  }
+
+  // ─────────────────────────────────────────────
+  // Header: Search
+  // ─────────────────────────────────────────────
+  &-search {
+    display: none;
+    align-items: center;
+    background-color: $fill-tertiary;
+    border-color: transparent !important;
+    border-radius: $spacing-lg !important;
+    width: auto !important;
+    transition:
+      border-color $transition-fast,
+      box-shadow $transition-fast;
+
+    @media (min-width: 768px) {
+      display: inline-flex;
+    }
+
+    &:focus-within {
+      border-color: var(--#{$prefix}-primary-color, #{$primary-color}) !important;
+    }
+
+    &-input {
+      background: transparent !important;
+      border: none !important;
+      outline: none !important;
+      width: 128px;
+      transition: width $transition-base;
+      font-size: var(--#{$prefix}-font-size-sm);
+
+      &:focus {
+        width: 192px;
+        box-shadow: none !important;
+      }
+    }
+  }
+
+  // ─────────────────────────────────────────────
+  // Header: Action Buttons
+  // ─────────────────────────────────────────────
+  &-action-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: transparent;
+    border-radius: 50%;
+    cursor: pointer;
+    color: var(--#{$prefix}-color-text-secondary, #{$text-color-secondary});
+    transition:
+      background-color $transition-fast,
+      color $transition-fast;
+
+    &:hover {
+      background-color: $fill-quaternary;
+      color: var(--#{$prefix}-color-text, #{$text-color});
+    }
+  }
+
+  // ─────────────────────────────────────────────
+  // Header: Badge (notification count)
+  // ─────────────────────────────────────────────
+  &-badge {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    min-width: 8px;
+    height: 8px;
+    padding: 0;
+    background: var(--#{$prefix}-error-color);
+    border-radius: 50%;
+    border: 2px solid var(--#{$prefix}-color-bg-container);
+    font-size: $font-size-sm;
+    line-height: 1;
+    color: $text-color-light-solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  // ─────────────────────────────────────────────
+  // Header: Divider
+  // ─────────────────────────────────────────────
+  &-header-divider {
+    width: 1px;
+    height: 24px;
+    background: var(--#{$prefix}-color-border-secondary, #{$border-color-secondary});
+    flex-shrink: 0;
+  }
+
+  // ─────────────────────────────────────────────
+  // Header: User
+  // ─────────────────────────────────────────────
+  &-user {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    cursor: pointer;
+
+    &-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: color-mix(in srgb, var(--#{$prefix}-primary-color) 15%, transparent);
+      color: var(--#{$prefix}-primary-color);
+      font-weight: 700;
+      font-size: $font-size-sm;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border: 2px solid transparent;
+      transition: border-color $transition-fast;
+    }
+
+    &:hover &-avatar {
+      border-color: var(--#{$prefix}-primary-color);
+    }
+
+    &-name {
+      font-size: var(--#{$prefix}-font-size-sm);
+      font-weight: 500;
+      color: var(--#{$prefix}-color-text, #{$text-color});
+
+      @media (max-width: 480px) {
+        display: none;
+      }
+    }
+  }
+}
+
+// ─────────────────────────────────────────────
+// PageContainer
+// ─────────────────────────────────────────────
+.#{$prefix}-page-container {
+  display: flex;
+  flex-direction: column;
+
+  &-header {
+    padding: $spacing-md $spacing-lg;
+    background: var(--#{$prefix}-color-bg-container, #{$bg-container});
+    border-bottom: 1px solid var(--#{$prefix}-color-border-secondary, #{$border-color-secondary});
+    margin-bottom: $spacing-lg;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-md;
+    flex-wrap: wrap;
+  }
+
+  &-header-left {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+    min-width: 0;
+  }
+
+  &-title {
+    font-size: $font-size-xl;
+    font-weight: 600;
+    color: var(--#{$prefix}-color-text, #{$text-color});
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &-description {
+    font-size: var(--#{$prefix}-font-size-sm);
+    color: var(--#{$prefix}-color-text-secondary, #{$text-color-secondary});
+    margin: 0;
+  }
+
+  &-extra {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    flex-shrink: 0;
+  }
+
+  &-content {
+    padding: 0 $spacing-lg $spacing-lg $spacing-lg;
+  }
+}

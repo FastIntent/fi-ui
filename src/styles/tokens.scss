@@ -1,0 +1,390 @@
+@use "./variables" as *;
+
+:root {
+  /* --- Primary Palette --- */
+  --#{$prefix}-primary-color: #1677ff;
+  --#{$prefix}-primary-color-hover: #4096ff;
+  --#{$prefix}-primary-color-active: #0958d9;
+  --#{$prefix}-primary-color-outline: color-mix(
+    in srgb,
+    var(--#{$prefix}-primary-color) 15%,
+    transparent
+  );
+  --#{$prefix}-primary-color-opacity-10: color-mix(
+    in srgb,
+    var(--#{$prefix}-primary-color) 10%,
+    transparent
+  );
+  --#{$prefix}-primary-color-opacity-12: color-mix(
+    in srgb,
+    var(--#{$prefix}-primary-color) 12%,
+    transparent
+  );
+
+  /* --- Functional Colors --- */
+  --#{$prefix}-success-color: #52c41a;
+  --#{$prefix}-warning-color: #faad14;
+  --#{$prefix}-warning-color-outline: color-mix(
+    in srgb,
+    var(--#{$prefix}-warning-color) 15%,
+    transparent
+  );
+  --#{$prefix}-error-color: #ff4d4f;
+  --#{$prefix}-error-color-hover: #ff7875;
+  --#{$prefix}-error-color-active: #d9363e;
+  --#{$prefix}-error-color-outline: color-mix(
+    in srgb,
+    var(--#{$prefix}-error-color) 15%,
+    transparent
+  );
+  --#{$prefix}-info-color: var(--#{$prefix}-primary-color);
+
+  /* --- Typography --- */
+  --#{$prefix}-font-family:
+    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    sans-serif;
+  --#{$prefix}-font-size: 14px;
+  --#{$prefix}-font-size-sm: 12px;
+  --#{$prefix}-font-size-md: 14px;
+  --#{$prefix}-font-size-lg: 16px;
+  --#{$prefix}-line-height: 1.5714;
+  --#{$prefix}-border-radius: 6px;
+  --#{$prefix}-border-radius-sm: 4px;
+  --#{$prefix}-border-radius-lg: 8px;
+  --#{$prefix}-border-radius-card: 8px;
+
+  /* --- Neutral Colors (Refined Grays) --- */
+  --#{$prefix}-color-text: #1a1a1a;
+  --#{$prefix}-color-text-secondary: #666666;
+  --#{$prefix}-color-text-tertiary: #999999;
+  --#{$prefix}-color-text-quaternary: #cccccc;
+  --#{$prefix}-color-text-heading: var(--#{$prefix}-color-text);
+  --#{$prefix}-color-text-disabled: #cccccc; /* = quaternary, disabled state */
+  --#{$prefix}-color-text-placeholder: #b0b0b0; /* input placeholder */
+  --#{$prefix}-color-text-light-solid: #ffffff; /* white text on colored solid backgrounds */
+
+  /* --- Link Colors --- */
+  --#{$prefix}-color-link: var(--#{$prefix}-primary-color);
+  --#{$prefix}-color-link-hover: var(--#{$prefix}-primary-color-hover);
+  --#{$prefix}-color-link-active: var(--#{$prefix}-primary-color-active);
+
+  /* --- Text Semantic Aliases --- */
+  --#{$prefix}-color-text-label: var(--#{$prefix}-color-text-secondary);
+  --#{$prefix}-color-text-description: var(--#{$prefix}-color-text-tertiary);
+
+  /* --- Icon Colors --- */
+  --#{$prefix}-color-icon: #999999;
+  --#{$prefix}-color-icon-hover: #1a1a1a;
+
+  --#{$prefix}-color-border: #e6e6e6;
+  --#{$prefix}-color-border-secondary: #f0f0f0;
+  --#{$prefix}-color-border-bg: var(--#{$prefix}-color-bg-container);
+
+  --#{$prefix}-color-bg-layout: #f8f9fa;
+  --#{$prefix}-color-bg-container: #ffffff;
+  --#{$prefix}-color-bg-elevated: #ffffff;
+  --#{$prefix}-color-bg-spotlight: #1a1a1a;
+  --#{$prefix}-color-bg-mask: rgba(0, 0, 0, 0.45);
+  --#{$prefix}-color-bg-solid: var(--#{$prefix}-primary-color);
+  --#{$prefix}-color-bg-solid-hover: var(--#{$prefix}-primary-color-hover);
+  --#{$prefix}-color-bg-solid-active: var(--#{$prefix}-primary-color-active);
+
+  /* --- Fill Levels --- */
+  --#{$prefix}-color-fill: rgba(0, 0, 0, 0.15); /* darkest fill (Slider hover) */
+  --#{$prefix}-color-fill-secondary: rgba(0, 0, 0, 0.06); /* secondary fill (Rate, Skeleton) */
+  --#{$prefix}-color-fill-tertiary: rgba(0, 0, 0, 0.04);
+  --#{$prefix}-color-fill-quaternary: rgba(0, 0, 0, 0.02);
+  --#{$prefix}-color-fill-alter: rgba(0, 0, 0, 0.02); /* alternate rows */
+  --#{$prefix}-color-fill-content: rgba(0, 0, 0, 0.06); /* content area */
+  --#{$prefix}-color-fill-content-hover: rgba(0, 0, 0, 0.12);
+  --#{$prefix}-color-error: var(--#{$prefix}-error-color);
+
+  /* --- Status Variant Tokens (bg / border per status) --- */
+  --#{$prefix}-color-primary-bg: color-mix(in srgb, var(--#{$prefix}-primary-color) 10%, white);
+  --#{$prefix}-color-primary-bg-hover: color-mix(
+    in srgb,
+    var(--#{$prefix}-primary-color) 20%,
+    white
+  );
+  --#{$prefix}-color-primary-border: color-mix(in srgb, var(--#{$prefix}-primary-color) 40%, white);
+  --#{$prefix}-color-primary-border-hover: color-mix(
+    in srgb,
+    var(--#{$prefix}-primary-color) 60%,
+    white
+  );
+  --#{$prefix}-color-primary-text: var(--#{$prefix}-primary-color);
+  --#{$prefix}-color-primary-text-hover: var(--#{$prefix}-primary-color-hover);
+  --#{$prefix}-color-primary-text-active: var(--#{$prefix}-primary-color-active);
+
+  --#{$prefix}-color-success-bg: #f6ffed;
+  --#{$prefix}-color-success-bg-hover: #d9f7be;
+  --#{$prefix}-color-success-border: #b7eb8f;
+  --#{$prefix}-color-success-border-hover: #95de64;
+  --#{$prefix}-color-success-hover: #95de64;
+  --#{$prefix}-color-success-active: #389e0d;
+  --#{$prefix}-color-success-text: var(--#{$prefix}-success-color);
+  --#{$prefix}-color-success-text-hover: #95de64;
+  --#{$prefix}-color-success-text-active: #389e0d;
+
+  --#{$prefix}-color-warning-bg: #fffbe6;
+  --#{$prefix}-color-warning-bg-hover: #fff1b8;
+  --#{$prefix}-color-warning-border: #ffe58f;
+  --#{$prefix}-color-warning-border-hover: #ffd666;
+  --#{$prefix}-color-warning-hover: #ffd666;
+  --#{$prefix}-color-warning-active: #d48806;
+  --#{$prefix}-color-warning-text: var(--#{$prefix}-warning-color);
+  --#{$prefix}-color-warning-text-hover: #ffd666;
+  --#{$prefix}-color-warning-text-active: #d48806;
+
+  --#{$prefix}-color-error-bg: #fff2f0;
+  --#{$prefix}-color-error-bg-hover: #ffccc7;
+  --#{$prefix}-color-error-border: #ffccc7;
+  --#{$prefix}-color-error-border-hover: #ff7875;
+  --#{$prefix}-color-error-bg-active: #ffccc7;
+  --#{$prefix}-color-error-text: var(--#{$prefix}-error-color);
+  --#{$prefix}-color-error-text-hover: #ff7875;
+  --#{$prefix}-color-error-text-active: #d9363e;
+
+  --#{$prefix}-color-info-bg: color-mix(in srgb, var(--#{$prefix}-info-color) 10%, white);
+  --#{$prefix}-color-info-bg-hover: color-mix(in srgb, var(--#{$prefix}-info-color) 20%, white);
+  --#{$prefix}-color-info-border: color-mix(in srgb, var(--#{$prefix}-info-color) 40%, white);
+  --#{$prefix}-color-info-border-hover: color-mix(in srgb, var(--#{$prefix}-info-color) 60%, white);
+  --#{$prefix}-color-info-hover: var(--#{$prefix}-primary-color-hover);
+  --#{$prefix}-color-info-active: var(--#{$prefix}-primary-color-active);
+  --#{$prefix}-color-info-text: var(--#{$prefix}-info-color);
+  --#{$prefix}-color-info-text-hover: var(--#{$prefix}-primary-color-hover);
+  --#{$prefix}-color-info-text-active: var(--#{$prefix}-primary-color-active);
+
+  /* --- Constants --- */
+  --#{$prefix}-color-white: #ffffff;
+  --#{$prefix}-color-black: #000000;
+
+  /* --- Shadows (Premium Elevation) --- */
+  --#{$prefix}-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --#{$prefix}-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --#{$prefix}-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --#{$prefix}-shadow-xl: 0 12px 32px rgba(0, 0, 0, 0.15);
+  /* Popup shadow (dropdowns, menus, tooltips) */
+  --#{$prefix}-shadow-popup:
+    0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12),
+    0 9px 28px 8px rgba(0, 0, 0, 0.05);
+
+  /* --- Transitions --- */
+  --#{$prefix}-transition-fast: 0.1s cubic-bezier(0.645, 0.045, 0.355, 1);
+  --#{$prefix}-transition-base: 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  --#{$prefix}-transition-slow: 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  --#{$prefix}-transition-bounce: 0.3s cubic-bezier(0.12, 0.4, 0.29, 1.46);
+  --#{$prefix}-motion-duration-fast: 0.1s;
+  --#{$prefix}-motion-duration-base: 0.2s;
+  --#{$prefix}-motion-duration-slow: 0.3s;
+  --#{$prefix}-motion-ease-in-out: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --#{$prefix}-motion-ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --#{$prefix}-motion-ease-in: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  --#{$prefix}-motion-ease-out-back: cubic-bezier(0.12, 0.4, 0.29, 1.46);
+  --#{$prefix}-density: comfortable;
+
+  /* --- Typography Extended --- */
+  --#{$prefix}-font-size-xl: 20px;
+  --#{$prefix}-font-size-heading-1: 38px;
+  --#{$prefix}-font-size-heading-2: 30px;
+  --#{$prefix}-font-size-heading-3: 24px;
+  --#{$prefix}-font-size-heading-4: 20px;
+  --#{$prefix}-font-size-heading-5: 16px;
+  --#{$prefix}-font-size-icon: 12px;
+  --#{$prefix}-font-weight-strong: 600;
+  --#{$prefix}-font-family-code:
+    "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  --#{$prefix}-line-height-heading-1: 1.2105;
+  --#{$prefix}-line-height-heading-2: 1.2667;
+  --#{$prefix}-line-height-heading-3: 1.3333;
+  --#{$prefix}-line-height-heading-4: 1.4;
+  --#{$prefix}-line-height-heading-5: 1.5;
+
+  /* --- Sizes / Control --- */
+  --#{$prefix}-control-height-xs: 16px;
+  --#{$prefix}-control-height-sm: 24px;
+  --#{$prefix}-control-height-md: 32px;
+  --#{$prefix}-control-height-lg: 40px;
+  --#{$prefix}-control-interactive-size: 16px; /* checkbox / radio size */
+  --#{$prefix}-control-item-bg-hover: rgba(0, 0, 0, 0.04);
+  --#{$prefix}-control-item-bg-active: color-mix(
+    in srgb,
+    var(--#{$prefix}-primary-color) 10%,
+    white
+  );
+  --#{$prefix}-control-item-bg-active-hover: color-mix(
+    in srgb,
+    var(--#{$prefix}-primary-color) 20%,
+    white
+  );
+  --#{$prefix}-control-item-bg-active-disabled: rgba(0, 0, 0, 0.15);
+  --#{$prefix}-control-outline-width: 2px;
+
+  --#{$prefix}-padding-inline-sm: 8px;
+  --#{$prefix}-padding-inline-md: 16px;
+  --#{$prefix}-padding-inline-lg: 24px;
+  --#{$prefix}-control-padding-horizontal: 12px;
+  --#{$prefix}-select-color-bg: var(--#{$prefix}-color-bg-container);
+  --#{$prefix}-select-color-border: var(--#{$prefix}-color-border);
+  --#{$prefix}-select-border-radius: var(--#{$prefix}-border-radius);
+  /* --- Spin --- */
+  --#{$prefix}-spin-size-sm: 14px;
+  --#{$prefix}-spin-size-md: 20px;
+  --#{$prefix}-spin-size-lg: 32px;
+
+  --#{$prefix}-select-multiple-item-height: 22px;
+  --#{$prefix}-select-multiple-item-height-sm: 16px;
+  --#{$prefix}-select-multiple-item-height-lg: 28px;
+  --#{$prefix}-select-multiple-item-bg: rgba(0, 0, 0, 0.06);
+  --#{$prefix}-select-multiple-item-border-color: var(--#{$prefix}-color-border-secondary);
+
+  /* --- Spacing Scale (generic: gap, margin, padding uses) --- */
+  --#{$prefix}-spacing-xxs: 2px;
+  --#{$prefix}-spacing-xs: 4px;
+  --#{$prefix}-spacing-sm: 8px;
+  --#{$prefix}-spacing-md: 16px;
+  --#{$prefix}-spacing-lg: 24px;
+  --#{$prefix}-spacing-xl: 32px;
+
+  /* --- Padding Scale (fills gaps between spacing tiers) --- */
+  --#{$prefix}-padding-sm: 12px;
+  --#{$prefix}-padding-md: 20px;
+  --#{$prefix}-padding-content-horizontal-lg: 24px;
+  --#{$prefix}-padding-content-horizontal: 16px;
+  --#{$prefix}-padding-content-horizontal-sm: 12px;
+  --#{$prefix}-padding-content-vertical-lg: 16px;
+  --#{$prefix}-padding-content-vertical: 12px;
+  --#{$prefix}-padding-content-vertical-sm: 8px;
+
+  /* --- Margin Scale (mirrors spacing scale, adds missing steps) --- */
+  --#{$prefix}-margin-xxs: var(--#{$prefix}-spacing-xs); /* 4px */
+  --#{$prefix}-margin-xs: var(--#{$prefix}-spacing-sm); /* 8px */
+  --#{$prefix}-margin-sm: 12px;
+  --#{$prefix}-margin-md: var(--#{$prefix}-spacing-md); /* 16px */
+  --#{$prefix}-margin-lg: var(--#{$prefix}-spacing-lg); /* 24px */
+  --#{$prefix}-margin-xl: var(--#{$prefix}-spacing-xl); /* 32px */
+  --#{$prefix}-margin-xxl: 48px;
+
+  /* --- Padding Block (vertical padding per size tier) --- */
+  --#{$prefix}-padding-block-sm: 4px;
+  --#{$prefix}-padding-block-md: 8px;
+  --#{$prefix}-padding-block-lg: 12px;
+  --#{$prefix}-dropdown-padding-block: 5px;
+
+  /* --- Border --- */
+  --#{$prefix}-border-width: 1px;
+  --#{$prefix}-border-width-bold: 2px;
+  --#{$prefix}-border-width-focus: 4px;
+  --#{$prefix}-border-style: solid;
+  --#{$prefix}-border-radius-xs: 2px;
+
+  /* --- Line Height per size tier ((fontSize+8)/fontSize) --- */
+  --#{$prefix}-line-height-sm: 1.6667;
+  --#{$prefix}-line-height-lg: 1.5;
+
+  /* --- Wave --- */
+  --#{$prefix}-wave-opacity: 0.3;
+  --#{$prefix}-wave-spread: 8px;
+  --#{$prefix}-wave-duration: 0.6s;
+  --#{$prefix}-wave-color: var(--#{$prefix}-primary-color);
+
+  --#{$prefix}-z-index-base: 0;
+  --#{$prefix}-z-index-dropdown: 1050;
+  --#{$prefix}-z-index-modal: 1000;
+  --#{$prefix}-z-index-drawer: 1000;
+  --#{$prefix}-z-index-header: 100;
+  --#{$prefix}-z-index-sider: 99;
+
+  --#{$prefix}-layout-header-bg: var(--#{$prefix}-color-bg-container);
+  --#{$prefix}-layout-header-height: 56px;
+  --#{$prefix}-layout-sider-bg: var(--#{$prefix}-color-bg-container);
+  --#{$prefix}-layout-sider-width: 260px;
+  --#{$prefix}-layout-sider-collapsed-width: 72px;
+  --#{$prefix}-layout-sider-active-bg: var(--#{$prefix}-primary-color-opacity-10);
+  --#{$prefix}-layout-sider-active-color: var(--#{$prefix}-primary-color);
+
+  --#{$prefix}-divider-orientation-margin: 5%;
+  --#{$prefix}-divider-text-padding-inline: 1em;
+  --#{$prefix}-divider-vertical-margin-inline: 8px;
+
+  /* --- Screen Breakpoints --- */
+  --#{$prefix}-screen-xs: 480px;
+  --#{$prefix}-screen-sm: 576px;
+  --#{$prefix}-screen-md: 768px;
+  --#{$prefix}-screen-lg: 992px;
+  --#{$prefix}-screen-xl: 1200px;
+  --#{$prefix}-screen-xxl: 1600px;
+
+  --#{$prefix}-prefix: fi;
+}
+
+// =============================================================================
+// Dark Mode token overrides
+// Two activation methods:
+//   1. [data-theme="dark"] — explicit opt-in (overrides media query)
+//   2. prefers-color-scheme: dark — automatic for users without explicit choice
+//      :root:not([data-theme='light']) prevents re-applying when forced to light
+// =============================================================================
+
+// Shared dark token values via SCSS map to avoid duplication
+$dark-tokens: (
+  primary-color: #3c89e8,
+  primary-color-hover: #65a9f3,
+  primary-color-active: #1668dc,
+  color-text: #f8f9fa,
+  color-text-secondary: #adb5bd,
+  color-text-tertiary: #868e96,
+  color-text-quaternary: #495057,
+  color-text-disabled: #495057,
+  color-text-placeholder: #6c757d,
+  color-icon: #868e96,
+  color-icon-hover: #f8f9fa,
+  color-border: #343a40,
+  color-border-secondary: #212529,
+  color-bg-layout: #0b0c0d,
+  color-bg-container: #151719,
+  color-bg-elevated: #1e2124,
+  color-fill: rgba(255, 255, 255, 0.18),
+  color-fill-secondary: rgba(255, 255, 255, 0.12),
+  color-fill-tertiary: rgba(255, 255, 255, 0.08),
+  color-fill-quaternary: rgba(255, 255, 255, 0.04),
+  color-fill-alter: rgba(255, 255, 255, 0.04),
+  color-fill-content: rgba(255, 255, 255, 0.12),
+  color-fill-content-hover: rgba(255, 255, 255, 0.18),
+  color-success-bg: #162312,
+  color-success-border: #274916,
+  color-warning-bg: #2b2111,
+  color-warning-border: #594214,
+  color-error-bg: #2c1618,
+  color-error-border: #58181c,
+  control-item-bg-hover: rgba(255, 255, 255, 0.08),
+  shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2),
+  shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3),
+  shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4),
+  shadow-xl: 0 12px 32px rgba(0, 0, 0, 0.5),
+);
+
+@mixin apply-dark-tokens {
+  @each $key, $value in $dark-tokens {
+    --#{$prefix}-#{$key}: #{$value};
+  }
+  --#{$prefix}-color-text-heading: var(--#{$prefix}-color-text);
+  --#{$prefix}-color-primary-bg: color-mix(in srgb, var(--#{$prefix}-primary-color) 15%, #151719);
+  --#{$prefix}-color-primary-border: color-mix(
+    in srgb,
+    var(--#{$prefix}-primary-color) 40%,
+    #151719
+  );
+  --#{$prefix}-color-info-bg: color-mix(in srgb, var(--#{$prefix}-info-color) 15%, #151719);
+  --#{$prefix}-color-info-border: color-mix(in srgb, var(--#{$prefix}-info-color) 40%, #151719);
+  --#{$prefix}-control-item-bg-active: color-mix(
+    in srgb,
+    var(--#{$prefix}-primary-color) 15%,
+    #151719
+  );
+}
+
+/* Explicit dark mode — data-theme="dark" on <html> or wrapper element */
+[data-theme="dark"] {
+  @include apply-dark-tokens;
+}

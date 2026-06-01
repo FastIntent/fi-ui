@@ -1,0 +1,389 @@
+@use "./variables" as *;
+
+// =============================================================================
+// RTL (Right-to-Left) Support
+// Overrides for Arabic, Hebrew, and other RTL languages.
+// Apply [dir="rtl"] to the <html> or a wrapper element to activate these styles.
+// Uses CSS logical properties where possible for cleaner RTL/LTR switching.
+// =============================================================================
+
+// =============================================================================
+// BREADCRUMB — Invert separator direction and flex layout
+// =============================================================================
+[dir="rtl"] {
+  .#{$prefix}-breadcrumb {
+    direction: rtl;
+
+    &-separator {
+      transform: scaleX(-1);
+    }
+
+    ol {
+      flex-direction: row-reverse;
+    }
+  }
+}
+
+// =============================================================================
+// PAGINATION — Invert prev/next button directions and icon transforms
+// =============================================================================
+[dir="rtl"] {
+  .#{$prefix}-pagination {
+    direction: rtl;
+
+    &-prev,
+    &-next {
+      .#{$prefix}-pagination-item-link {
+        transform: scaleX(-1);
+      }
+    }
+
+    &-options {
+      margin-inline-start: 8px;
+      margin-inline-end: 0;
+    }
+
+    &-jump-prev,
+    &-jump-next {
+      .#{$prefix}-pagination-item-container {
+        .#{$prefix}-pagination-item-ellipsis {
+          letter-spacing: 0;
+        }
+        .#{$prefix}-pagination-item-link-icon {
+          transform: scaleX(-1);
+        }
+      }
+    }
+  }
+}
+
+// =============================================================================
+// STEPS — Invert horizontal direction
+// =============================================================================
+[dir="rtl"] {
+  .#{$prefix}-steps {
+    direction: rtl;
+
+    &-horizontal {
+      flex-direction: row-reverse;
+    }
+
+    &-item {
+      &-tail {
+        inset-inline-start: auto;
+        inset-inline-end: 0;
+      }
+
+      &-icon {
+        margin-inline-start: 0;
+        margin-inline-end: 8px;
+      }
+
+      &-content {
+        text-align: right;
+      }
+    }
+  }
+}
+
+// =============================================================================
+// TIMELINE — Invert dot/tail side (move from left to right)
+// =============================================================================
+[dir="rtl"] {
+  .#{$prefix}-timeline {
+    direction: rtl;
+
+    &-item {
+      &-tail {
+        inset-inline-start: auto;
+        inset-inline-end: 4px;
+        border-inline-start: none;
+        border-inline-end: 2px solid var(--#{$prefix}-color-border);
+      }
+
+      &-head {
+        inset-inline-start: auto;
+        inset-inline-end: 0;
+        margin-inline-start: 0;
+        margin-inline-end: -4px;
+      }
+
+      &-content {
+        margin-inline-start: 0;
+        margin-inline-end: 26px;
+        text-align: right;
+      }
+
+      &-left {
+        .#{$prefix}-timeline-item-content {
+          inset-inline-start: auto;
+          inset-inline-end: calc(50% + 14px);
+          text-align: right;
+        }
+        .#{$prefix}-timeline-item-head,
+        .#{$prefix}-timeline-item-tail {
+          inset-inline-start: auto;
+          inset-inline-end: 50%;
+        }
+      }
+
+      &-right {
+        .#{$prefix}-timeline-item-content {
+          inset-inline-start: calc(50% + 14px);
+          inset-inline-end: auto;
+          text-align: left;
+        }
+        .#{$prefix}-timeline-item-head,
+        .#{$prefix}-timeline-item-tail {
+          inset-inline-start: 50%;
+          inset-inline-end: auto;
+        }
+      }
+    }
+  }
+}
+
+// =============================================================================
+// LAYOUT SIDEBAR — Move sidebar from left to right
+// =============================================================================
+[dir="rtl"] {
+  .#{$prefix}-layout {
+    &-sider {
+      &-left {
+        order: 1;
+        border-inline-start: 1px solid var(--#{$prefix}-color-border);
+        border-inline-end: none;
+      }
+
+      &-collapsed-button {
+        inset-inline-start: auto;
+        inset-inline-end: -13px;
+      }
+    }
+
+    &-sidebar {
+      left: auto;
+      right: 0;
+      border-left: none;
+      border-right: 1px solid var(--#{$prefix}-color-border);
+    }
+
+    &-main {
+      margin-inline-start: 0;
+      margin-inline-end: var(--sidebar-width, 240px);
+    }
+  }
+}
+
+// =============================================================================
+// BADGE — Move badge from top-right to top-left
+// =============================================================================
+[dir="rtl"] {
+  .#{$prefix}-badge {
+    &-count,
+    &-dot,
+    &-status-dot {
+      inset-inline-start: 0;
+      inset-inline-end: auto;
+      transform: translate(-50%, -50%);
+    }
+
+    &-sup {
+      right: auto;
+      left: 0;
+      transform: translate(-50%, -50%);
+    }
+  }
+}
+
+// =============================================================================
+// ALERT — Invert flex direction and icon margin
+// =============================================================================
+[dir="rtl"] {
+  .#{$prefix}-alert {
+    direction: rtl;
+    text-align: right;
+
+    &-content {
+      flex-direction: row-reverse;
+    }
+
+    &-icon {
+      margin-inline-start: 8px;
+      margin-inline-end: 0;
+    }
+
+    &-close-icon {
+      margin-inline-start: 0;
+      margin-inline-end: auto;
+    }
+
+    &-with-description {
+      .#{$prefix}-alert-icon {
+        margin-inline-start: 12px;
+        margin-inline-end: 0;
+      }
+    }
+  }
+}
+
+// =============================================================================
+// INPUT — RTL text direction
+// =============================================================================
+[dir="rtl"] {
+  .#{$prefix}-input {
+    direction: rtl;
+    text-align: right;
+
+    &-prefix {
+      margin-inline-start: 0;
+      margin-inline-end: 4px;
+      order: 1;
+    }
+
+    &-suffix {
+      margin-inline-start: 4px;
+      margin-inline-end: 0;
+      order: -1;
+    }
+
+    &-group {
+      &-addon {
+        &:first-child {
+          border-radius: 0 $border-radius-base $border-radius-base 0;
+        }
+        &:last-child {
+          border-radius: $border-radius-base 0 0 $border-radius-base;
+        }
+      }
+    }
+
+    &-affix-wrapper {
+      direction: rtl;
+    }
+  }
+
+  .#{$prefix}-input-number {
+    direction: rtl;
+
+    &-handler-wrap {
+      left: 0;
+      right: auto;
+      border-radius: $border-radius-base 0 0 $border-radius-base;
+    }
+
+    &-input {
+      text-align: right;
+      padding-inline-start: 28px;
+      padding-inline-end: 11px;
+    }
+  }
+}
+
+// =============================================================================
+// SELECT — Invert dropdown arrow position and text alignment
+// =============================================================================
+[dir="rtl"] {
+  .#{$prefix}-select {
+    direction: rtl;
+
+    &-selector {
+      text-align: right;
+    }
+
+    &-arrow {
+      inset-inline-start: 11px;
+      inset-inline-end: auto;
+    }
+
+    &-clear {
+      inset-inline-start: 32px;
+      inset-inline-end: auto;
+    }
+
+    &-dropdown {
+      direction: rtl;
+      text-align: right;
+    }
+
+    &-item-option-state {
+      padding-inline-start: 0;
+      padding-inline-end: 5px;
+    }
+  }
+}
+
+// =============================================================================
+// DRAWER — Invert placement: left becomes right and vice-versa
+// =============================================================================
+[dir="rtl"] {
+  .#{$prefix}-drawer {
+    &-left {
+      .#{$prefix}-drawer-content-wrapper {
+        left: auto;
+        right: 0;
+      }
+    }
+
+    &-right {
+      .#{$prefix}-drawer-content-wrapper {
+        right: auto;
+        left: 0;
+      }
+    }
+
+    &-header {
+      flex-direction: row-reverse;
+    }
+
+    &-close {
+      margin-inline-start: 12px;
+      margin-inline-end: 0;
+    }
+
+    &-content {
+      direction: rtl;
+    }
+  }
+}
+
+// =============================================================================
+// GENERAL UTILITY — Flip icons that indicate direction
+// =============================================================================
+[dir="rtl"] {
+  // Arrow icons inside components that indicate left/right navigation
+  .#{$prefix}-icon-arrow-left,
+  .#{$prefix}-icon-caret-left,
+  .#{$prefix}-icon-left {
+    transform: scaleX(-1);
+  }
+
+  .#{$prefix}-icon-arrow-right,
+  .#{$prefix}-icon-caret-right,
+  .#{$prefix}-icon-right {
+    transform: scaleX(-1);
+  }
+
+  // Modal close button alignment
+  .#{$prefix}-modal-close {
+    inset-inline-start: 17px;
+    inset-inline-end: auto;
+  }
+
+  // Collapse arrow
+  .#{$prefix}-collapse-arrow {
+    transform: rotate(180deg);
+  }
+
+  // Checkbox and Radio label alignment
+  .#{$prefix}-checkbox-wrapper,
+  .#{$prefix}-radio-wrapper {
+    direction: rtl;
+
+    .#{$prefix}-checkbox,
+    .#{$prefix}-radio {
+      margin-inline-start: 8px;
+      margin-inline-end: 0;
+    }
+  }
+}

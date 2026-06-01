@@ -1,0 +1,63 @@
+// Unified export for the library
+export * from './components/Button';
+export * from './components/Form';
+export * from './components/Input';
+export * from './components/Modal';
+export * from './components/Typography';
+export * from './components/Wave';
+export * from './components/Dropdown';
+export { Menu, SubMenu, MenuItem, ItemGroup } from './components/Menu';
+export type { MenuProps } from './components/Menu';
+export { Select, Option, OptGroup } from './components/Select';
+export type { SelectProps } from './components/Select';
+export * from './components/Avatar';
+export * from './components/Card';
+export * from './components/Drawer';
+export * from './components/Layout';
+export * from './components/Checkbox';
+export * from './components/Switch';
+export * from './components/ConfigProvider';
+export * from './components/DatePicker';
+export * from './components/InputOTP';
+export * from './components/InputNumber';
+export * from './components/Radio';
+export { Row, Col } from './components/Grid';
+export type { RowProps, ColProps } from './components/Grid';
+export * from './components/Slider';
+export * from './components/Rate';
+export * from './components/Upload';
+export * from './components/Progress';
+export * from './components/Badge';
+export * from './components/Alert';
+export * from './components/Table';
+export * from './components/Space';
+export * from './components/Notification';
+export * from './components/Message';
+export * from './components/Tabs';
+export { Tooltip } from './components/Tooltip';
+export type { TooltipProps } from './components/Tooltip';
+export * from './components/Popover';
+export * from './components/Popconfirm';
+export * from './components/Collapse';
+export * from './components/Skeleton';
+export * from './components/Empty';
+export * from './components/Result';
+export * from './components/Breadcrumb';
+export * from './components/Steps';
+export * from './components/Timeline';
+export * from './components/Tag';
+export * from './components/Divider';
+export * from './components/Pagination';
+export * from './components/Popover';
+export * from './components/Spin';
+export * from './components/Flex';
+export * from './components/Calendar';
+
+// Locale exports
+export { enUS, esES, ptBR, frFR, deDE } from './components/locale';
+export type { FastUILocale } from './components/locale';
+
+// Design tokens
+import './styles/tokens.scss';
+import './styles/base.scss';
+import './styles/theme-amber.scss';

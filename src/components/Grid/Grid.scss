@@ -1,0 +1,114 @@
+@use "sass:math";
+@use "../../styles/variables" as *;
+
+$grid-prefix-cls: "#{$prefix}-row";
+$col-prefix-cls: "#{$prefix}-col";
+
+.#{$grid-prefix-cls} {
+  display: flex;
+  flex-flow: row wrap;
+  box-sizing: border-box;
+  width: 100%;
+
+  &::before,
+  &::after {
+    display: flex;
+  }
+
+  // Alignments
+  &-align-top {
+    align-items: flex-start;
+  }
+  &-align-middle {
+    align-items: center;
+  }
+  &-align-bottom {
+    align-items: flex-end;
+  }
+  &-align-stretch {
+    align-items: stretch;
+  }
+
+  // Justifications
+  &-justify-start {
+    justify-content: flex-start;
+  }
+  &-justify-end {
+    justify-content: flex-end;
+  }
+  &-justify-center {
+    justify-content: center;
+  }
+  &-justify-space-around {
+    justify-content: space-around;
+  }
+  &-justify-space-between {
+    justify-content: space-between;
+  }
+  &-justify-space-evenly {
+    justify-content: space-evenly;
+  }
+}
+
+.#{$col-prefix-cls} {
+  position: relative;
+  width: 100%;
+  min-height: 1px;
+  box-sizing: border-box;
+
+  // 24 column system — base + xs share the same rules (no media query)
+  @for $i from 1 through 24 {
+    $percent: math.div($i, 24) * 100%;
+
+    &-#{$i},
+    &-xs-#{$i} {
+      flex: 0 0 $percent;
+      max-width: $percent;
+    }
+
+    &-offset-#{$i},
+    &-xs-offset-#{$i} {
+      margin-inline-start: $percent;
+    }
+
+    &-order-#{$i},
+    &-xs-order-#{$i} {
+      order: $i;
+    }
+  }
+
+  // Responsive Breakpoints (sm+)
+  $breakpoints: (
+    "sm": 576px,
+    "md": 768px,
+    "lg": 992px,
+    "xl": 1200px,
+    "xxl": 1600px,
+  );
+
+  @each $key, $val in $breakpoints {
+    @media (min-width: $val) {
+      @for $i from 1 through 24 {
+        $percent: math.div($i, 24) * 100%;
+
+        &-#{$key}-#{$i} {
+          flex: 0 0 $percent;
+          max-width: $percent;
+        }
+
+        &-#{$key}-offset-#{$i} {
+          margin-inline-start: $percent;
+        }
+
+        &-#{$key}-order-#{$i} {
+          order: $i;
+        }
+      }
+    }
+  }
+
+  // Column 0 (hidden)
+  &-0 {
+    display: none;
+  }
+}

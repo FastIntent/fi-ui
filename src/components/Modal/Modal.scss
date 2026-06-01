@@ -1,0 +1,217 @@
+@use "../../styles/_variables.scss" as *;
+
+/* --- Modal Styles --- */
+
+/* Let rc-dialog handle the root wrapper naturally */
+
+.#{$prefix}-modal-mask {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  height: 100%;
+  background-color: $bg-mask;
+
+  &-hidden {
+    display: none;
+  }
+}
+
+.#{$prefix}-modal-wrap {
+  position: fixed;
+  inset: 0;
+  overflow: auto;
+  outline: 0;
+  z-index: 1000;
+  -webkit-overflow-scrolling: touch;
+}
+
+.#{$prefix}-modal {
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 0 0 $spacing-lg;
+  color: var(--#{$prefix}-color-text, #{$text-color});
+  font-size: $font-size-md;
+  line-height: $line-height;
+  list-style: none;
+  position: relative;
+  top: 100px;
+  width: auto;
+
+  &-content,
+  &-section {
+    position: relative;
+    background-color: var(--#{$prefix}-modal-color-bg, #{$bg-container});
+    background-clip: padding-box;
+    border: 0;
+    border-radius: var(--#{$prefix}-modal-border-radius, #{$border-radius-lg});
+    box-shadow: var(--#{$prefix}-modal-shadow, #{$shadow-xl});
+    display: flex;
+    flex-direction: column;
+  }
+
+  &-close {
+    position: absolute;
+    top: 16px; // Match header padding so it sits vertically centered in the header
+    right: 24px;
+    z-index: 10;
+    padding: 0;
+    color: var(--#{$prefix}-color-text-secondary, #{$text-color-secondary});
+    background: transparent;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    transition: color $transition-base;
+    width: 22px; // Adjusted for better clicking area relative to title
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      color: var(--#{$prefix}-color-text, #{$text-color});
+      background-color: $border-color-secondary;
+      border-radius: $border-radius-sm;
+    }
+
+    &-x {
+      font-size: $font-size-lg;
+      line-height: 1;
+    }
+  }
+
+  &-header {
+    padding: $spacing-md $spacing-lg;
+    color: var(--#{$prefix}-color-text, #{$text-color});
+    background: var(
+      --#{$prefix}-modal-header-bg,
+      var(--#{$prefix}-modal-color-bg, #{$bg-container})
+    );
+    border-bottom: 1px solid $border-color-secondary;
+    border-radius: var(--#{$prefix}-modal-border-radius, #{$border-radius-lg})
+      var(--#{$prefix}-modal-border-radius, #{$border-radius-lg}) 0 0;
+  }
+
+  &-title {
+    margin: 0;
+    color: inherit;
+    font-weight: 600;
+    font-size: $font-size-lg;
+    line-height: $line-height;
+  }
+
+  &-body {
+    padding: $spacing-lg;
+    font-size: $font-size-md;
+    line-height: $line-height;
+    word-wrap: break-word;
+    background: var(--#{$prefix}-modal-color-bg, #{$bg-container}); // Fallback directly on body
+  }
+
+  &-footer {
+    padding: $spacing-sm $spacing-lg;
+    text-align: right;
+    background: var(
+      --#{$prefix}-modal-footer-bg,
+      var(--#{$prefix}-modal-color-bg, #{$bg-container})
+    ); // Fallback directly on footer
+    border-top: 1px solid $border-color-secondary;
+    border-radius: 0 0 var(--#{$prefix}-modal-border-radius, #{$border-radius-lg})
+      var(--#{$prefix}-modal-border-radius, #{$border-radius-lg});
+
+    .#{$prefix}-btn + .#{$prefix}-btn {
+      margin-inline-start: $spacing-sm;
+    }
+  }
+
+  /* Centered Logic */
+  &-centered {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .#{$prefix}-modal {
+      top: 0;
+      padding-bottom: 0;
+      margin: 0;
+    }
+  }
+}
+
+/* Animations */
+.#{$prefix}-fade-enter,
+.#{$prefix}-fade-appear {
+  opacity: 0;
+  animation-duration: 0.3s;
+  animation-fill-mode: both;
+  animation-timing-function: linear;
+}
+.#{$prefix}-fade-enter-active,
+.#{$prefix}-fade-appear-active {
+  animation-name: #{$prefix}FadeIn;
+}
+.#{$prefix}-fade-leave {
+  animation-duration: 0.2s;
+  animation-fill-mode: both;
+  animation-timing-function: linear;
+}
+.#{$prefix}-fade-leave-active {
+  animation-name: #{$prefix}FadeOut;
+}
+
+.#{$prefix}-zoom-enter,
+.#{$prefix}-zoom-appear {
+  opacity: 0;
+  animation-duration: 0.25s;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.08, 0.82, 0.17, 1);
+  transform: none;
+}
+.#{$prefix}-zoom-enter-active,
+.#{$prefix}-zoom-appear-active {
+  animation-name: #{$prefix}ZoomIn;
+}
+.#{$prefix}-zoom-leave {
+  animation-duration: 0.2s;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.6, 0.04, 0.98, 0.34);
+}
+.#{$prefix}-zoom-leave-active {
+  animation-name: #{$prefix}ZoomOut;
+}
+
+@keyframes #{$prefix}FadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes #{$prefix}FadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes #{$prefix}ZoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes #{$prefix}ZoomOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+}

@@ -1,0 +1,99 @@
+@use "../../styles/_variables.scss" as *;
+
+$avatar-size-base: 32px;
+$avatar-size-lg: 40px;
+$avatar-size-sm: 24px;
+
+.#{$prefix}-avatar {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: $text-color-light-solid;
+  font-size: $font-size-md;
+  font-variant: tabular-nums;
+  line-height: $avatar-size-base;
+  list-style: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  background: $text-color-quaternary; // Consistent neutral background
+  vertical-align: middle;
+
+  &-circle {
+    border-radius: 50%;
+  }
+
+  &-square {
+    border-radius: $border-radius-base;
+  }
+
+  // --- Sizes ---
+  &-large {
+    width: $avatar-size-lg;
+    height: $avatar-size-lg;
+    line-height: $avatar-size-lg;
+    font-size: $font-size-lg;
+  }
+
+  &-small {
+    width: $avatar-size-sm;
+    height: $avatar-size-sm;
+    line-height: $avatar-size-sm;
+    font-size: $font-size-sm;
+  }
+
+  &-default {
+    width: $avatar-size-base;
+    height: $avatar-size-base;
+    line-height: $avatar-size-base;
+  }
+
+  // --- Content ---
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &-string {
+    position: absolute;
+    left: 50%;
+    transform-origin: 0 center;
+  }
+
+  &-icon {
+    font-size: $font-size-lg;
+
+    &.#{$prefix}-avatar-small {
+      font-size: $font-size-md;
+    }
+    &.#{$prefix}-avatar-large {
+      font-size: $font-size-heading-3;
+    }
+  }
+
+  // Color variations
+  background: $primary-color;
+}
+
+// --- Avatar Group ---
+.#{$prefix}-avatar-group {
+  display: inline-flex;
+  align-items: center;
+
+  .#{$prefix}-avatar {
+    border: 2px solid var(--#{$prefix}-color-bg-container, #fff);
+    cursor: default;
+    transition: transform $transition-fast;
+    position: relative;
+
+    &:hover {
+      z-index: 1;
+      transform: scale(1.08);
+    }
+  }
+}

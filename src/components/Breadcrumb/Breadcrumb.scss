@@ -1,0 +1,69 @@
+@use "../../styles/variables" as *;
+
+$breadcrumb-prefix-cls: "#{$prefix}-breadcrumb";
+
+.#{$breadcrumb-prefix-cls} {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: $text-color-secondary;
+  font-size: $font-size-md;
+  line-height: $line-height;
+
+  &-item {
+    display: inline-flex;
+    align-items: center;
+
+    &-link {
+      appearance: none;
+      background: transparent;
+      border: 0;
+      padding: 0;
+      color: $text-color-secondary;
+      transition: color $transition-fast;
+      text-decoration: none;
+      cursor: pointer;
+      font: inherit;
+
+      &:hover {
+        color: $primary-color-hover;
+      }
+    }
+
+    // Last item is usually inactive/current page
+    &:last-child {
+      color: $text-color;
+      font-weight: 500;
+
+      .#{$breadcrumb-prefix-cls}-item-link {
+        color: $text-color;
+        cursor: default;
+        pointer-events: none;
+      }
+    }
+  }
+
+  &-item-separator {
+    margin: 0 $spacing-sm;
+    color: $text-color-quaternary;
+    user-select: none;
+  }
+}
+
+// Dark Mode Support
+[data-theme="dark"] .#{$breadcrumb-prefix-cls} {
+  &-item {
+    &-link {
+      color: $text-color-tertiary;
+      &:hover {
+        color: $primary-color-hover;
+      }
+    }
+    &:last-child {
+      color: $text-color;
+      .#{$breadcrumb-prefix-cls}-item-link {
+        color: $text-color;
+      }
+    }
+  }
+}

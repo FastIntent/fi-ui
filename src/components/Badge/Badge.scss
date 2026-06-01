@@ -1,0 +1,156 @@
+@use "../../styles/variables" as *;
+
+$badge-prefix-cls: "#{$prefix}-badge";
+
+.#{$badge-prefix-cls} {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: $text-color;
+  font-size: $font-size-md;
+  list-style: none;
+  position: relative;
+  display: inline-block;
+  line-height: 1;
+
+  &-count {
+    z-index: 10;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 $spacing-xs;
+    color: $text-color-light-solid;
+    font-weight: normal;
+    font-size: $font-size-sm;
+    line-height: $line-height;
+    white-space: nowrap;
+    text-align: center;
+    background: $error-color;
+    border-radius: $border-radius-lg;
+    box-shadow: 0 0 0 1px $component-background;
+    transition: all $transition-base;
+
+    // Positioning
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+    transform-origin: 100% 0%;
+  }
+
+  &-dot {
+    z-index: 10;
+    width: 6px;
+    height: 6px;
+    background: $error-color;
+    border-radius: 9999px;
+    box-shadow: 0 0 0 1px $component-background;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+    transform-origin: 100% 0%;
+  }
+
+  // Status colors
+  &-status {
+    display: inline-flex;
+    align-items: center;
+    /* stylelint-disable-next-line scale-unlimited/declaration-strict-value */
+    line-height: inherit;
+    vertical-align: baseline;
+
+    &-dot {
+      position: relative;
+      top: -1px;
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      vertical-align: middle;
+      border-radius: 50%;
+    }
+
+    &-text {
+      margin-inline-start: $spacing-sm;
+      color: $text-color;
+      font-size: $font-size-md;
+    }
+
+    &-success {
+      background-color: $success-color;
+    }
+    &-processing {
+      background-color: $primary-color;
+      &::after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 1px solid $primary-color;
+        border-radius: 50%;
+        animation: #{$prefix}-status-processing 1.2s infinite ease-in-out;
+        content: "";
+      }
+    }
+    &-default {
+      background-color: $disabled-color;
+    }
+    &-error {
+      background-color: $error-color;
+    }
+    &-warning {
+      background-color: $warning-color;
+    }
+  }
+}
+
+// --- Standalone Pill Badge ---
+.#{$badge-prefix-cls}-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+  padding: 0 $spacing-sm;
+  height: 22px;
+  border-radius: $border-radius-lg;
+  font-size: $font-size-sm;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  vertical-align: middle;
+
+  &-icon {
+    display: flex;
+    align-items: center;
+    font-size: $font-size-md;
+    line-height: 1;
+  }
+
+  &-count {
+    line-height: 1;
+  }
+
+  // Filled variant: solid background, white text
+  &-filled {
+    color: $text-color-light-solid;
+    // backgroundColor set via inline style (dynamic color)
+  }
+
+  // Outline variant: border only, no fill, colored text/border
+  &-outline {
+    background-color: transparent;
+    border: 1.5px solid currentColor;
+    // color and borderColor set via inline style
+  }
+}
+
+@keyframes #{$prefix}-status-processing {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}

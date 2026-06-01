@@ -1,0 +1,215 @@
+@use "../../styles/_variables.scss" as *;
+
+.#{$prefix}-card {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: $text-color;
+  font-size: $font-size-md;
+  font-family: $font-family;
+  line-height: $line-height;
+  background: $bg-container;
+  border-radius: var(--#{$prefix}-border-radius-card, 12px);
+  position: relative;
+  transition: all $transition-base;
+  box-shadow: $shadow-sm;
+
+  &-bordered {
+    border: 1px solid var(--#{$prefix}-color-border-secondary, #{$border-color-secondary});
+    box-shadow: none;
+  }
+
+  &-hoverable {
+    cursor: pointer;
+    transition:
+      box-shadow $transition-base,
+      transform $transition-base;
+    &:hover {
+      box-shadow: $shadow-lg;
+      transform: translateY(-2px);
+    }
+  }
+
+  &-head {
+    min-height: 56px;
+    padding: 0 $spacing-lg;
+    border-bottom: 1px solid var(--#{$prefix}-color-border-secondary, #{$border-color-secondary});
+    border-radius: var(--#{$prefix}-border-radius-card, 12px)
+      var(--#{$prefix}-border-radius-card, 12px) 0 0;
+
+    &-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+      min-height: 56px;
+    }
+
+    &-title {
+      font-weight: 600;
+      font-size: $font-size-md;
+      color: var(--#{$prefix}-color-text-heading, #{$text-color-heading});
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      letter-spacing: -0.01em;
+    }
+  }
+
+  &-extra {
+    margin-inline-start: auto;
+    font-size: $font-size-md;
+    color: $primary-color;
+
+    a {
+      color: $primary-color;
+      text-decoration: none;
+      transition: color $transition-fast;
+      &:hover {
+        color: $primary-color-hover;
+      }
+    }
+  }
+
+  &-body {
+    padding: $spacing-lg;
+
+    // Scoped reset for typography to prevent layout breaks
+    > p {
+      margin-top: 0;
+      margin-bottom: $spacing-md;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &-cover {
+    > * {
+      display: block;
+      width: 100%;
+      border-radius: var(--#{$prefix}-border-radius-card, 12px)
+        var(--#{$prefix}-border-radius-card, 12px) 0 0;
+    }
+  }
+
+  &-actions {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background: var(--#{$prefix}-color-bg-layout, #{$bg-layout});
+    border-top: 1px solid var(--#{$prefix}-color-border-secondary, #{$border-color-secondary});
+    display: flex;
+    border-radius: 0 0 var(--#{$prefix}-border-radius-card, 12px)
+      var(--#{$prefix}-border-radius-card, 12px);
+
+    > li {
+      flex: 1;
+      text-align: center;
+      margin: $spacing-sm 0;
+      color: $text-color-secondary;
+      cursor: pointer;
+      transition: color $transition-base;
+
+      &:not(:last-child) {
+        border-right: 1px solid var(--#{$prefix}-color-border-secondary, #{$border-color-secondary});
+      }
+
+      &:hover {
+        color: $primary-color;
+      }
+    }
+  }
+
+  // Loading skeleton
+  &-loading-content {
+    p {
+      display: flex;
+      gap: $spacing-sm;
+      margin: 0 0 $spacing-sm;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &-loading-block {
+    display: inline-block;
+    height: 14px;
+    background: linear-gradient(
+      90deg,
+      var(--#{$prefix}-color-fill-tertiary, rgba(0, 0, 0, 0.06)) 25%,
+      var(--#{$prefix}-color-fill-secondary, rgba(0, 0, 0, 0.12)) 37%,
+      var(--#{$prefix}-color-fill-tertiary, rgba(0, 0, 0, 0.06)) 63%
+    );
+    background-size: 400% 100%;
+    border-radius: $border-radius-sm;
+    animation: #{$prefix}-card-loading 1.4s ease infinite;
+  }
+
+  // Meta layout
+  &-meta {
+    display: flex;
+    align-items: flex-start;
+
+    &-avatar {
+      padding-inline-end: $spacing-md;
+      flex-shrink: 0;
+    }
+
+    &-detail {
+      flex: 1;
+      overflow: hidden;
+    }
+
+    &-title {
+      font-weight: 600;
+      font-size: $font-size-lg;
+      color: var(--#{$prefix}-color-text-heading, #{$text-color-heading});
+      margin-bottom: $spacing-sm;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    &-description {
+      color: $text-color-secondary;
+      font-size: $font-size-md;
+
+      p {
+        margin: 0 0 $spacing-xs;
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  // Small variant
+  &-small {
+    .#{$prefix}-card-head {
+      min-height: 36px;
+      padding: 0 $spacing-md;
+      &-wrapper {
+        min-height: 36px;
+      }
+      &-title {
+        font-size: $font-size-md;
+      }
+    }
+    .#{$prefix}-card-body {
+      padding: $spacing-md;
+    }
+  }
+}
+
+@keyframes #{$prefix}-card-loading {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

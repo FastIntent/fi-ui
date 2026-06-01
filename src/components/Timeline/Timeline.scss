@@ -1,0 +1,114 @@
+@use "../../styles/variables" as *;
+
+$timeline-prefix-cls: "#{$prefix}-timeline";
+$timeline-item-prefix-cls: "#{$prefix}-timeline-item";
+
+.#{$timeline-prefix-cls} {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  &-item {
+    position: relative;
+    margin: 0;
+    padding-bottom: $spacing-xl;
+
+    &-tail {
+      position: absolute;
+      top: 10px;
+      left: 4px;
+      height: 100%;
+      border-left: 2px solid $border-color-secondary;
+    }
+
+    &-last &-tail {
+      display: none;
+    }
+
+    &-dot {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: $bg-container;
+      border: 2px solid transparent;
+      border-radius: 50%;
+      z-index: 1;
+
+      // Semantic Dot Colors
+      &-primary {
+        border-color: $primary-color;
+      }
+      &-success {
+        border-color: $success-color;
+      }
+      &-error {
+        border-color: $error-color;
+      }
+      &-warning {
+        border-color: $warning-color;
+      }
+      &-info {
+        border-color: $info-color;
+      }
+    }
+
+    &-content {
+      position: relative;
+      top: -6px;
+      margin-left: calc(#{$spacing-lg} + #{$spacing-xxs});
+      word-break: break-word;
+      color: $text-color;
+      font-size: $font-size-md;
+    }
+
+    &-label {
+      position: absolute;
+      top: -6px;
+      width: 100px;
+      text-align: right;
+      left: -120px;
+      color: $text-color-secondary;
+      font-size: $font-size-sm;
+    }
+  }
+
+  // Right mode adjustments
+  &-mode-right {
+    .#{$timeline-item-prefix-cls} {
+      &-tail {
+        left: auto;
+        right: 4px;
+        border-left: none;
+        border-right: 2px solid $border-color-secondary;
+      }
+      &-dot {
+        left: auto;
+        right: 0;
+      }
+      &-content {
+        margin-left: 0;
+        margin-right: calc(#{$spacing-lg} + #{$spacing-xxs});
+        text-align: right;
+      }
+    }
+  }
+}
+
+// Dark Mode Support
+[data-theme="dark"] .#{$timeline-prefix-cls} {
+  &-item {
+    &-tail {
+      border-color: $border-color;
+    }
+    &-dot {
+      background-color: $bg-container;
+    }
+    &-content {
+      color: $text-color;
+    }
+    &-label {
+      color: $text-color-tertiary;
+    }
+  }
+}

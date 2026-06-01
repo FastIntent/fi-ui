@@ -1,0 +1,254 @@
+@use "../../styles/_variables.scss" as *;
+
+.#{$prefix}-calendar {
+  background: var(--#{$prefix}-color-bg-container, #{$bg-container});
+  font-family: $font-family;
+  font-size: $font-size-md;
+  color: var(--#{$prefix}-color-text, #{$text-color});
+
+  // ── Header ──
+  &-header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: $spacing-sm 0;
+
+    &-right {
+      display: flex;
+      align-items: center;
+      gap: $spacing-sm;
+    }
+  }
+
+  &-year-select,
+  &-month-select {
+    appearance: auto;
+    padding: $spacing-xxs $spacing-sm;
+    border: 1px solid var(--#{$prefix}-color-border, #{$border-color});
+    border-radius: $border-radius-base;
+    background: var(--#{$prefix}-color-bg-container, #{$bg-container});
+    color: var(--#{$prefix}-color-text, #{$text-color});
+    font-size: $font-size-md;
+    cursor: pointer;
+    min-height: 32px;
+
+    &:hover {
+      border-color: var(--#{$prefix}-primary-color-hover, #{$primary-color-hover});
+    }
+
+    &:focus {
+      border-color: var(--#{$prefix}-primary-color, #{$primary-color});
+      outline: none;
+      box-shadow: 0 0 0 2px var(--#{$prefix}-primary-color-outline, #{$primary-color-outline});
+    }
+  }
+
+  &-mode-switch {
+    display: inline-flex;
+    border: 1px solid var(--#{$prefix}-color-border, #{$border-color});
+    border-radius: $border-radius-base;
+    overflow: hidden;
+  }
+
+  &-mode-btn {
+    background: var(--#{$prefix}-color-bg-container, #{$bg-container});
+    border: none;
+    padding: $spacing-xxs $spacing-md;
+    cursor: pointer;
+    font-size: $font-size-md;
+    color: var(--#{$prefix}-color-text, #{$text-color});
+    min-height: 32px;
+    transition: all $transition-fast;
+
+    &:not(:last-child) {
+      border-right: 1px solid var(--#{$prefix}-color-border, #{$border-color});
+    }
+
+    &:hover {
+      color: var(--#{$prefix}-primary-color, #{$primary-color});
+    }
+
+    &-active {
+      color: var(--#{$prefix}-primary-color, #{$primary-color});
+      background: var(--#{$prefix}-color-primary-bg, #{$color-primary-bg});
+      font-weight: 500;
+    }
+  }
+
+  // ── Body wrapper ──
+  &-body {
+    padding: $spacing-xs 0;
+  }
+
+  // ── Table / Month view ──
+  &-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+
+  &-column-header {
+    padding: 0 0 $spacing-xxs 0;
+    padding-inline-end: $spacing-sm;
+    text-align: end;
+    color: var(--#{$prefix}-color-text, #{$text-color});
+    font-weight: 400;
+    font-size: $font-size-md;
+    line-height: $line-height-lg;
+  }
+
+  // ── Date cells ──
+  &-cell {
+    padding: 0;
+    vertical-align: top;
+    cursor: pointer;
+
+    // Out-of-month dates
+    color: var(--#{$prefix}-color-text-quaternary, #{$text-color-quaternary});
+
+    &-in-view {
+      color: var(--#{$prefix}-color-text, #{$text-color});
+    }
+
+    &-disabled {
+      cursor: not-allowed;
+      opacity: 0.4;
+
+      .#{$prefix}-calendar-date:hover {
+        background: transparent;
+      }
+    }
+  }
+
+  &-date {
+    display: block;
+    margin: 0 $margin-xxs;
+    padding: $spacing-xxs $spacing-xs 0;
+    border-top: 2px solid var(--#{$prefix}-color-border-secondary, #{$border-color-secondary});
+    transition: background $transition-fast;
+
+    &:hover {
+      background: var(--#{$prefix}-control-item-bg-hover, #{$control-item-bg-hover});
+    }
+  }
+
+  &-date-value {
+    display: block;
+    text-align: end;
+    font-size: $font-size-md;
+    line-height: $line-height-lg;
+  }
+
+  &-date-content {
+    height: 86px;
+    overflow-y: auto;
+    color: var(--#{$prefix}-color-text, #{$text-color});
+    line-height: $line-height;
+    text-align: start;
+  }
+
+  // Today
+  &-cell-today &-date {
+    border-top-color: var(--#{$prefix}-primary-color, #{$primary-color});
+  }
+
+  &-cell-today &-date-value {
+    color: var(--#{$prefix}-primary-color, #{$primary-color});
+  }
+
+  // Selected
+  &-cell-selected &-date {
+    background: color-mix(in srgb, var(--#{$prefix}-primary-color, #1677ff) 8%, transparent);
+  }
+
+  // ── Year / Month panel ──
+  &-month-panel {
+    padding: $spacing-md;
+  }
+
+  &-month-row {
+    display: flex;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-sm;
+  }
+
+  &-month-cell {
+    flex: 1;
+    text-align: center;
+    padding: $spacing-lg $spacing-md;
+    border-radius: $border-radius-base;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    &:hover {
+      background: var(--#{$prefix}-control-item-bg-hover, #{$control-item-bg-hover});
+    }
+
+    &-today {
+      .#{$prefix}-calendar-month-cell-inner > span {
+        color: var(--#{$prefix}-primary-color, #{$primary-color});
+        font-weight: 600;
+      }
+    }
+
+    &-selected {
+      background: color-mix(in srgb, var(--#{$prefix}-primary-color, #1677ff) 8%, transparent);
+    }
+  }
+
+  // ── Mini mode ──
+  &-mini {
+    display: inline-block;
+
+    .#{$prefix}-calendar-header {
+      padding: $spacing-sm;
+    }
+
+    .#{$prefix}-calendar-date {
+      min-height: auto;
+      padding: $spacing-xxs;
+      border-top: none;
+      text-align: center;
+    }
+
+    .#{$prefix}-calendar-date-value {
+      text-align: center;
+      width: 28px;
+      height: 28px;
+      line-height: $line-height-lg;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .#{$prefix}-calendar-cell-selected .#{$prefix}-calendar-date-value {
+      background: var(--#{$prefix}-primary-color, #{$primary-color});
+      color: var(--#{$prefix}-color-text-light-solid, #{$text-color-light-solid});
+    }
+
+    .#{$prefix}-calendar-cell-selected .#{$prefix}-calendar-date {
+      background: transparent;
+    }
+
+    .#{$prefix}-calendar-cell-today .#{$prefix}-calendar-date-value {
+      border: 1px solid var(--#{$prefix}-primary-color, #{$primary-color});
+    }
+
+    .#{$prefix}-calendar-cell-today .#{$prefix}-calendar-date {
+      border-top-color: transparent;
+    }
+
+    .#{$prefix}-calendar-column-header {
+      text-align: center;
+      padding-right: 0;
+    }
+
+    .#{$prefix}-calendar-date-content {
+      display: none;
+    }
+
+    .#{$prefix}-calendar-mode-switch,
+    .#{$prefix}-calendar-month-select {
+      display: none;
+    }
+  }
+}

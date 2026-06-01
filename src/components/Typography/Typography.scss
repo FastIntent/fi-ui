@@ -1,0 +1,103 @@
+@use "../../styles/_variables.scss" as *;
+
+.#{$prefix}-typography {
+  color: var(--#{$prefix}-typography-color-text, #{$text-color});
+  font-family: $font-family;
+  font-size: $font-size-base;
+  line-height: $line-height;
+  margin: 0;
+
+  &-title {
+    font-weight: 700;
+    /* stylelint-disable-next-line scale-unlimited/declaration-strict-value */
+    margin-bottom: 0.5em;
+    color: inherit;
+
+    &-h1 {
+      font-size: $font-size-heading-1;
+      line-height: $line-height-sm;
+      letter-spacing: -0.02em;
+    }
+    &-h2 {
+      font-size: $font-size-heading-2;
+      line-height: $line-height-sm;
+      letter-spacing: -0.01em;
+    }
+    &-h3 {
+      font-size: $font-size-heading-3;
+      line-height: $line-height-sm;
+    }
+    &-h4 {
+      font-size: $font-size-heading-4;
+      line-height: $line-height-sm;
+      font-weight: 600;
+    }
+    &-h5 {
+      font-size: $font-size-heading-5;
+      line-height: $line-height;
+      font-weight: 600;
+    }
+  }
+
+  &-text {
+    display: inline-block;
+  }
+
+  &-paragraph {
+    /* stylelint-disable-next-line scale-unlimited/declaration-strict-value */
+    margin-bottom: 1em;
+  }
+
+  /* Variants */
+  &-primary {
+    color: var(--#{$prefix}-primary-color, #{$primary-color});
+  }
+  &-secondary {
+    color: var(--#{$prefix}-typography-color-text-description, #{$text-color-secondary});
+  }
+  &-success {
+    color: var(--#{$prefix}-success-color, #{$success-color});
+  }
+  &-warning {
+    color: var(--#{$prefix}-warning-color, #{$warning-color});
+  }
+  &-error {
+    color: var(--#{$prefix}-error-color, #{$error-color});
+  }
+  &-info {
+    color: var(--#{$prefix}-info-color, #{$info-color});
+  }
+
+  /* States */
+  &-strong {
+    font-weight: 600;
+  }
+  &-italic {
+    font-style: italic;
+  }
+  &-underline {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  &-delete {
+    text-decoration: line-through;
+    opacity: 0.6;
+  }
+  &-disabled {
+    color: var(--#{$prefix}-color-text-quaternary, #{$text-color-quaternary});
+    cursor: not-allowed;
+    user-select: none;
+  }
+
+  /* Link */
+  a {
+    color: var(--#{$prefix}-typography-color-link, #{$primary-color});
+    text-decoration: none;
+    transition: color $transition-base;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--#{$prefix}-typography-color-link-hover, #{$primary-color-hover});
+    }
+  }
+}

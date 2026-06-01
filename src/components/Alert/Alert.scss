@@ -1,0 +1,147 @@
+@use "../../styles/variables" as *;
+
+$alert-prefix-cls: "#{$prefix}-alert";
+
+.#{$alert-prefix-cls} {
+  box-sizing: border-box;
+  margin: 0;
+  padding: $spacing-sm $spacing-md;
+  color: $text-color;
+  font-size: $font-size-md;
+  line-height: $line-height;
+  list-style: none;
+  position: relative;
+  display: flex;
+  // Center-align for single-line alerts so icon sits at text midline
+  align-items: center;
+  word-wrap: break-word;
+  border-radius: $border-radius-base;
+  margin-bottom: $spacing-md;
+
+  &-icon {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    margin-right: $spacing-sm;
+    font-size: $font-size-lg;
+    line-height: 1;
+  }
+
+  &-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &-message {
+    color: $heading-color;
+    font-weight: 500;
+  }
+
+  &-description {
+    display: none;
+    font-size: $font-size-md;
+    line-height: $line-height;
+  }
+
+  &-with-description {
+    // Top-align icon with first line of title when description is present
+    align-items: flex-start;
+    padding: $spacing-sm $spacing-md;
+
+    .#{$alert-prefix-cls}-icon {
+      font-size: $font-size-heading-3;
+      margin-right: $spacing-sm;
+      // Nudge icon down slightly so it aligns with the title baseline
+      margin-top: $spacing-xxs;
+    }
+
+    .#{$alert-prefix-cls}-message {
+      display: block;
+      margin-bottom: $spacing-xs;
+      font-size: $font-size-lg;
+      font-weight: 600;
+    }
+
+    .#{$alert-prefix-cls}-description {
+      display: block;
+      color: $text-color;
+    }
+  }
+
+  // Types
+  &-success {
+    background-color: $color-success-bg;
+    border: 1px solid $color-success-border;
+    .#{$alert-prefix-cls}-icon {
+      color: $success-color;
+    }
+  }
+
+  &-info {
+    background-color: $color-info-bg;
+    border: 1px solid $color-info-border;
+    .#{$alert-prefix-cls}-icon {
+      color: $primary-color;
+    }
+  }
+
+  &-warning {
+    background-color: $color-warning-bg;
+    border: 1px solid $color-warning-border;
+    .#{$alert-prefix-cls}-icon {
+      color: $warning-color;
+    }
+  }
+
+  &-error {
+    background-color: $color-error-bg;
+    border: 1px solid $color-error-border;
+    .#{$alert-prefix-cls}-icon {
+      color: $error-color;
+    }
+  }
+
+  &-close-icon {
+    margin-left: $spacing-sm;
+    padding: 0;
+    overflow: hidden;
+    color: $text-color-secondary;
+    font-size: $font-size-sm;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: color $transition-base;
+
+    &:hover {
+      color: $text-color;
+    }
+  }
+
+  // Closing animation — fade out + collapse height + margin
+  &-closing {
+    overflow: hidden;
+    animation: fi-alert-close-out 0.3s ease-in forwards;
+    pointer-events: none;
+  }
+
+  @keyframes fi-alert-close-out {
+    0% {
+      opacity: 1;
+      max-height: 200px;
+      margin-bottom: $spacing-md;
+    }
+    30% {
+      opacity: 0;
+      max-height: 200px;
+      margin-bottom: $spacing-md;
+    }
+    100% {
+      opacity: 0;
+      max-height: 0;
+      margin-bottom: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+  }
+}

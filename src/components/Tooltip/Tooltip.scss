@@ -1,0 +1,193 @@
+@use "../../styles/_variables.scss" as *;
+
+// --- Tooltip Design Tokens ---
+:root {
+  --#{$prefix}-tooltip-bg: rgba(0, 0, 0, 0.85);
+  --#{$prefix}-tooltip-color: #fff;
+  --#{$prefix}-tooltip-font-size: #{$font-size-md};
+  --#{$prefix}-tooltip-border-radius: #{$border-radius-base};
+  --#{$prefix}-tooltip-shadow:
+    0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12),
+    0 9px 28px 8px rgba(0, 0, 0, 0.05);
+  --#{$prefix}-tooltip-arrow-width: 8px;
+  --#{$prefix}-tooltip-arrow-height: 5px;
+}
+
+.#{$prefix}-tooltip {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: var(--#{$prefix}-tooltip-color);
+  font-size: var(--#{$prefix}-tooltip-font-size);
+  line-height: $line-height;
+  list-style: none;
+  font-family: $font-family;
+  position: absolute;
+  z-index: 1070;
+  display: block;
+  visibility: visible;
+  max-width: 250px;
+  word-wrap: break-word;
+  pointer-events: none;
+  transform-origin: var(--arrow-x, 50%) var(--arrow-y, 50%);
+
+  &-hidden {
+    display: none;
+  }
+
+  &-container {
+    min-width: 32px;
+    min-height: 32px;
+    padding: $spacing-xs $spacing-sm;
+    color: var(--#{$prefix}-tooltip-color);
+    text-align: start;
+    text-decoration: none;
+    background-color: var(--#{$prefix}-tooltip-bg);
+    border-radius: var(--#{$prefix}-tooltip-border-radius);
+    box-shadow: var(--#{$prefix}-tooltip-shadow);
+    pointer-events: auto;
+  }
+
+  // --- Arrow ---
+  // bottom/top/left/right se inyectan como inline styles por @rc-component/trigger v3.
+  // z-index: 1 permite que el arrow solape 2px dentro del container (mismo color),
+  // eliminando cualquier gap visual causado por border-radius.
+  &-arrow {
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-color: transparent;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  // --- Placements ---
+  &-placement-top,
+  &-placement-topLeft,
+  &-placement-topRight {
+    padding-bottom: var(--#{$prefix}-tooltip-arrow-height);
+    .#{$prefix}-tooltip-arrow {
+      margin-left: calc(var(--#{$prefix}-tooltip-arrow-width) #{"/"} -2);
+      border-width: var(--#{$prefix}-tooltip-arrow-height)
+        calc(var(--#{$prefix}-tooltip-arrow-width) #{"/"} 2) 0;
+      border-top-color: var(--#{$prefix}-tooltip-bg);
+      transform: translateY(-2px);
+    }
+  }
+
+  &-placement-bottom,
+  &-placement-bottomLeft,
+  &-placement-bottomRight {
+    padding-top: var(--#{$prefix}-tooltip-arrow-height);
+    .#{$prefix}-tooltip-arrow {
+      margin-left: calc(var(--#{$prefix}-tooltip-arrow-width) #{"/"} -2);
+      border-width: 0 calc(var(--#{$prefix}-tooltip-arrow-width) #{"/"} 2)
+        var(--#{$prefix}-tooltip-arrow-height);
+      border-bottom-color: var(--#{$prefix}-tooltip-bg);
+      transform: translateY(2px);
+    }
+  }
+
+  &-placement-left,
+  &-placement-leftTop,
+  &-placement-leftBottom {
+    padding-right: var(--#{$prefix}-tooltip-arrow-height);
+    .#{$prefix}-tooltip-arrow {
+      margin-top: calc(var(--#{$prefix}-tooltip-arrow-width) #{"/"} -2);
+      border-width: calc(var(--#{$prefix}-tooltip-arrow-width) #{"/"} 2) 0
+        calc(var(--#{$prefix}-tooltip-arrow-width) #{"/"} 2) var(--#{$prefix}-tooltip-arrow-height);
+      border-left-color: var(--#{$prefix}-tooltip-bg);
+      transform: translateX(2px);
+    }
+  }
+
+  &-placement-right,
+  &-placement-rightTop,
+  &-placement-rightBottom {
+    padding-left: var(--#{$prefix}-tooltip-arrow-height);
+    .#{$prefix}-tooltip-arrow {
+      margin-top: calc(var(--#{$prefix}-tooltip-arrow-width) #{"/"} -2);
+      border-width: calc(var(--#{$prefix}-tooltip-arrow-width) #{"/"} 2)
+        var(--#{$prefix}-tooltip-arrow-height) calc(var(--#{$prefix}-tooltip-arrow-width) #{"/"} 2)
+        0;
+      border-right-color: var(--#{$prefix}-tooltip-bg);
+      transform: translateX(-2px);
+    }
+  }
+
+  // Specific corner offsets
+  &-placement-topLeft .#{$prefix}-tooltip-arrow,
+  &-placement-bottomLeft .#{$prefix}-tooltip-arrow {
+    left: 16px;
+    margin-left: 0;
+  }
+  &-placement-topRight .#{$prefix}-tooltip-arrow,
+  &-placement-bottomRight .#{$prefix}-tooltip-arrow {
+    left: auto;
+    right: 16px;
+    margin-left: 0;
+  }
+  &-placement-leftTop .#{$prefix}-tooltip-arrow,
+  &-placement-rightTop .#{$prefix}-tooltip-arrow {
+    top: 12px;
+    margin-top: 0;
+  }
+  &-placement-leftBottom .#{$prefix}-tooltip-arrow,
+  &-placement-rightBottom .#{$prefix}-tooltip-arrow {
+    top: auto;
+    bottom: 12px;
+    margin-top: 0;
+  }
+}
+
+// --- Motion ('zoom-big-fast') ---
+.#{$prefix}-tooltip-zoom-enter,
+.#{$prefix}-tooltip-zoom-appear {
+  opacity: 0;
+  animation-duration: 0.1s;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.08, 0.82, 0.17, 1);
+  animation-play-state: paused;
+}
+
+.#{$prefix}-tooltip-zoom-leave {
+  animation-duration: 0.1s;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.78, 0.14, 0.15, 0.86);
+  animation-play-state: paused;
+}
+
+.#{$prefix}-tooltip-zoom-enter.#{$prefix}-tooltip-zoom-enter-active,
+.#{$prefix}-tooltip-zoom-appear.#{$prefix}-tooltip-zoom-appear-active {
+  animation-name: fiTooltipZoomIn;
+  animation-play-state: running;
+}
+
+.#{$prefix}-tooltip-zoom-leave.#{$prefix}-tooltip-zoom-leave-active {
+  animation-name: fiTooltipZoomOut;
+  animation-play-state: running;
+}
+
+@keyframes fiTooltipZoomIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fiTooltipZoomOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}

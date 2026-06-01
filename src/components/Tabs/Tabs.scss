@@ -1,0 +1,263 @@
+@use "../../styles/_variables.scss" as *;
+
+$tabs-prefix-cls: "#{$prefix}-tabs";
+
+.#{$tabs-prefix-cls} {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: $text-color;
+  font-size: $font-size-md;
+  line-height: $line-height;
+  display: flex;
+
+  &-top,
+  &-bottom {
+    flex-direction: column;
+  }
+
+  &-left,
+  &-right {
+    flex-direction: row;
+  }
+
+  // ─── Nav Bar ──────────────────────────────────────────────────────────────────
+  &-nav {
+    position: relative;
+    display: flex;
+    flex: none;
+    align-items: center;
+    margin-bottom: $spacing-md;
+
+    // Bottom border for line tabs
+    &::before {
+      position: absolute;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      border-bottom: 1px solid var(--#{$prefix}-color-border-secondary, rgba(0, 0, 0, 0.06));
+      content: "";
+    }
+  }
+
+  &-nav-wrap {
+    position: relative;
+    display: flex;
+    flex: auto;
+    align-items: stretch;
+    overflow: hidden;
+    white-space: nowrap;
+    transform: translate(0);
+  }
+
+  &-nav-list {
+    position: relative;
+    display: flex;
+    transition: transform $transition-base;
+  }
+
+  // Centered mode
+  &-centered > .#{$tabs-prefix-cls}-nav .#{$tabs-prefix-cls}-nav-wrap {
+    display: flex;
+    justify-content: center;
+  }
+
+  // ─── Tab Item ─────────────────────────────────────────────────────────────────
+  &-tab {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    padding: $spacing-sm 0;
+    margin: 0 $spacing-xl 0 0;
+    color: $text-color;
+    font-size: $font-size-md;
+    background: transparent;
+    border: 0;
+    outline: none;
+    cursor: pointer;
+    transition: color $transition-base;
+
+    &:hover {
+      color: var(--#{$prefix}-primary-color-hover, color-mix(in srgb, $primary-color 80%, white));
+    }
+
+    &-active {
+      color: $primary-color;
+      font-weight: 600;
+    }
+
+    &-disabled {
+      color: $text-color-tertiary;
+      cursor: not-allowed;
+      &:hover {
+        color: $text-color-tertiary;
+      }
+    }
+
+    &-icon-wrapper {
+      display: flex;
+      align-items: center;
+      gap: $spacing-sm;
+    }
+  }
+
+  // ─── Ink Bar ──────────────────────────────────────────────────────────────────
+  &-ink-bar {
+    position: absolute;
+    background: $primary-color;
+    pointer-events: none;
+    transition:
+      width $transition-base,
+      left $transition-base,
+      right $transition-base;
+  }
+
+  &-top > .#{$tabs-prefix-cls}-nav .#{$tabs-prefix-cls}-ink-bar,
+  &-bottom > .#{$tabs-prefix-cls}-nav .#{$tabs-prefix-cls}-ink-bar {
+    height: 2px;
+    bottom: 0;
+  }
+
+  // ─── Sizes ────────────────────────────────────────────────────────────────────
+  &-sm {
+    .#{$tabs-prefix-cls}-tab {
+      padding: $spacing-sm 0;
+      font-size: $font-size-sm;
+    }
+  }
+
+  &-lg {
+    .#{$tabs-prefix-cls}-tab {
+      padding: $spacing-md 0;
+      font-size: $font-size-lg;
+    }
+  }
+
+  // ─── Content ──────────────────────────────────────────────────────────────────
+  &-content {
+    display: flex;
+    width: 100%;
+  }
+
+  &-content-holder {
+    flex: auto;
+    min-width: 0;
+    min-height: 0;
+  }
+
+  &-tabpane {
+    flex: none;
+    width: 100%;
+    outline: none;
+
+    &-hidden {
+      display: none;
+    }
+  }
+}
+
+// ─── Card Type ────────────────────────────────────────────────────────────────
+.#{$tabs-prefix-cls}-card {
+  > .#{$tabs-prefix-cls}-nav {
+    margin-bottom: 0;
+
+    &::before {
+      display: block;
+      border-bottom: 1px solid var(--#{$prefix}-color-border-secondary, rgba(0, 0, 0, 0.06));
+    }
+
+    .#{$tabs-prefix-cls}-tab {
+      position: relative;
+      top: 1px;
+      margin: 0 $spacing-xxs 0 0;
+      padding: $spacing-xs $spacing-md;
+      background: var(--#{$prefix}-color-fill-quaternary, rgba(0, 0, 0, 0.02));
+      border: 1px solid var(--#{$prefix}-color-border-secondary, rgba(0, 0, 0, 0.06));
+      border-bottom: 1px solid var(--#{$prefix}-color-border-secondary, rgba(0, 0, 0, 0.06));
+      border-radius: $border-radius-base $border-radius-base 0 0;
+      transition: all $transition-base;
+
+      &-active {
+        color: $primary-color;
+        background: $bg-container;
+        border-bottom-color: $bg-container;
+      }
+    }
+
+    .#{$tabs-prefix-cls}-ink-bar {
+      visibility: hidden;
+    }
+  }
+
+  > .#{$tabs-prefix-cls}-content-holder {
+    padding-top: $spacing-md;
+  }
+}
+
+// ─── Editable Card Type ───────────────────────────────────────────────────────
+.#{$tabs-prefix-cls}-editable-card {
+  @extend .#{$tabs-prefix-cls}-card;
+
+  > .#{$tabs-prefix-cls}-nav {
+    .#{$tabs-prefix-cls}-tab {
+      padding-right: $spacing-sm;
+    }
+
+    .#{$tabs-prefix-cls}-tab-remove {
+      margin-left: $spacing-md;
+      color: $text-color-tertiary;
+      font-size: $font-size-md;
+      cursor: pointer;
+      transition: all $transition-base;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      // Reset button styles
+      background: transparent;
+      border: none;
+      padding: 0;
+      outline: none;
+
+      &:hover {
+        color: $text-color;
+      }
+    }
+
+    .#{$tabs-prefix-cls}-nav-add {
+      position: relative;
+      top: 1px;
+      min-width: 40px;
+      margin-left: $spacing-xxs;
+      padding: $spacing-xs $spacing-md;
+      background: var(--#{$prefix}-color-fill-quaternary, rgba(0, 0, 0, 0.02));
+      border: 1px solid var(--#{$prefix}-color-border-secondary, rgba(0, 0, 0, 0.06));
+      border-radius: $border-radius-base $border-radius-base 0 0;
+      cursor: pointer;
+      transition: all $transition-base;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: $text-color-secondary;
+      outline: none;
+
+      &:hover {
+        color: $primary-color;
+        background: $bg-container;
+      }
+    }
+  }
+
+  .#{$tabs-prefix-cls}-nav-operations {
+    display: flex;
+    .#{$tabs-prefix-cls}-nav-add {
+      display: none; // Hide duplicated add button in operations
+    }
+    .#{$tabs-prefix-cls}-nav-more {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0 $spacing-md;
+    }
+  }
+}

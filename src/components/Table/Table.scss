@@ -1,0 +1,373 @@
+@use "../../styles/_variables.scss" as *;
+
+// --- Table Design Tokens ---
+// Fallback defaults — ConfigProvider overrides all of these via inline CSS vars.
+// Variable names match flattenThemeToCssVars output so they are always in sync:
+//   Table.headerBg      → --fi-table-header-bg
+//   Table.colorBg       → --fi-table-color-bg
+//   Table.colorRowHover → --fi-table-color-row-hover
+//   Table.colorFixedHover → --fi-table-color-fixed-hover
+//   Table.colorBorder   → --fi-table-color-border
+:root {
+  --#{$prefix}-table-header-bg: var(--#{$prefix}-color-bg-layout);
+  --#{$prefix}-table-color-bg: var(--#{$prefix}-color-bg-container);
+  --#{$prefix}-table-color-row-hover: var(--#{$prefix}-color-bg-layout);
+  --#{$prefix}-table-color-fixed-hover: var(--#{$prefix}-color-bg-layout);
+  --#{$prefix}-table-color-border: var(--#{$prefix}-color-border-secondary);
+}
+
+.#{$prefix}-table {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: $text-color;
+  font-size: $font-size-md;
+  font-family: $font-family;
+  line-height: $line-height;
+  list-style: none;
+  background: $bg-container;
+  border-radius: $border-radius-base;
+  position: relative;
+
+  &-wrapper {
+    position: relative;
+    clear: both;
+    max-width: 100%;
+  }
+
+  table {
+    width: 100%;
+    text-align: left;
+    border-radius: $border-radius-base $border-radius-base 0 0;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  &-layout-fixed table {
+    table-layout: fixed;
+  }
+
+  &-thead > tr > th {
+    box-sizing: border-box;
+    position: relative;
+    color: $text-color;
+    font-weight: 600;
+    text-align: left;
+    background: var(--#{$prefix}-table-header-bg);
+    border-bottom: 1px solid var(--#{$prefix}-table-color-border, #{$border-color-secondary});
+    transition: background $transition-base;
+    padding: $padding-inline-md;
+
+    &:first-child {
+      border-top-left-radius: $border-radius-base;
+    }
+
+    &:last-child {
+      border-top-right-radius: $border-radius-base;
+    }
+  }
+
+  &-tbody > tr {
+    transition: background $transition-base;
+
+    > td {
+      box-sizing: border-box;
+      border-bottom: 1px solid var(--#{$prefix}-table-color-border, #{$border-color-secondary});
+      transition: background $transition-base;
+      padding: $padding-inline-md;
+      word-break: break-word;
+    }
+
+    &:hover > td {
+      background: var(--#{$prefix}-table-color-row-hover);
+    }
+
+    &:last-child > td {
+      &:first-child {
+        border-bottom-left-radius: $border-radius-base;
+      }
+      &:last-child {
+        border-bottom-right-radius: $border-radius-base;
+      }
+    }
+  }
+
+  // Hide the measure row used by rc-table for fixed columns calculation
+  &-measure-row {
+    visibility: hidden;
+    height: 0;
+    font-size: 0;
+    line-height: 0;
+
+    > td {
+      padding: 0 !important;
+      border: 0 !important;
+      height: 0 !important;
+    }
+  }
+
+  // --- Fixed Columns ---
+  // rc-component/table uses -fix-start (left) and -fix-end (right)
+  // background-color !important is required: fixed cells must be opaque to cover
+  // scrolling content behind them. Any semi-transparent bg would show through.
+  &-cell-fix-start,
+  &-cell-fix-end {
+    position: sticky !important;
+    z-index: 2;
+    background-color: var(--#{$prefix}-table-color-bg) !important;
+  }
+
+  &-thead > tr > th {
+    &.#{$prefix}-table-cell-fix-start,
+    &.#{$prefix}-table-cell-fix-end {
+      background-color: var(--#{$prefix}-table-header-bg) !important;
+      z-index: 3;
+    }
+  }
+
+  // On hover, fixed body cells need a solid (opaque) hover color — never transparent
+  &-tbody > tr:hover > td {
+    &.#{$prefix}-table-cell-fix-start,
+    &.#{$prefix}-table-cell-fix-end {
+      background-color: var(--#{$prefix}-table-color-fixed-hover) !important;
+    }
+  }
+
+  // Shadow pseudo-element — always positioned, shadow only when -show class is active
+  &-cell-fix-start-shadow::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: -1px;
+    width: 30px;
+    transform: translateX(100%);
+    transition: box-shadow $transition-base;
+    content: "";
+    pointer-events: none;
+  }
+
+  &-cell-fix-end-shadow::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: -1px;
+    width: 30px;
+    transform: translateX(-100%);
+    transition: box-shadow $transition-base;
+    content: "";
+    pointer-events: none;
+  }
+
+  // rc-table adds -shadow-show dynamically when the table is scrolled
+  &-cell-fix-start-shadow-show::after {
+    box-shadow: inset 10px 0 8px -8px var(--#{$prefix}-color-border-secondary, rgba(0, 0, 0, 0.15));
+  }
+
+  &-cell-fix-end-shadow-show::after {
+    box-shadow: inset -10px 0 8px -8px var(--#{$prefix}-color-border-secondary, rgba(0, 0, 0, 0.15));
+  }
+
+  // --- Variants ---
+  &-bordered {
+    border: 1px solid var(--#{$prefix}-table-color-border, #{$border-color-secondary});
+    border-radius: $border-radius-base;
+
+    .#{$prefix}-table-container {
+      border-left: 1px solid var(--#{$prefix}-table-color-border, #{$border-color-secondary});
+    }
+
+    table {
+      border-top: 1px solid var(--#{$prefix}-table-color-border, #{$border-color-secondary});
+    }
+
+    .#{$prefix}-table-thead > tr > th,
+    .#{$prefix}-table-tbody > tr > td {
+      border-right: 1px solid var(--#{$prefix}-table-color-border, #{$border-color-secondary});
+    }
+  }
+
+  &-striped {
+    .#{$prefix}-table-tbody > tr:nth-child(even) > td {
+      background: color-mix(in srgb, $text-color 2%, $bg-container);
+    }
+  }
+
+  // --- Sizes ---
+  &-small {
+    .#{$prefix}-table-thead > tr > th,
+    .#{$prefix}-table-tbody > tr > td {
+      padding: $padding-inline-sm;
+    }
+  }
+
+  &-large {
+    .#{$prefix}-table-thead > tr > th,
+    .#{$prefix}-table-tbody > tr > td {
+      padding: $padding-inline-lg $padding-inline-md;
+    }
+  }
+
+  // --- Loading State ---
+  &-loading {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  // --- Pagination Container ---
+  &-pagination-container {
+    margin-top: $spacing-md;
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.#{$prefix}-table-container {
+  position: relative;
+  overflow-x: auto;
+
+  // rc-table renders these divs when scroll.y is set
+  .#{$prefix}-table-header {
+    overflow: hidden;
+  }
+
+  .#{$prefix}-table-body {
+    overflow-x: auto;
+    overflow-y: auto;
+  }
+}
+
+// --- Expandable rows ---
+.#{$prefix}-table {
+  // Hide default expand icon column when using custom expand
+  &-row-expand-icon {
+    display: none;
+  }
+
+  &-expand-icon-col,
+  &-row-expand-icon-cell {
+    display: none;
+  }
+
+  // Expand arrow — CSS chevron (same technique as fi-menu-submenu-arrow)
+  // 2 states only: DOWN ▾ (collapsed) ↔ UP ▴ (expanded)
+  &-expand-arrow {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    color: var(--#{$prefix}-color-text-quaternary, #{$text-color-quaternary});
+    transition: color $transition-fast;
+
+    &:hover {
+      color: var(--#{$prefix}-primary-color, #{$primary-color});
+    }
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      width: 5px;
+      height: 1.5px;
+      /* stylelint-disable-next-line scale-unlimited/declaration-strict-value */
+      background-color: currentColor;
+      border-radius: $border-radius-base;
+      transition:
+        background-color $transition-slow,
+        transform $transition-slow,
+        top $transition-slow,
+        color $transition-slow;
+    }
+
+    // Default: DOWN ▾
+    &::before {
+      transform: rotate(-45deg) translateX(2.5px);
+    }
+
+    &::after {
+      transform: rotate(45deg) translateX(-2.5px);
+    }
+
+    // Expanded: UP ▴
+    &-expanded::before {
+      transform: rotate(45deg) translateX(2.5px);
+    }
+
+    &-expanded::after {
+      transform: rotate(-45deg) translateX(-2.5px);
+    }
+  }
+
+  // Expanded row content — height animation via CSS grid (0fr ↔ 1fr)
+  // All expanded rows stay in DOM; visual state toggled via -open class + transition.
+  &-expanded-row {
+    > td {
+      padding: 0 !important;
+    }
+  }
+
+  &-expand-content {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows $transition-fast;
+
+    &-open {
+      grid-template-rows: 1fr;
+    }
+
+    &-inner {
+      overflow: hidden;
+      min-height: 0;
+      background: var(--#{$prefix}-color-bg-layout, #{$bg-layout});
+      opacity: 0;
+      transition: opacity $transition-fast;
+
+      > * {
+        padding: $spacing-md $spacing-lg;
+        margin: 0;
+        overflow-x: auto;
+
+        // Custom thin scrollbar
+        &::-webkit-scrollbar {
+          height: 6px;
+        }
+
+        &::-webkit-scrollbar-track {
+          background: var(--#{$prefix}-color-bg-layout, #{$bg-layout});
+          border-radius: $border-radius-sm;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: var(--#{$prefix}-color-border-secondary, #{$border-color-secondary});
+          border-radius: $border-radius-sm;
+
+          &:hover {
+            background: var(--#{$prefix}-color-border, #{$border-color});
+          }
+        }
+
+        scrollbar-width: thin;
+        scrollbar-color: var(--#{$prefix}-color-border-secondary, #{$border-color-secondary})
+          var(--#{$prefix}-color-bg-layout, #{$bg-layout});
+      }
+    }
+
+    &-open > &-inner {
+      opacity: 1;
+    }
+  }
+}
+
+// Scoped under wrapper for specificity
+.#{$prefix}-table-wrapper {
+  // rc-table adds -shadow-show class dynamically when fixed columns have scrollable content behind them
+  .#{$prefix}-table-cell-fix-start-shadow-show::after {
+    box-shadow: inset 10px 0 8px -8px var(--#{$prefix}-color-border-secondary, rgba(0, 0, 0, 0.15));
+  }
+
+  .#{$prefix}-table-cell-fix-end-shadow-show::after {
+    box-shadow: inset -10px 0 8px -8px var(--#{$prefix}-color-border-secondary, rgba(0, 0, 0, 0.15));
+  }
+}

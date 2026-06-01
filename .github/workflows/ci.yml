@@ -1,0 +1,73 @@
+name: Fast-UI CI/CD Pipeline
+
+on:
+  push:
+    branches: ['main', 'master']
+  pull_request:
+    branches: ['main', 'master']
+
+jobs:
+  security:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Audit Dependencies (high severity)
+        run: pnpm audit --audit-level=high
+
+  verify:
+    name: Build & Test
+    runs-on: ubuntu-latest
+    needs: security
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Static Type Check
+        run: pnpm run typecheck
+
+      - name: Component Quality Gate
+        run: pnpm run validate
+
+      - name: Run Unit, A11y & SSR Tests
+        run: pnpm run test
+
+      - name: Build Library (ESM, CJS, DTS)
+        run: pnpm run build
+
+      - name: Bundle Size Governance
+        run: pnpm run size-check
+
+      - name: Build Storybook Documentation
+        run: pnpm run build-storybook

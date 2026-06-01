@@ -1,0 +1,190 @@
+@use "../../styles/variables" as *;
+
+// Sizes
+$spin-size-sm: var(--#{$prefix}-spin-size-sm, 14px);
+$spin-size-md: var(--#{$prefix}-spin-size-md, 20px);
+$spin-size-lg: var(--#{$prefix}-spin-size-lg, 32px);
+
+@keyframes #{$prefix}-spin-rotate {
+  to {
+    transform: rotate(405deg);
+  }
+}
+
+@keyframes #{$prefix}-spin-comet {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes #{$prefix}-spin-move {
+  to {
+    opacity: 1;
+  }
+}
+
+.#{$prefix}-spin {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  color: $primary-color;
+  font-size: $font-size-md;
+  font-family: $font-family;
+
+  // ── Default dot spinner ──────────────────────────────────────────────────
+  &-dot {
+    position: relative;
+    display: inline-block;
+    width: $spin-size-md;
+    height: $spin-size-md;
+
+    &-item {
+      position: absolute;
+      display: block;
+      width: 45%;
+      height: 45%;
+      background-color: $primary-color;
+      border-radius: 50%;
+      transform: scale(0.75);
+      transform-origin: 50% 50%;
+      opacity: 0.3;
+      animation: #{$prefix}-spin-move 1s infinite linear alternate;
+
+      &:nth-child(1) {
+        top: 0;
+        left: 0;
+      }
+      &:nth-child(2) {
+        top: 0;
+        right: 0;
+        animation-delay: 0.4s;
+      }
+      &:nth-child(3) {
+        bottom: 0;
+        right: 0;
+        animation-delay: 0.8s;
+      }
+      &:nth-child(4) {
+        bottom: 0;
+        left: 0;
+        animation-delay: 1.2s;
+      }
+    }
+
+    &-spin {
+      transform: rotate(45deg);
+      animation: #{$prefix}-spin-rotate 1.2s infinite linear;
+    }
+  }
+
+  // ── Label below spinner ──────────────────────────────────────────────────
+  &-text {
+    margin-top: $spacing-sm;
+    color: $primary-color;
+    font-size: $font-size-md;
+  }
+
+  // ── Comet spinner ────────────────────────────────────────────────────────
+  &-comet {
+    display: inline-block;
+    width: $spin-size-md;
+    height: $spin-size-md;
+    color: $primary-color;
+    animation: #{$prefix}-spin-comet 0.9s linear infinite;
+    overflow: visible;
+  }
+
+  // ── Sizes ────────────────────────────────────────────────────────────────
+  &-sm &-dot {
+    width: $spin-size-sm;
+    height: $spin-size-sm;
+  }
+  &-lg &-dot {
+    width: $spin-size-lg;
+    height: $spin-size-lg;
+  }
+  &-sm &-comet {
+    width: $spin-size-sm;
+    height: $spin-size-sm;
+  }
+  &-lg &-comet {
+    width: $spin-size-lg;
+    height: $spin-size-lg;
+  }
+
+  // ── Wrapper (nested loading) mode ────────────────────────────────────────
+  &-nested-loading {
+    position: relative;
+
+    // Spinner layer: centered over the content
+    > .#{$prefix}-spin {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 4;
+      max-height: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  &-container {
+    position: relative;
+    transition: opacity $transition-base;
+
+    &::after {
+      // Transparent overlay to block pointer events while spinning
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity $transition-base;
+    }
+  }
+
+  &-blur {
+    // Blur + dim content while loading
+    opacity: 0.5;
+    pointer-events: none;
+    user-select: none;
+
+    &::after {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
+  // ── Fullscreen mode ──────────────────────────────────────────────────────
+  &-fullscreen-container {
+    position: fixed;
+    inset: 0;
+    z-index: 1050;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: color-mix(
+      in srgb,
+      $bg-container 45%,
+      transparent
+    ); // Semi-transparent overlay
+    backdrop-filter: blur(2px);
+  }
+
+  &-fullscreen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}

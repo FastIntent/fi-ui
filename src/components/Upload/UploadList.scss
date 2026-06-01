@@ -1,0 +1,155 @@
+@use "../../styles/variables" as *;
+
+// ── Text / Picture list ──────────────────────────────────────────────────────
+.#{$prefix}-upload-list-text,
+.#{$prefix}-upload-list-picture {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xxs;
+  margin-top: $spacing-sm;
+
+  .#{$prefix}-upload-list-item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-xs 0;
+    min-height: 28px;
+    border-radius: $border-radius-base;
+    transition: background $transition-fast;
+
+    &:hover {
+      background: var(--#{$prefix}-color-fill-quaternary, rgba(0, 0, 0, 0.04));
+    }
+
+    &-error {
+      .#{$prefix}-upload-list-item-name,
+      .#{$prefix}-upload-list-item-icon {
+        color: var(--#{$prefix}-error-color, #ff4d4f);
+      }
+    }
+
+    &-icon {
+      flex-shrink: 0;
+      font-size: $font-size-md;
+      color: var(--#{$prefix}-primary-color, #006aff);
+      display: flex;
+      align-items: center;
+    }
+
+    &-name {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: $font-size-md;
+      color: var(--#{$prefix}-primary-color, #006aff);
+      cursor: default;
+    }
+
+    &-remove {
+      flex-shrink: 0;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: $spacing-xxs $spacing-xs;
+      font-size: $font-size-md;
+      color: var(--#{$prefix}-color-text-secondary, #666);
+      display: flex;
+      align-items: center;
+      transition: color $transition-fast;
+
+      &:hover {
+        color: var(--#{$prefix}-error-color, #ff4d4f);
+      }
+    }
+  }
+}
+
+// ── Picture-card / Picture-circle list ───────────────────────────────────────
+.#{$prefix}-upload-list-picture-card,
+.#{$prefix}-upload-list-picture-circle {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+  margin-top: $spacing-sm;
+
+  .#{$prefix}-upload-list-item {
+    position: relative;
+    width: 104px;
+    height: 104px;
+    padding: $spacing-sm;
+    border: 1px solid var(--#{$prefix}-color-border, #d9d9d9);
+    border-radius: var(--#{$prefix}-border-radius-lg, 8px);
+    overflow: hidden;
+    background: var(--#{$prefix}-color-bg-container, #fff);
+    transition: border-color $transition-fast;
+
+    &:hover {
+      border-color: var(--#{$prefix}-color-primary, #1890ff);
+
+      .#{$prefix}-upload-list-item-actions {
+        opacity: 1;
+      }
+    }
+
+    &-info {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &-thumbnail {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    &-file-icon {
+      font-size: $font-size-heading-1;
+    }
+
+    &-actions {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: $bg-mask;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity $transition-base;
+    }
+
+    &-remove {
+      background: transparent;
+      border: none;
+      color: $text-color-light-solid;
+      cursor: pointer;
+      font-size: $font-size-lg;
+      padding: $spacing-xs;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        color: var(--#{$prefix}-color-error, #ff4d4f);
+      }
+    }
+  }
+}
+
+.#{$prefix}-upload-list-picture-circle {
+  .#{$prefix}-upload-list-item {
+    border-radius: 50%;
+  }
+}
+
+// Layout for picture-card inside Upload container
+.#{$prefix}-upload-picture-card {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+}

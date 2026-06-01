@@ -1,0 +1,176 @@
+/* Design tokens as SCSS variables mapping to CSS variables */
+$prefix: "fi" !default;
+
+$primary-color: var(--#{$prefix}-primary-color);
+$primary-color-hover: var(--#{$prefix}-primary-color-hover);
+$primary-color-active: var(--#{$prefix}-primary-color-active);
+$primary-color-outline: var(--#{$prefix}-primary-color-outline);
+
+$success-color: var(--#{$prefix}-success-color);
+$warning-color: var(--#{$prefix}-warning-color);
+$warning-color-outline: var(--#{$prefix}-warning-color-outline);
+$error-color: var(--#{$prefix}-error-color);
+$error-color-hover: var(--#{$prefix}-error-color-hover);
+$error-color-active: var(--#{$prefix}-error-color-active);
+$error-color-outline: var(--#{$prefix}-error-color-outline);
+$info-color: var(--#{$prefix}-info-color);
+
+$font-family: var(--#{$prefix}-font-family);
+$font-size-base: var(--#{$prefix}-font-size);
+$font-size-sm: var(--#{$prefix}-font-size-sm, 12px);
+$font-size-md: var(--#{$prefix}-font-size-md, 14px);
+$font-size-lg: var(--#{$prefix}-font-size-lg, 16px);
+$line-height: var(--#{$prefix}-line-height);
+
+$border-radius-base: var(--#{$prefix}-border-radius);
+$border-radius-sm: var(--#{$prefix}-border-radius-sm);
+$border-radius-lg: var(--#{$prefix}-border-radius-lg);
+$border-radius-card: var(--#{$prefix}-border-radius-card);
+
+/* Elevation & Shadows */
+$shadow-sm: var(--#{$prefix}-shadow-sm);
+$shadow-md: var(--#{$prefix}-shadow-md);
+$shadow-lg: var(--#{$prefix}-shadow-lg);
+$shadow-xl: var(--#{$prefix}-shadow-xl);
+$shadow-popup: var(--#{$prefix}-shadow-popup);
+
+/* Transitions */
+$transition-fast: var(--#{$prefix}-transition-fast);
+$transition-base: var(--#{$prefix}-transition-base);
+$transition-slow: var(--#{$prefix}-transition-slow);
+$transition-bounce: var(--#{$prefix}-transition-bounce);
+
+/* Control Sizes */
+$control-height-sm: var(--#{$prefix}-control-height-sm);
+$control-height-md: var(--#{$prefix}-control-height-md);
+$control-height-lg: var(--#{$prefix}-control-height-lg);
+
+$padding-inline-sm: var(--#{$prefix}-padding-inline-sm);
+$padding-inline-md: var(--#{$prefix}-padding-inline-md);
+$padding-inline-lg: var(--#{$prefix}-padding-inline-lg);
+$control-padding-horizontal: var(--#{$prefix}-control-padding-horizontal);
+
+/* Wave config */
+$wave-opacity: var(--#{$prefix}-wave-opacity);
+$wave-spread: var(--#{$prefix}-wave-spread);
+$wave-duration: var(--#{$prefix}-wave-duration);
+
+$text-color: var(--#{$prefix}-color-text);
+$text-color-secondary: var(--#{$prefix}-color-text-secondary);
+$text-color-tertiary: var(--#{$prefix}-color-text-tertiary);
+$text-color-quaternary: var(--#{$prefix}-color-text-quaternary);
+$text-color-heading: var(--#{$prefix}-color-text-heading, #1a1a1a);
+$text-color-disabled: var(--#{$prefix}-color-text-disabled);
+$text-color-placeholder: var(--#{$prefix}-color-text-placeholder);
+$text-color-light-solid: var(--#{$prefix}-color-text-light-solid);
+
+$color-icon: var(--#{$prefix}-color-icon);
+$color-icon-hover: var(--#{$prefix}-color-icon-hover);
+
+$border-color: var(--#{$prefix}-color-border);
+$border-color-secondary: var(--#{$prefix}-color-border-secondary);
+
+$bg-layout: var(--#{$prefix}-color-bg-layout);
+$bg-container: var(--#{$prefix}-color-bg-container);
+$bg-elevated: var(--#{$prefix}-color-bg-elevated);
+$bg-mask: var(--#{$prefix}-color-bg-mask);
+
+$color-fill: var(--#{$prefix}-color-fill);
+$fill-secondary: var(--#{$prefix}-color-fill-secondary);
+$fill-tertiary: var(--#{$prefix}-color-fill-tertiary);
+$fill-quaternary: var(--#{$prefix}-color-fill-quaternary);
+$fill-alter: var(--#{$prefix}-color-fill-alter);
+$fill-content: var(--#{$prefix}-color-fill-content);
+$fill-content-hover: var(--#{$prefix}-color-fill-content-hover);
+
+/* Status Variant Tokens */
+$color-primary-bg: var(--#{$prefix}-color-primary-bg);
+$color-primary-border: var(--#{$prefix}-color-primary-border);
+$color-success-bg: var(--#{$prefix}-color-success-bg);
+$color-success-border: var(--#{$prefix}-color-success-border);
+$color-success-text: var(--#{$prefix}-color-success-text);
+$color-warning-bg: var(--#{$prefix}-color-warning-bg);
+$color-warning-border: var(--#{$prefix}-color-warning-border);
+$color-warning-text: var(--#{$prefix}-color-warning-text);
+$color-error-bg: var(--#{$prefix}-color-error-bg);
+$color-error-border: var(--#{$prefix}-color-error-border);
+$color-error-text: var(--#{$prefix}-color-error-text);
+$color-info-bg: var(--#{$prefix}-color-info-bg);
+$color-info-border: var(--#{$prefix}-color-info-border);
+
+/* Control Interactive */
+$control-item-bg-hover: var(--#{$prefix}-control-item-bg-hover);
+$control-item-bg-active: var(--#{$prefix}-control-item-bg-active);
+$control-interactive-size: var(--#{$prefix}-control-interactive-size);
+
+/* Semantic Aliases for Enterprise Components */
+$component-background: $bg-container;
+$border-color-base: $border-color;
+$border-color-split: $border-color-secondary;
+$disabled-color: $text-color-disabled;
+$disabled-bg: $bg-layout;
+$background-color-light: $bg-layout;
+$heading-color: $text-color-heading;
+
+/* Typography Extended */
+$font-size-xl: var(--#{$prefix}-font-size-xl);
+$font-size-heading-1: var(--#{$prefix}-font-size-heading-1);
+$font-size-heading-2: var(--#{$prefix}-font-size-heading-2);
+$font-size-heading-3: var(--#{$prefix}-font-size-heading-3);
+$font-size-heading-4: var(--#{$prefix}-font-size-heading-4);
+$font-size-heading-5: var(--#{$prefix}-font-size-heading-5);
+$font-size-icon: var(--#{$prefix}-font-size-icon);
+$font-weight-strong: var(--#{$prefix}-font-weight-strong);
+$font-family-code: var(--#{$prefix}-font-family-code);
+
+/* Spacing — always reference CSS vars, never hardcode px here */
+$spacing-xxs: var(--#{$prefix}-spacing-xxs);
+$spacing-xs: var(--#{$prefix}-spacing-xs);
+$spacing-sm: var(--#{$prefix}-spacing-sm);
+$spacing-md: var(--#{$prefix}-spacing-md);
+$spacing-lg: var(--#{$prefix}-spacing-lg);
+$spacing-xl: var(--#{$prefix}-spacing-xl);
+
+/* Margin Scale */
+$margin-xxs: var(--#{$prefix}-margin-xxs);
+$margin-xs: var(--#{$prefix}-margin-xs);
+$margin-sm: var(--#{$prefix}-margin-sm);
+$margin-md: var(--#{$prefix}-margin-md);
+$margin-lg: var(--#{$prefix}-margin-lg);
+$margin-xl: var(--#{$prefix}-margin-xl);
+$margin-xxl: var(--#{$prefix}-margin-xxl);
+
+/* Padding block (vertical) per size tier */
+$padding-block-sm: var(--#{$prefix}-padding-block-sm);
+$padding-block-md: var(--#{$prefix}-padding-block-md);
+$padding-block-lg: var(--#{$prefix}-padding-block-lg);
+$dropdown-padding-block: var(--#{$prefix}-dropdown-padding-block);
+$select-multiple-item-height: var(--#{$prefix}-select-multiple-item-height);
+$select-multiple-item-height-sm: var(--#{$prefix}-select-multiple-item-height-sm);
+$select-multiple-item-height-lg: var(--#{$prefix}-select-multiple-item-height-lg);
+
+/* Border */
+$border-width: var(--#{$prefix}-border-width);
+$border-width-bold: var(--#{$prefix}-border-width-bold);
+$border-width-focus: var(--#{$prefix}-border-width-focus);
+$border-style: var(--#{$prefix}-border-style);
+$border-radius-xs: var(--#{$prefix}-border-radius-xs);
+
+/* Line height per size tier */
+$line-height-sm: var(--#{$prefix}-line-height-sm);
+$line-height-lg: var(--#{$prefix}-line-height-lg);
+
+/* Mixins */
+@mixin focus-outline {
+  outline: 2px solid $primary-color-outline;
+  outline-offset: 2px;
+}
+
+@mixin premium-shadow {
+  transition: box-shadow $transition-base;
+  box-shadow: $shadow-sm;
+
+  &:hover {
+    box-shadow: $shadow-md;
+  }
+}

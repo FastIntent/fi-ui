@@ -1,0 +1,93 @@
+@use "sass:math";
+@use "../../styles/variables" as *;
+
+$skeleton-prefix-cls: "#{$prefix}-skeleton";
+$skeleton-bg: rgba(0, 0, 0, 0.06);
+
+.#{$skeleton-prefix-cls} {
+  display: block;
+  background-color: $skeleton-bg;
+  height: 1.2em;
+  margin-bottom: $spacing-sm;
+  box-sizing: border-box;
+
+  // Variants
+  &-text {
+    width: 100%;
+    height: 1em;
+    margin-top: 0;
+    margin-bottom: 0;
+    border-radius: $border-radius-sm;
+
+    &:empty::before {
+      content: "\00a0";
+    }
+  }
+
+  &-circular {
+    border-radius: 50%;
+  }
+
+  &-rectangular {
+    border-radius: 0;
+  }
+
+  &-rounded {
+    border-radius: $border-radius-base;
+  }
+
+  // Animations
+  &-animation-pulse {
+    animation: fiSkeletonPulse 1.5s ease-in-out infinite;
+  }
+
+  &-animation-wave {
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      content: "";
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+      animation: fiSkeletonWave 1.6s linear infinite;
+      transform: translateX(-100%);
+    }
+  }
+}
+
+@keyframes fiSkeletonPulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fiSkeletonWave {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+// Dark Mode Support
+[data-theme="dark"] .#{$skeleton-prefix-cls} {
+  background-color: $fill-secondary;
+
+  &::after {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+  }
+}

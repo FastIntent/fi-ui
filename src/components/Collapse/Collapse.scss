@@ -1,0 +1,200 @@
+@use "../../styles/_variables.scss" as *;
+
+$collapse-prefix: "#{$prefix}-collapse";
+
+.#{$collapse-prefix} {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  font-family: $font-family;
+  font-size: $font-size-md;
+  color: var(--#{$prefix}-color-text, rgba(0, 0, 0, 0.88));
+  background-color: var(--#{$prefix}-color-bg-container, #ffffff);
+  border: 1px solid var(--#{$prefix}-color-border, #d9d9d9);
+  border-bottom: 0;
+  border-radius: $border-radius-base;
+
+  &-borderless {
+    background-color: transparent;
+    border: 0;
+
+    > .#{$collapse-prefix}-item:last-child {
+      border-bottom: 0;
+    }
+  }
+
+  // --- Sizes ---
+  &-small {
+    > .#{$collapse-prefix}-item {
+      > .#{$collapse-prefix}-header {
+        padding: $spacing-sm $spacing-sm;
+        .#{$collapse-prefix}-expand-icon {
+          margin-right: $spacing-sm; // Simetría con el padding izquierdo (12px)
+        }
+      }
+      > .#{$collapse-prefix}-panel > .#{$collapse-prefix}-body {
+        padding-left: calc(#{$spacing-sm} * 2 + #{$font-size-md}); // padding + icon + padding
+      }
+    }
+  }
+
+  &-large {
+    font-size: $font-size-lg;
+    > .#{$collapse-prefix}-item {
+      > .#{$collapse-prefix}-header {
+        padding: $spacing-md $spacing-lg;
+        .#{$collapse-prefix}-expand-icon {
+          margin-right: $spacing-lg; // Simetría con el padding izquierdo (20px)
+        }
+      }
+      > .#{$collapse-prefix}-panel > .#{$collapse-prefix}-body {
+        padding-left: calc(#{$spacing-lg} + #{$spacing-xl}); // padding + icon + padding
+      }
+    }
+  }
+
+  &-item {
+    border-bottom: 1px solid var(--#{$prefix}-color-border, #d9d9d9);
+
+    &:last-child {
+      &,
+      > .#{$collapse-prefix}-header {
+        border-radius: 0 0 $border-radius-base $border-radius-base;
+      }
+    }
+
+    &-active {
+      > .#{$collapse-prefix}-header {
+        .#{$collapse-prefix}-expand-icon svg {
+          transform: rotate(90deg);
+        }
+      }
+      &:last-child {
+        > .#{$collapse-prefix}-header {
+          border-radius: 0;
+        }
+        > .#{$collapse-prefix}-panel {
+          border-radius: 0 0 $border-radius-base $border-radius-base;
+        }
+      }
+    }
+  }
+
+  &-header {
+    position: relative;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    padding: $spacing-sm $spacing-md;
+    color: var(--#{$prefix}-color-text, rgba(0, 0, 0, 0.88));
+    line-height: $line-height;
+    cursor: pointer;
+    transition: all $transition-base;
+    background-color: var(--#{$prefix}-color-fill-alter, rgba(0, 0, 0, 0.02));
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &-title {
+    flex: auto;
+  }
+
+  &-expand-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: $spacing-md; // Simetría con el padding izquierdo por defecto (Medium: 16px)
+    padding-top: $spacing-xxs; // Optical alignment with text
+
+    svg {
+      transition: transform $transition-fast;
+    }
+
+    &-active {
+      svg {
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+  &-icon-position-end {
+    .#{$collapse-prefix}-header {
+      flex-direction: row-reverse;
+      justify-content: space-between;
+
+      .#{$collapse-prefix}-expand-icon {
+        margin-right: 0 !important; // Anula el margen derecho en todos los tamaños
+        margin-left: $spacing-md; // Simetría por defecto
+      }
+    }
+
+    &.#{$collapse-prefix}-small .#{$collapse-prefix}-header .#{$collapse-prefix}-expand-icon {
+      margin-left: $spacing-sm;
+    }
+
+    &.#{$collapse-prefix}-large .#{$collapse-prefix}-header .#{$collapse-prefix}-expand-icon {
+      margin-left: $spacing-lg;
+    }
+
+    > .#{$collapse-prefix}-item {
+      > .#{$collapse-prefix}-panel > .#{$collapse-prefix}-body {
+        padding-left: $spacing-md; // Restaura padding en IconPositionEnd
+      }
+    }
+  }
+
+  &-panel {
+    color: var(--#{$prefix}-color-text, rgba(0, 0, 0, 0.88));
+    background-color: var(--#{$prefix}-color-bg-container, #ffffff);
+    border-top: 1px solid var(--#{$prefix}-color-border, #d9d9d9);
+  }
+
+  &-body {
+    padding: $spacing-md $spacing-md $spacing-md calc(#{$spacing-md} * 2 + #{$font-size-md}); // padding + icon + padding
+  }
+
+  &-panel-hidden {
+    display: none;
+  }
+
+  // --- Ghost Mode ---
+  &-ghost {
+    background-color: transparent;
+    border: 0;
+
+    > .#{$collapse-prefix}-item {
+      border-bottom: 0;
+      > .#{$collapse-prefix}-panel {
+        background-color: transparent;
+        border: 0;
+      }
+      > .#{$collapse-prefix}-header {
+        background-color: transparent;
+      }
+    }
+  }
+
+  // --- Extra (Right side content in header) ---
+  &-extra {
+    margin-left: auto;
+  }
+
+  // --- Motion Classes (managed by rc-motion) ---
+  &-motion-hidden {
+    display: none;
+  }
+
+  &-motion-enter,
+  &-motion-leave {
+    overflow: hidden;
+  }
+
+  &-motion-enter-active,
+  &-motion-leave-active {
+    overflow: hidden;
+    transition: height $transition-fast !important;
+  }
+}

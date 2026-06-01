@@ -1,0 +1,584 @@
+@use "sass:math";
+@use "../../styles/_variables.scss" as *;
+
+// Root Menu Setup
+.#{$prefix}-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  z-index: 1050;
+  background: transparent;
+
+  // Icon and label layout (used by MenuItem/SubMenu wrappers)
+  &-item-icon {
+    display: inline-flex;
+    align-items: center;
+    margin-inline-end: $spacing-sm;
+    font-size: $font-size-lg;
+    flex-shrink: 0;
+    color: $color-icon;
+    transition: color $transition-fast;
+  }
+
+  &-item-label {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  // Root-only aesthetics
+  &-root {
+    background: transparent;
+    padding: $spacing-xs;
+    overflow: hidden;
+  }
+
+  // Shared Item/Title styles ('Pill' Design)
+  &-item,
+  &-submenu-title {
+    display: flex;
+    align-items: center;
+    position: relative; // Required to anchor absolute icons
+    min-height: 40px;
+    padding: 0 $spacing-lg;
+    color: var(--#{$prefix}-menu-color-item-text, #{$text-color});
+    cursor: pointer;
+    /* transition: all $transition-fast; */
+    border-radius: $border-radius-base;
+
+    // V5 Spacing constraints to create the pill hover effect within the popup wrapper
+    margin: $spacing-xs;
+    width: calc(100% - 8px);
+    box-sizing: border-box;
+
+    // Items use text-overflow gracefully
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &:hover,
+    &.#{$prefix}-menu-item-active,
+    &.#{$prefix}-menu-submenu-active {
+      color: var(--#{$prefix}-menu-color-item-text-selected, #{$primary-color});
+      background-color: var(--#{$prefix}-menu-color-item-bg-hover, #{$control-item-bg-hover});
+
+      .#{$prefix}-menu-item-icon {
+        color: inherit;
+      }
+    }
+
+    &.#{$prefix}-menu-item-selected,
+    &-selected {
+      font-weight: 600;
+      background-color: var(--#{$prefix}-menu-color-item-bg-selected, #{$control-item-bg-active});
+      color: var(--#{$prefix}-menu-color-item-text-selected, #{$primary-color});
+
+      .#{$prefix}-menu-item-icon {
+        color: inherit;
+      }
+    }
+
+    &-disabled {
+      color: var(--#{$prefix}-color-text-quaternary, #{$text-color-quaternary}) !important;
+      cursor: not-allowed;
+      background: transparent !important;
+
+      .#{$prefix}-menu-item-icon {
+        color: inherit;
+      }
+    }
+
+    // Danger state (V5 pattern)
+    &-danger {
+      color: var(--#{$prefix}-error-color, #{$error-color}) !important;
+      .#{$prefix}-menu-item-icon {
+        color: inherit;
+      }
+      &:hover {
+        background-color: color-mix(
+          in srgb,
+          var(--#{$prefix}-error-color) 6%,
+          transparent
+        ) !important;
+      }
+    }
+  }
+
+  // Submenu specific
+  &-submenu-title {
+    padding-right: calc(#{$spacing-xl} + #{$spacing-xxs}) !important; // Ensure space for the arrow
+  }
+
+  // Sleek CSS Chevron (2-line setup)
+  &-submenu-arrow {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    width: 10px;
+    color: currentColor;
+    // Exactly as user inspected from DOM:
+    transform: translateY(-2px);
+    transition:
+      transform $transition-slow,
+      opacity $transition-slow;
+    pointer-events: none;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      width: 5px;
+      height: 1.5px;
+      /* stylelint-disable-next-line scale-unlimited/declaration-strict-value */
+      background-color: currentColor;
+      border-radius: $border-radius-base;
+      transition:
+        background-color $transition-slow,
+        transform $transition-slow,
+        top $transition-slow,
+        color $transition-slow;
+    }
+
+    // Default: Point DOWN (v) for Horizontal top level
+    &::before {
+      transform: rotate(-45deg) translateX(2.5px);
+    }
+    &::after {
+      transform: rotate(45deg) translateX(-2.5px);
+    }
+  }
+
+  // Vertical Root Menus must point RIGHT
+  &-root.#{$prefix}-menu-vertical &-submenu-arrow {
+    &::before {
+      transform: rotate(45deg) translateY(-2.5px) !important; // RIGHT
+    }
+    &::after {
+      transform: rotate(-45deg) translateY(2.5px) !important;
+    }
+  }
+
+  // Correct library-standard hidden classes
+  &-hidden,
+  &-submenu-hidden {
+    display: none !important;
+  }
+
+  // Sub-list structure
+  &-sub {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  // Sidebar aesthetics (Flush layouts)
+  &-sidebar {
+    border-right: 1px solid var(--#{$prefix}-color-border-secondary, #{$border-color-secondary});
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+
+    .#{$prefix}-menu-item-group {
+      margin-top: $spacing-md;
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+
+    &.#{$prefix}-menu-inline-collapsed {
+      .#{$prefix}-menu-item-group {
+        margin-top: 0;
+      }
+    }
+  }
+
+  &-inline {
+    .#{$prefix}-menu-sub {
+      background: var(--#{$prefix}-menu-color-item-bg, #{$fill-quaternary});
+      box-shadow: none !important;
+      border-radius: 0;
+
+      transition:
+        background-color $transition-base,
+        padding $transition-base;
+
+      // FIX para colapso de márgenes sin padding fraccional que rompe height: auto
+      // Un borde top invisible es el método más nativo para aislar el Block Formatting Context
+      border-top: 0.1px solid transparent;
+      border-bottom: 0.1px solid transparent;
+    }
+  }
+
+  // Styles for inline-collapsed (e.g. sidebar shrinking to 80px)
+  &-inline-collapsed {
+    width: 100%;
+
+    .#{$prefix}-menu-item,
+    .#{$prefix}-menu-submenu-title {
+      padding: 0 !important;
+      justify-content: center;
+
+      .#{$prefix}-menu-submenu-arrow {
+        display: none !important;
+      }
+    }
+
+    // El label por defecto se oculta para dejar ver sólo el ícono
+    .#{$prefix}-menu-item-label {
+      display: none !important;
+    }
+
+    // Centrado geométrico perfecto del ícono (sin el margen de separación del label)
+    .#{$prefix}-menu-item-icon {
+      margin: 0 !important;
+      font-size: $font-size-lg; // Ligeramente más grande para que sea el foco visual
+    }
+
+    // Mantener la flecha derecha visible en su rincón absoluto
+    .#{$prefix}-menu-submenu-arrow {
+      display: block !important;
+      opacity: 1 !important;
+      right: 12px !important; // Fijo a la derecha sin empujar al ícono interior
+    }
+
+    // Qué hacer si un ítem fue creado SIN ícono (para que no se vea vacío)
+    .#{$prefix}-menu-item:not(:has(.#{$prefix}-menu-item-icon)),
+    .#{$prefix}-menu-submenu-title:not(:has(.#{$prefix}-menu-item-icon)) {
+      .#{$prefix}-menu-item-label {
+        display: block !important;
+        font-size: $font-size-sm;
+        text-align: center;
+        opacity: 1 !important;
+        max-width: 50px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    // Ocultar los títulos de los grupos y aplastarlos con animación fluida usando max-height
+    .#{$prefix}-menu-item-group-title {
+      padding: 0 !important;
+      max-height: 0 !important;
+      opacity: 0 !important;
+      margin: 0 !important;
+      overflow: hidden !important;
+    }
+  }
+
+  // Horizontal mode specifics
+  &-horizontal {
+    display: flex;
+    border-bottom: 1px solid var(--#{$prefix}-color-border-secondary, #{$border-color-secondary});
+    box-shadow: none;
+    background: transparent;
+
+    .#{$prefix}-menu-item,
+    .#{$prefix}-menu-submenu-title {
+      width: auto; // Required to override the 'pill' width
+      margin: 0; // Wipe pill margin
+      border-radius: 0;
+      border-bottom: 2px solid transparent;
+      padding: 0 $spacing-lg;
+
+      &:hover,
+      &.#{$prefix}-menu-item-active,
+      &.#{$prefix}-menu-submenu-active {
+        background-color: transparent;
+        color: var(--#{$prefix}-menu-color-item-text-selected, #{$primary-color});
+        border-bottom-color: var(--#{$prefix}-menu-color-item-text-selected, #{$primary-color});
+      }
+
+      &-selected,
+      &.#{$prefix}-menu-item-selected {
+        background-color: transparent;
+        color: var(--#{$prefix}-menu-color-item-text-selected, #{$primary-color});
+        border-bottom-color: var(--#{$prefix}-menu-color-item-text-selected, #{$primary-color});
+      }
+    }
+  }
+
+  &-item-group-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    // In popups (where JS doesn't inject inline padding), force nested items to indent.
+    // We use !important because rc-menu strips some CSS in specific modes but we need structural integrity.
+    .#{$prefix}-menu-item {
+      padding-left: calc(#{$spacing-md} + #{$spacing-sm});
+    }
+  }
+
+  &-item-group-title {
+    // Global/Popup group title padding
+    padding: $spacing-sm $spacing-md;
+    color: var(--#{$prefix}-color-text-secondary, #{$text-color-secondary});
+    font-size: $font-size-sm;
+
+    // Animación matemática de max-height necesaria para resolver el snapping
+    // brusco de la altura cuando en CSS puro se pasa a height: 0
+    max-height: 44px; // Altura segura
+    opacity: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    // Transición suave (escala y disuelve paddings, max-height y opacity en paralelo)
+    transition:
+      max-height $transition-base,
+      padding $transition-base,
+      opacity $transition-base,
+      margin $transition-base;
+  }
+
+  // ... other items ...
+
+  &-divider {
+    height: 1px;
+    background-color: var(--#{$prefix}-color-border-secondary, #{$border-color-secondary});
+    margin: $spacing-xs 0;
+  }
+}
+
+// Popups are portalled to <body> - must be targeted outside .#{$prefix}-menu scope
+// By default, popup submenus (e.g. from vertical root menus) show > arrow
+.#{$prefix}-menu-submenu-popup .#{$prefix}-menu-submenu-arrow {
+  &::before {
+    transform: rotate(45deg) translateY(-2.5px); // RIGHT
+  }
+  &::after {
+    transform: rotate(-45deg) translateY(2.5px);
+  }
+}
+
+// In horizontal mode popups: hide the arrow entirely (only first-level bar items show v)
+// We detect horizontal origin via a CSS class added by the SubMenu wrapper component
+.#{$prefix}-menu-submenu-horizontal .#{$prefix}-menu-submenu-title .#{$prefix}-menu-submenu-arrow {
+  display: none !important;
+}
+
+// Inline mode specific structural overrides
+// Inline menus rely on JS deep-level padding, so the Group Title itself must manually match the JS staircase hierarchy.
+.#{$prefix}-menu.#{$prefix}-menu-inline .#{$prefix}-menu-item-group-title {
+  padding-left: $spacing-xl;
+}
+
+// Arrow animation: ONLY for Inline (cascade) menus when open
+// These selectors match exactly what rc-menu outputs in the DOM
+.#{$prefix}-menu-submenu-inline.#{$prefix}-menu-submenu-open
+  > .#{$prefix}-menu-submenu-title
+  > .#{$prefix}-menu-submenu-arrow {
+  &::before {
+    transform: rotate(45deg) translateX(2.5px);
+  }
+  &::after {
+    transform: rotate(-45deg) translateX(-2.5px);
+  }
+}
+
+// 1. Inline Menus (Expand vertically with JS assistance)
+.#{$prefix}-menu-collapse {
+  overflow: hidden;
+  transition:
+    height $transition-base,
+    opacity $transition-base !important;
+}
+.#{$prefix}-menu-collapse-enter,
+.#{$prefix}-menu-collapse-appear,
+.#{$prefix}-menu-collapse-leave {
+  overflow: hidden;
+}
+.#{$prefix}-menu-collapse-enter-active,
+.#{$prefix}-menu-collapse-appear-active,
+.#{$prefix}-menu-collapse-leave-active {
+  transition:
+    height $transition-base,
+    opacity $transition-base !important;
+}
+
+// 2. Horizontal Menus (Drop down vertically)
+.#{$prefix}-menu-slide-up-enter,
+.#{$prefix}-menu-slide-up-appear,
+.#{$prefix}-menu-slide-up-leave {
+  animation-duration: 0.2s;
+  animation-fill-mode: both;
+  animation-play-state: paused;
+}
+
+.#{$prefix}-menu-slide-up-enter,
+.#{$prefix}-menu-slide-up-appear {
+  opacity: 0;
+  animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+}
+.#{$prefix}-menu-slide-up-leave {
+  animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+}
+
+// Fallback to SlideUp (prevent 1-frame click alignment stutters)
+.#{$prefix}-menu-slide-up-enter.#{$prefix}-menu-slide-up-enter-active,
+.#{$prefix}-menu-slide-up-appear.#{$prefix}-menu-slide-up-appear-active {
+  transform-origin: 0% 0%; // Opens downward → scale from top
+  animation-name: fiMenuSlideUpIn;
+  animation-play-state: running;
+}
+.#{$prefix}-menu-slide-up-leave.#{$prefix}-menu-slide-up-leave-active {
+  transform-origin: 0% 0%;
+  animation-name: fiMenuSlideUpOut;
+  animation-play-state: running;
+  pointer-events: none;
+}
+
+// Upward positioning: override transform-origin AND animation name
+.#{$prefix}-menu-submenu-popup-placement-topLeft,
+.#{$prefix}-menu-submenu-popup-placement-topRight,
+.#{$prefix}-menu-submenu-popup-placement-top {
+  &.#{$prefix}-menu-slide-up-enter.#{$prefix}-menu-slide-up-enter-active,
+  &.#{$prefix}-menu-slide-up-appear.#{$prefix}-menu-slide-up-appear-active {
+    transform-origin: 0% 100%; // Opens upward → scale from bottom
+    animation-name: fiMenuSlideDownIn;
+  }
+  &.#{$prefix}-menu-slide-up-leave.#{$prefix}-menu-slide-up-leave-active {
+    transform-origin: 0% 100%;
+    animation-name: fiMenuSlideDownOut;
+  }
+}
+
+// 3. Side Popups / Vertical Mode (Zoom Big)
+.#{$prefix}-menu-zoom-enter,
+.#{$prefix}-menu-zoom-appear,
+.#{$prefix}-menu-zoom-leave {
+  animation-duration: 0.2s;
+  animation-fill-mode: both;
+  animation-play-state: paused;
+}
+
+.#{$prefix}-menu-zoom-enter,
+.#{$prefix}-menu-zoom-appear {
+  opacity: 0;
+  animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+}
+.#{$prefix}-menu-zoom-leave {
+  animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+}
+
+.#{$prefix}-menu-zoom-enter.#{$prefix}-menu-zoom-enter-active,
+.#{$prefix}-menu-zoom-appear.#{$prefix}-menu-zoom-appear-active {
+  animation-name: fiZoomBigIn;
+  animation-play-state: running;
+}
+
+.#{$prefix}-menu-zoom-leave.#{$prefix}-menu-zoom-leave-active {
+  animation-name: fiZoomBigOut;
+  animation-play-state: running;
+  pointer-events: none;
+}
+
+// Menu Keyframes Repository
+@keyframes fiMenuSlideUpIn {
+  0% {
+    transform: scaleY(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+@keyframes fiMenuSlideUpOut {
+  0% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(0.8);
+    opacity: 0;
+  }
+}
+@keyframes fiMenuSlideDownIn {
+  0% {
+    transform: scaleY(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+@keyframes fiMenuSlideDownOut {
+  0% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(0.8);
+    opacity: 0;
+  }
+}
+@keyframes fiZoomBigIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes fiZoomBigOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+// Popup / Floating Submenus
+.#{$prefix}-menu-submenu-popup {
+  position: absolute;
+  z-index: 1050;
+  background: transparent;
+
+  // Transform origins to ensure smooth Zoom expansions from the trigger item
+  // Defaults to Top-Left for Right-opening submenus
+  transform-origin: 0% 0%;
+
+  &-placement-rightTop,
+  &-placement-rightBottom,
+  &-placement-right {
+    transform-origin: 0% 0%;
+  }
+
+  &-placement-leftTop,
+  &-placement-leftBottom,
+  &-placement-left {
+    transform-origin: 100% 0%;
+  }
+
+  &-placement-bottomLeft,
+  &-placement-bottomRight,
+  &-placement-bottom {
+    transform-origin: 0% 0%;
+  }
+
+  &-placement-topLeft,
+  &-placement-topRight,
+  &-placement-top {
+    transform-origin: 0% 100%;
+  }
+
+  .#{$prefix}-menu-sub {
+    background: var(--#{$prefix}-color-bg-elevated, #{$bg-elevated});
+    border-radius: var(--#{$prefix}-border-radius-card, #{$border-radius-card});
+    box-shadow: var(--#{$prefix}-shadow-popup, #{$shadow-popup});
+    padding: $spacing-xs;
+    display: block !important;
+  }
+}

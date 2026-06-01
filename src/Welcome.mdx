@@ -1,0 +1,50 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Welcome" />
+
+<div className="welcome-container">
+  <h1>🚀 Fast UI</h1>
+  <p>
+    An enterprise-class React UI component library. Lightweight, accessible, and highly performant.
+  </p>
+
+<div className="features-grid">
+  <div className="feature-item">
+    <h3>⚡️ Ligera</h3>
+    <p>Sin CSS-in-JS. Estilos puros en SASS y CSS Variables.</p>
+  </div>
+  <div className="feature-item">
+    <h3>🌳 Tree-shaking</h3>
+    <p>Importa solo lo que necesitas. Optimizado para producción.</p>
+  </div>
+  <div className="feature-item">
+    <h3>🧩 rc-components</h3>
+    <p>Basada en componentes robustos y accesibles.</p>
+  </div>
+</div>
+
+<style>
+  {`
+      .welcome-container {
+        padding: 40px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      }
+      h1 { font-size: 48px; margin-bottom: 20px; color: #1677ff; }
+      p { font-size: 18px; color: #666; }
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin-top: 40px;
+      }
+      .feature-item {
+        padding: 20px;
+        border: 1px solid #f0f0f0;
+        border-radius: 8px;
+        background: #fafafa;
+      }
+      .feature-item h3 { margin-bottom: 10px; color: #000; }
+    `}
+</style>
+
+</div>

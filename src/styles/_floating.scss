@@ -1,0 +1,71 @@
+@use "variables" as *;
+
+// Shared floating label styles
+.#{$prefix}-float-label {
+  position: relative;
+  display: flex;
+  width: 100%;
+
+  // The floating label text
+  &-text {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: $font-size-md;
+    color: var(--#{$prefix}-color-text-quaternary, #{$text-color-quaternary});
+    pointer-events: none;
+    transition: all $transition-fast;
+    transform-origin: left top;
+    z-index: 1;
+    padding: 0 $spacing-xxs;
+    background: transparent;
+    max-width: calc(100% - 24px);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    line-height: 1;
+  }
+
+  // Active state: focused or has value — label sits just above the top border
+  &-active &-text {
+    top: 2px;
+    transform: translateY(-50%) scale(0.75);
+    color: var(--#{$prefix}-primary-color, #{$primary-color});
+    background: var(--#{$prefix}-input-color-bg, #{$bg-container});
+    padding: 0 $spacing-xs;
+  }
+
+  // Error status
+  &-error &-text {
+    color: var(--#{$prefix}-error-color, #{$error-color});
+  }
+
+  // Sizes
+  &-sm &-text {
+    left: 8px;
+    font-size: $font-size-sm;
+  }
+
+  &-lg &-text {
+    left: 12px;
+    font-size: $font-size-lg;
+  }
+
+  // Make the inner component fill the wrapper
+  > .#{$prefix}-input,
+  > .#{$prefix}-input-affix-wrapper,
+  > .#{$prefix}-input-number {
+    width: 100%;
+  }
+
+  > .#{$prefix}-select {
+    display: flex;
+    width: 100%;
+  }
+
+  > .#{$prefix}-picker {
+    display: flex;
+    width: 100%;
+  }
+}

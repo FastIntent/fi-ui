@@ -1,0 +1,205 @@
+@use "../../styles/variables" as *;
+
+$slider-prefix-cls: "#{$prefix}-slider";
+$rail-height: 4px;
+$handle-size: 14px;
+// Container height = handle height so the handle sits perfectly within
+$slider-height: $handle-size;
+// Rail centered in container: (handle - rail) / 2
+$rail-top: calc((#{$handle-size} - #{$rail-height}) / 2);
+
+.#{$slider-prefix-cls} {
+  position: relative;
+  width: 100%;
+  height: $slider-height;
+  margin: $border-radius-lg 0;
+  padding: 0;
+  cursor: pointer;
+  touch-action: none;
+  box-sizing: border-box;
+
+  // ── Rail (background track) ────────────────────────────────────────────────
+  &-rail {
+    position: absolute;
+    top: $rail-top;
+    width: 100%;
+    height: $rail-height;
+    background-color: var(--#{$prefix}-color-border-secondary, #f0f0f0);
+    border-radius: $border-radius-base;
+    transition: background-color $transition-base;
+  }
+
+  // ── Filled track ──────────────────────────────────────────────────────────
+  &-track {
+    position: absolute;
+    top: $rail-top;
+    height: $rail-height;
+    background-color: $primary-color;
+    border-radius: $border-radius-base;
+    transition: background-color $transition-base;
+    z-index: 1;
+  }
+
+  // ── Handle ────────────────────────────────────────────────────────────────
+  // rc-slider sets inline: left: XX%; transform: translateX(-50%)
+  // We only control the vertical axis here — never use transform for Y
+  &-handle {
+    position: absolute;
+    top: 0;
+    width: $handle-size;
+    height: $handle-size;
+    background-color: $bg-container;
+    border: 2px solid $primary-color-hover;
+    border-radius: 50%;
+    outline: none;
+    cursor: pointer;
+    transition:
+      border-color $transition-base,
+      box-shadow $transition-base;
+    z-index: 2;
+
+    &:hover,
+    &-active,
+    &:focus {
+      border-color: $primary-color;
+      box-shadow: 0 0 0 5px var(--#{$prefix}-primary-color-opacity-12, rgba(22, 119, 255, 0.12));
+    }
+  }
+
+  // ── Step dots at mark positions ────────────────────────────────────────────
+  &-step {
+    position: absolute;
+    top: $rail-top;
+    width: 100%;
+    height: $rail-height;
+    background: transparent;
+    pointer-events: none;
+  }
+
+  &-dot {
+    position: absolute;
+    // rc-slider sets inline: left: XX%; transform: translateX(-50%)
+    // top: -2px centers the 8px dot on the 4px rail: (4 - 8) / 2 = -2px
+    top: -2px;
+    width: 8px;
+    height: 8px;
+    background-color: $bg-container;
+    border: 2px solid var(--#{$prefix}-color-border-secondary, #f0f0f0);
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1;
+
+    &-active {
+      border-color: $primary-color;
+    }
+  }
+
+  // ── Mark labels ───────────────────────────────────────────────────────────
+  &-with-marks {
+    margin-bottom: calc(#{$spacing-md} + #{$spacing-sm});
+  }
+
+  &-mark {
+    position: absolute;
+    top: calc(#{$handle-size} + 4px);
+    left: 0;
+    width: 100%;
+    font-size: $font-size-sm;
+  }
+
+  &-mark-text {
+    position: absolute;
+    display: inline-block;
+    color: $text-color-secondary;
+    text-align: center;
+    word-break: keep-all;
+    cursor: pointer;
+    user-select: none;
+    transform: translateX(-50%);
+
+    &-active {
+      color: $text-color;
+    }
+  }
+
+  // ── Hover on rail/track ────────────────────────────────────────────────────
+  &:hover {
+    .#{$slider-prefix-cls}-rail {
+      background-color: var(--#{$prefix}-color-border, #d9d9d9);
+    }
+    .#{$slider-prefix-cls}-track {
+      background-color: $primary-color-hover;
+    }
+  }
+
+  // ── Vertical ──────────────────────────────────────────────────────────────
+  // rc-slider sets inline: bottom: XX%; transform: translateY(50%)
+  // We only control the horizontal axis here
+  &-vertical {
+    width: $slider-height;
+    height: 100%;
+    margin: 0 $border-radius-lg;
+    padding: 0;
+
+    .#{$slider-prefix-cls}-rail {
+      top: 0;
+      left: $rail-top;
+      width: $rail-height;
+      height: 100%;
+    }
+
+    .#{$slider-prefix-cls}-track {
+      top: auto;
+      left: $rail-top;
+      width: $rail-height;
+    }
+
+    .#{$slider-prefix-cls}-handle {
+      top: auto;
+      left: 0;
+    }
+
+    .#{$slider-prefix-cls}-step {
+      top: 0;
+      left: $rail-top;
+      width: $rail-height;
+      height: 100%;
+    }
+
+    .#{$slider-prefix-cls}-dot {
+      // rc-slider sets inline: bottom: XX%; transform: translateY(50%)
+      // left: -2px centers the 8px dot on the 4px rail: (4 - 8) / 2 = -2px
+      top: auto;
+      left: -2px;
+    }
+
+    .#{$slider-prefix-cls}-mark {
+      top: 0;
+      left: calc(#{$handle-size} + 4px);
+      width: auto;
+      height: 100%;
+    }
+
+    .#{$slider-prefix-cls}-mark-text {
+      transform: translateY(50%);
+    }
+  }
+
+  // ── Disabled ──────────────────────────────────────────────────────────────
+  &-disabled {
+    cursor: not-allowed;
+
+    .#{$slider-prefix-cls}-rail {
+      background-color: $disabled-bg !important;
+    }
+    .#{$slider-prefix-cls}-track {
+      background-color: $disabled-color !important;
+    }
+    .#{$slider-prefix-cls}-handle {
+      border-color: $disabled-color !important;
+      background-color: $bg-container;
+      cursor: not-allowed;
+      box-shadow: none !important;
+    }
+  }
+}

@@ -1,0 +1,294 @@
+@use "../../styles/_variables.scss" as *;
+
+.#{$prefix}-input {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0 $padding-inline-md;
+  color: var(--#{$prefix}-input-color-text, #{$text-color});
+  font-size: $font-size-md;
+  line-height: $line-height;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  min-width: 0;
+  height: $control-height-md;
+  background-color: var(--#{$prefix}-input-color-bg, #{$bg-container});
+  border: 1px solid var(--#{$prefix}-input-color-border, #{$border-color});
+  border-radius: var(--#{$prefix}-input-border-radius, #{$border-radius-base});
+  transition: $transition-base;
+
+  &::-ms-clear,
+  &::-ms-reveal {
+    display: none;
+  }
+
+  &::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+  }
+
+  &::placeholder {
+    color: var(--#{$prefix}-input-color-placeholder, #{$text-color-quaternary});
+    opacity: 0.8;
+  }
+
+  &:hover {
+    border-color: var(--#{$prefix}-input-hover-border-color, #{$primary-color-hover});
+    box-shadow: $shadow-sm;
+  }
+
+  &:focus,
+  &-focused {
+    border-color: var(--#{$prefix}-input-active-border-color, #{$primary-color});
+    box-shadow: var(--#{$prefix}-input-active-shadow, 0 0 0 4px #{$primary-color-outline});
+    outline: 0;
+  }
+
+  &-disabled,
+  &:disabled {
+    color: $text-color-quaternary;
+    background-color: $bg-layout;
+    cursor: not-allowed;
+    border-color: $border-color;
+    box-shadow: none !important;
+  }
+
+  &-status-error {
+    border-color: $error-color;
+    &:hover {
+      border-color: $error-color-hover;
+    }
+    &:focus {
+      border-color: $error-color-active;
+      box-shadow: 0 0 0 4px var(--#{$prefix}-error-color-outline);
+    }
+  }
+
+  &-status-success {
+    border-color: $success-color;
+    &:hover {
+      border-color: $success-color;
+    }
+    &:focus {
+      border-color: $success-color;
+      box-shadow: 0 0 0 4px $color-success-bg;
+    }
+  }
+
+  // Affix Wrapper (Prefix/Suffix)
+  &-affix-wrapper {
+    position: relative;
+    display: inline-flex;
+    width: 100%;
+    align-items: center;
+    border: 1px solid var(--#{$prefix}-input-color-border, #{$border-color});
+    border-radius: var(--#{$prefix}-input-border-radius, #{$border-radius-base});
+    background-color: var(--#{$prefix}-input-color-bg, #{$bg-container});
+    padding: 0 $padding-inline-md;
+    box-sizing: border-box;
+    height: $control-height-md;
+    transition: $transition-base;
+
+    .#{$prefix}-input {
+      border: none;
+      padding: 0;
+      box-shadow: none !important;
+      height: 100%;
+      background: transparent;
+      // Permite que el input interno se anime de ancho (w-32 → focus:w-48)
+      width: 100%;
+      min-width: 0;
+      transition: width $transition-base;
+
+      &:focus {
+        box-shadow: none;
+      }
+    }
+
+    &:hover {
+      border-color: var(--#{$prefix}-input-hover-border-color, #{$primary-color-hover});
+      box-shadow: $shadow-sm;
+    }
+
+    &-focused {
+      border-color: var(--#{$prefix}-input-active-border-color, #{$primary-color});
+      box-shadow: var(--#{$prefix}-input-active-shadow, 0 0 0 4px #{$primary-color-outline});
+    }
+
+    &-status-error {
+      border-color: $error-color !important;
+    }
+    &-status-success {
+      border-color: $success-color !important;
+    }
+  }
+
+  &-prefix,
+  &-suffix {
+    display: flex;
+    flex: none;
+    align-items: center;
+    color: $text-color-secondary;
+    font-size: $font-size-md;
+
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  &-prefix {
+    margin-right: $spacing-sm;
+  }
+  &-suffix {
+    margin-left: $spacing-sm;
+  }
+
+  // Sizes
+  &-large {
+    height: $control-height-lg;
+    font-size: $font-size-lg;
+    border-radius: $border-radius-lg;
+  }
+  &-affix-wrapper-lg {
+    height: $control-height-lg;
+    border-radius: $border-radius-lg;
+  }
+
+  &-small {
+    height: $control-height-sm;
+    font-size: $font-size-sm;
+    border-radius: $border-radius-sm;
+  }
+
+  &-clear-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    font-size: $font-size-md;
+    color: $text-color-quaternary;
+    background-color: $border-color-secondary;
+    cursor: pointer;
+    transition: $transition-fast;
+    margin: 0;
+    padding: 0;
+    border: none;
+    line-height: 1;
+
+    &:hover {
+      color: $text-color-secondary;
+      background-color: color-mix(in srgb, $text-color 8%, transparent);
+      transform: scale(1.1);
+    }
+
+    &-hidden {
+      display: none !important;
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+
+  // Ensure it hides when placeholder is visible (input is truly empty)
+  &:placeholder-shown + &-clear-icon,
+  &:placeholder-shown + .#{$prefix}-input-suffix + &-clear-icon {
+    display: none !important;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  // ── TextArea ───────────────────────────────────────────────────────────────
+  &-textarea-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  &-textarea {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    padding: $spacing-xs $padding-inline-md;
+    color: var(--#{$prefix}-input-color-text, #{$text-color});
+    font-size: $font-size-md;
+    font-family: inherit;
+    line-height: $line-height;
+    background-color: var(--#{$prefix}-input-color-bg, #{$bg-container});
+    border: 1px solid var(--#{$prefix}-input-color-border, #{$border-color});
+    border-radius: var(--#{$prefix}-input-border-radius, #{$border-radius-base});
+    transition:
+      border-color $transition-fast,
+      box-shadow $transition-fast;
+    resize: vertical;
+    outline: none;
+
+    &::placeholder {
+      color: var(--#{$prefix}-input-color-placeholder, #{$text-color-quaternary});
+      opacity: 0.8;
+    }
+
+    &:hover {
+      border-color: var(--#{$prefix}-input-hover-border-color, #{$primary-color-hover});
+      box-shadow: $shadow-sm;
+    }
+
+    &:focus {
+      border-color: var(--#{$prefix}-input-active-border-color, #{$primary-color});
+      box-shadow: var(--#{$prefix}-input-active-shadow, 0 0 0 4px #{$primary-color-outline});
+    }
+
+    &-no-resize {
+      resize: none;
+    }
+
+    &-autosize {
+      overflow: hidden;
+      resize: none;
+    }
+
+    &-disabled,
+    &:disabled {
+      color: $text-color-quaternary;
+      background-color: $bg-layout;
+      cursor: not-allowed;
+      border-color: $border-color;
+      box-shadow: none !important;
+      resize: none;
+    }
+
+    &-status-error {
+      border-color: $error-color;
+      &:hover {
+        border-color: $error-color-hover;
+      }
+      &:focus {
+        border-color: $error-color-active;
+        box-shadow: 0 0 0 4px var(--#{$prefix}-error-color-outline);
+      }
+    }
+
+    &-status-warning {
+      border-color: $warning-color;
+      &:focus {
+        box-shadow: 0 0 0 4px var(--#{$prefix}-warning-color-outline, #{$warning-color-outline});
+      }
+    }
+
+    &-status-success {
+      border-color: $success-color;
+      &:focus {
+        border-color: $success-color;
+        box-shadow: 0 0 0 4px $color-success-bg;
+      }
+    }
+  }
+
+  &-textarea-count {
+    align-self: flex-end;
+    margin-top: $spacing-xs;
+    font-size: $font-size-sm;
+    color: $text-color-quaternary;
+    user-select: none;
+    pointer-events: none;
+  }
+}

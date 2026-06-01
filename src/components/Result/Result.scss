@@ -1,0 +1,84 @@
+@use "../../styles/variables" as *;
+
+$result-prefix-cls: "#{$prefix}-result";
+
+.#{$result-prefix-cls} {
+  padding: calc($spacing-xl * 2) $spacing-xl;
+  text-align: center;
+  box-sizing: border-box;
+
+  &-icon {
+    display: flex;
+    justify-content: center;
+    margin-bottom: $spacing-xl;
+
+    svg {
+      display: block;
+    }
+  }
+
+  &-title {
+    color: $text-color;
+    font-size: $font-size-heading-3;
+    font-weight: 600;
+    line-height: $line-height-lg;
+    margin-bottom: $spacing-sm;
+  }
+
+  &-subtitle {
+    color: $text-color-secondary;
+    font-size: $font-size-md;
+    line-height: $line-height;
+    margin-bottom: $spacing-xl;
+  }
+
+  &-extra {
+    margin-bottom: $spacing-xl;
+
+    & > * {
+      margin-inline-end: $spacing-sm;
+      &:last-child {
+        margin-inline-end: 0;
+      }
+    }
+  }
+
+  &-content {
+    margin-top: $spacing-xl;
+    padding: $spacing-xl;
+    background-color: $bg-layout;
+    border-radius: $border-radius-base;
+    text-align: start;
+  }
+
+  // Semantic Status Colors
+  &-status-success .#{$result-prefix-cls}-icon {
+    color: $success-color;
+  }
+  &-status-error .#{$result-prefix-cls}-icon {
+    color: $error-color;
+  }
+  &-status-warning .#{$result-prefix-cls}-icon {
+    color: $warning-color;
+  }
+  &-status-info .#{$result-prefix-cls}-icon {
+    color: $info-color;
+  }
+  &-status-404,
+  &-status-403,
+  &-status-500 {
+    .#{$result-prefix-cls}-icon {
+      color: $primary-color;
+    }
+  }
+}
+
+// Dark Mode Support
+[data-theme="dark"] .#{$result-prefix-cls} {
+  &-subtitle {
+    color: $text-color-tertiary;
+  }
+  &-content {
+    background-color: $fill-quaternary;
+  }
+}

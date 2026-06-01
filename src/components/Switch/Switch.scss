@@ -1,0 +1,150 @@
+@use "../../styles/_variables.scss" as *;
+
+.#{$prefix}-switch {
+  --#{$prefix}-wave-color: var(--#{$prefix}-switch-color-active, #{$primary-color});
+  margin: 0;
+  padding: 0;
+  color: var(--#{$prefix}-color-text, #{$text-color});
+  font-size: $font-size-md;
+  line-height: $line-height;
+  list-style: none;
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+  width: fit-content;
+  min-width: var(--#{$prefix}-switch-size, 44px);
+  height: calc(var(--#{$prefix}-switch-size, 44px) #{"/"} 2);
+  line-height: calc(var(--#{$prefix}-switch-size, 44px) #{"/"} 2);
+  vertical-align: middle;
+  background: var(--#{$prefix}-switch-color-inactive, #{$color-fill});
+  border: 0;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all $transition-base;
+  user-select: none;
+
+  &:hover:not(&-disabled) {
+    filter: brightness(0.9);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 4px var(--#{$prefix}-primary-color-outline);
+  }
+
+  &-status-error {
+    background: color-mix(in srgb, var(--#{$prefix}-error-color) 40%, #{$color-fill}) !important;
+    &:focus-visible {
+      box-shadow: 0 0 0 4px var(--#{$prefix}-error-color-outline) !important;
+    }
+
+    &.#{$prefix}-switch-checked {
+      background: var(--#{$prefix}-error-color) !important;
+      &:hover {
+        filter: brightness(1.1) !important;
+      }
+    }
+  }
+
+  &-inner {
+    display: block;
+    margin-inline-start: $spacing-lg;
+    margin-inline-end: $spacing-sm;
+    color: $text-color-light-solid;
+    font-size: $font-size-sm;
+    transition: margin $transition-base;
+  }
+
+  &-inner-checked,
+  &-inner-unchecked {
+    display: block;
+  }
+
+  &::before {
+    position: absolute;
+    top: 2px;
+    inset-inline-start: 2px;
+    width: calc(calc(var(--#{$prefix}-switch-size, 44px) #{"/"} 2) - 4px);
+    height: calc(calc(var(--#{$prefix}-switch-size, 44px) #{"/"} 2) - 4px);
+    background-color: var(--#{$prefix}-switch-handle-color, #{$bg-container});
+    border-radius: 50%;
+    box-shadow: 0 2px 4px 0 rgba(0, 25, 68, 0.2);
+    transition: all $transition-bounce;
+    content: "";
+    z-index: 1;
+  }
+
+  &-checked {
+    background: var(--#{$prefix}-switch-color-active, #{$primary-color});
+
+    .#{$prefix}-switch-inner {
+      margin-inline-start: $spacing-sm;
+      margin-inline-end: $spacing-lg;
+    }
+
+    &::before {
+      inset-inline-start: calc(
+        100% - calc(calc(var(--#{$prefix}-switch-size, 44px) #{"/"} 2) - 2px)
+      );
+    }
+
+    &:hover:not(.#{$prefix}-switch-disabled) {
+      filter: brightness(1.1);
+    }
+  }
+
+  &-loading-icon {
+    position: absolute;
+    top: 5px;
+    inset-inline-start: 5px;
+    z-index: 2;
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    color: var(--#{$prefix}-switch-color-active, #{$primary-color});
+    border: 1.5px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: rotate 0.8s linear infinite;
+    transition: all $transition-bounce;
+  }
+
+  &-checked &-loading-icon {
+    inset-inline-start: calc(100% - 17px);
+  }
+
+  &-disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+
+    &::before {
+      background-color: var(--#{$prefix}-color-bg-layout, #{$bg-layout});
+    }
+  }
+
+  &-small {
+    --#{$prefix}-switch-size: 28px !important;
+
+    .#{$prefix}-switch-inner {
+      margin-inline-start: $spacing-lg;
+      margin-inline-end: $spacing-xs;
+      font-size: $font-size-sm;
+    }
+
+    &.#{$prefix}-switch-checked {
+      .#{$prefix}-switch-inner {
+        margin-inline-start: $spacing-xs;
+        margin-inline-end: $spacing-lg;
+      }
+    }
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

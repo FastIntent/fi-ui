@@ -1,0 +1,227 @@
+@use "../../styles/_variables.scss" as *;
+
+// ---------------------------------------------------------------------------
+// Popover Design Tokens
+// ---------------------------------------------------------------------------
+:root {
+  --#{$prefix}-popover-bg: var(--#{$prefix}-color-bg-elevated, #fff);
+  --#{$prefix}-popover-color: var(--#{$prefix}-color-text);
+  --#{$prefix}-popover-border-radius: #{$border-radius-base};
+  --#{$prefix}-popover-shadow: var(--#{$prefix}-shadow-popup);
+  --#{$prefix}-popover-min-width: 177px;
+  --#{$prefix}-popover-title-color: var(--#{$prefix}-color-text);
+  --#{$prefix}-popover-title-font-weight: 600;
+  --#{$prefix}-popover-title-min-height: 32px;
+  --#{$prefix}-popover-padding-h: 16px;
+  --#{$prefix}-popover-padding-v: 12px;
+  --#{$prefix}-popover-title-border-color: var(--#{$prefix}-color-border-secondary);
+  --#{$prefix}-popover-arrow-size: 8px;
+  --#{$prefix}-popover-z-index: 1030;
+}
+
+// ---------------------------------------------------------------------------
+// Root wrapper (positioned by rc-tooltip)
+// ---------------------------------------------------------------------------
+.#{$prefix}-popover {
+  box-sizing: border-box;
+  position: absolute;
+  z-index: var(--#{$prefix}-popover-z-index);
+  font-family: $font-family;
+  font-size: $font-size-md;
+  line-height: $line-height;
+  color: var(--#{$prefix}-popover-color);
+  max-width: 380px;
+  pointer-events: none;
+  transform-origin: var(--arrow-x, 50%) var(--arrow-y, 50%);
+
+  &-hidden {
+    display: none;
+  }
+
+  // Trigger area allows interaction
+  &-container {
+    pointer-events: auto;
+    background-color: var(--#{$prefix}-popover-bg);
+    border-radius: var(--#{$prefix}-popover-border-radius);
+    box-shadow: var(--#{$prefix}-popover-shadow);
+    min-width: var(--#{$prefix}-popover-min-width, 177px);
+    overflow: hidden;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Content structure
+  // ---------------------------------------------------------------------------
+  &-inner-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &-title {
+    min-height: var(--#{$prefix}-popover-title-min-height);
+    padding: var(--#{$prefix}-popover-padding-v) var(--#{$prefix}-popover-padding-h);
+    color: var(--#{$prefix}-popover-title-color);
+    font-weight: var(--#{$prefix}-popover-title-font-weight);
+    border-bottom: 1px solid var(--#{$prefix}-popover-title-border-color);
+    display: flex;
+    align-items: center;
+  }
+
+  &-inner-body {
+    padding: var(--#{$prefix}-popover-padding-v) var(--#{$prefix}-popover-padding-h);
+    color: var(--#{$prefix}-popover-color);
+  }
+
+  // ---------------------------------------------------------------------------
+  // Arrow (triangular indicator)
+  // ---------------------------------------------------------------------------
+  &-arrow {
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 0;
+    background: transparent;
+    border-style: solid;
+    border-color: transparent;
+    pointer-events: none;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Placements
+  // ---------------------------------------------------------------------------
+  &-placement-top,
+  &-placement-topLeft,
+  &-placement-topRight {
+    padding-bottom: var(--#{$prefix}-popover-arrow-size);
+
+    .#{$prefix}-popover-arrow {
+      bottom: 0;
+      left: 50%;
+      margin-left: calc(var(--#{$prefix}-popover-arrow-size) / -2);
+      border-width: var(--#{$prefix}-popover-arrow-size)
+        calc(var(--#{$prefix}-popover-arrow-size) / 2) 0;
+      border-top-color: var(--#{$prefix}-popover-bg);
+    }
+  }
+
+  &-placement-bottom,
+  &-placement-bottomLeft,
+  &-placement-bottomRight {
+    padding-top: var(--#{$prefix}-popover-arrow-size);
+
+    .#{$prefix}-popover-arrow {
+      top: 0;
+      left: 50%;
+      margin-left: calc(var(--#{$prefix}-popover-arrow-size) / -2);
+      border-width: 0 calc(var(--#{$prefix}-popover-arrow-size) / 2)
+        var(--#{$prefix}-popover-arrow-size);
+      border-bottom-color: var(--#{$prefix}-popover-bg);
+    }
+  }
+
+  &-placement-left,
+  &-placement-leftTop,
+  &-placement-leftBottom {
+    padding-right: var(--#{$prefix}-popover-arrow-size);
+
+    .#{$prefix}-popover-arrow {
+      right: 0;
+      top: 50%;
+      margin-top: calc(var(--#{$prefix}-popover-arrow-size) / -2);
+      border-width: calc(var(--#{$prefix}-popover-arrow-size) / 2) 0
+        calc(var(--#{$prefix}-popover-arrow-size) / 2) var(--#{$prefix}-popover-arrow-size);
+      border-left-color: var(--#{$prefix}-popover-bg);
+    }
+  }
+
+  &-placement-right,
+  &-placement-rightTop,
+  &-placement-rightBottom {
+    padding-left: var(--#{$prefix}-popover-arrow-size);
+
+    .#{$prefix}-popover-arrow {
+      left: 0;
+      top: 50%;
+      margin-top: calc(var(--#{$prefix}-popover-arrow-size) / -2);
+      border-width: calc(var(--#{$prefix}-popover-arrow-size) / 2)
+        var(--#{$prefix}-popover-arrow-size) calc(var(--#{$prefix}-popover-arrow-size) / 2) 0;
+      border-right-color: var(--#{$prefix}-popover-bg);
+    }
+  }
+
+  // Corner offsets
+  &-placement-topLeft .#{$prefix}-popover-arrow,
+  &-placement-bottomLeft .#{$prefix}-popover-arrow {
+    left: 16px;
+    margin-left: 0;
+  }
+
+  &-placement-topRight .#{$prefix}-popover-arrow,
+  &-placement-bottomRight .#{$prefix}-popover-arrow {
+    left: auto;
+    right: 16px;
+    margin-left: 0;
+  }
+
+  &-placement-leftTop .#{$prefix}-popover-arrow,
+  &-placement-rightTop .#{$prefix}-popover-arrow {
+    top: 12px;
+    margin-top: 0;
+  }
+
+  &-placement-leftBottom .#{$prefix}-popover-arrow,
+  &-placement-rightBottom .#{$prefix}-popover-arrow {
+    top: auto;
+    bottom: 12px;
+    margin-top: 0;
+  }
+}
+
+// --- Motion ('zoom-big') ---
+.#{$prefix}-popover-zoom-enter,
+.#{$prefix}-popover-zoom-appear {
+  opacity: 0;
+  animation-duration: 0.2s;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.08, 0.82, 0.17, 1);
+  animation-play-state: paused;
+}
+
+.#{$prefix}-popover-zoom-leave {
+  animation-duration: 0.2s;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.78, 0.14, 0.15, 0.86);
+  animation-play-state: paused;
+}
+
+.#{$prefix}-popover-zoom-enter.#{$prefix}-popover-zoom-enter-active,
+.#{$prefix}-popover-zoom-appear.#{$prefix}-popover-zoom-appear-active {
+  animation-name: fiPopoverZoomIn;
+  animation-play-state: running;
+}
+
+.#{$prefix}-popover-zoom-leave.#{$prefix}-popover-zoom-leave-active {
+  animation-name: fiPopoverZoomOut;
+  animation-play-state: running;
+}
+
+@keyframes fiPopoverZoomIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fiPopoverZoomOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}

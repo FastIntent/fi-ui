@@ -1,0 +1,420 @@
+@use "sass:math";
+@use "../../styles/variables" as *;
+
+$steps-prefix-cls: "#{$prefix}-steps";
+$step-item-prefix-cls: "#{$prefix}-steps-item";
+$step-icon-size: 32px;
+
+.#{$steps-prefix-cls} {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  // CSS custom property para tamaño de ícono — se sobreescribe por size
+  --step-icon-size: #{$step-icon-size}; // middle default: 32px
+
+  &-small {
+    --step-icon-size: 24px;
+  }
+
+  &-horizontal {
+    flex-direction: row;
+  }
+
+  &-vertical {
+    flex-direction: column;
+
+    .#{$step-item-prefix-cls} {
+      padding-bottom: $spacing-xl;
+
+      // Row layout: ícono a la izquierda, contenido a la derecha
+      &-container {
+        flex-direction: row;
+        align-items: flex-start;
+        text-align: left;
+      }
+
+      &-icon-wrapper {
+        margin-bottom: 0;
+        margin-inline-end: $spacing-sm;
+        flex-shrink: 0;
+      }
+
+      &-tail {
+        // Gap de 6px arriba (bajo el ícono) y 6px abajo (antes del siguiente ícono)
+        top: calc(var(--step-icon-size) + 6px);
+        // Alineado con el centro del ícono en la posición izquierda:
+        // padding del container + mitad del ícono
+        left: calc(#{$spacing-sm} + var(--step-icon-size) / 2 - 0.5px);
+        width: 1px;
+        height: calc(100% - var(--step-icon-size) - 12px);
+        background-color: $border-color-secondary;
+      }
+    }
+  }
+}
+
+.#{$step-item-prefix-cls} {
+  position: relative;
+  flex: 1;
+  vertical-align: top;
+
+  &:last-child {
+    .#{$step-item-prefix-cls}-tail {
+      display: none;
+    }
+  }
+
+  &-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 $spacing-sm;
+  }
+
+  &-icon-wrapper {
+    position: relative;
+    z-index: 2;
+    margin-bottom: $spacing-sm;
+  }
+
+  &-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--step-icon-size);
+    height: var(--step-icon-size);
+    border: 1px solid $text-color-quaternary;
+    border-radius: 50%;
+    font-size: $font-size-md;
+    background-color: $bg-container;
+    transition: all $transition-base;
+    color: $text-color-secondary;
+  }
+
+  &-tail {
+    position: absolute;
+    // Centrado verticalmente: la mitad del ícono desde el top del item
+    top: calc(var(--step-icon-size) / 2);
+    // Empieza en el borde derecho del ícono + gap
+    left: calc(50% + var(--step-icon-size) / 2 + 8px);
+    // Termina en el borde izquierdo del ícono siguiente - gap
+    right: calc(var(--step-icon-size) / 2 - 50% + 8px);
+    height: 1px;
+    background-color: $border-color-secondary;
+    z-index: 1;
+  }
+
+  &-title {
+    font-size: $font-size-md;
+    font-weight: 500;
+    color: $text-color-secondary;
+    margin-bottom: $spacing-xs;
+  }
+
+  &-description {
+    font-size: $font-size-sm;
+    color: $text-color-tertiary;
+    max-width: 140px;
+  }
+
+  // Statuses
+  &-status-process {
+    .#{$step-item-prefix-cls}-icon {
+      background-color: $primary-color;
+      border-color: $primary-color;
+      color: $text-color-light-solid;
+    }
+    .#{$step-item-prefix-cls}-title {
+      color: $text-color;
+    }
+  }
+
+  &-status-finish {
+    .#{$step-item-prefix-cls}-icon {
+      border-color: $primary-color;
+      color: $primary-color;
+    }
+    .#{$step-item-prefix-cls}-tail {
+      background-color: $primary-color;
+    }
+    .#{$step-item-prefix-cls}-title {
+      color: $text-color-secondary;
+    }
+  }
+
+  &-status-error {
+    .#{$step-item-prefix-cls}-icon {
+      border-color: $error-color;
+      color: $error-color;
+    }
+    .#{$step-item-prefix-cls}-title {
+      color: $error-color;
+    }
+  }
+}
+
+// Dark Mode Support
+[data-theme="dark"] .#{$step-item-prefix-cls} {
+  &-icon {
+    background-color: $bg-container;
+  }
+  &-tail {
+    background-color: $border-color;
+  }
+
+  &-status-wait {
+    .#{$step-item-prefix-cls}-icon {
+      border-color: $border-color;
+      color: $text-color-tertiary;
+    }
+  }
+}
+
+// ─────────────────────────────────────────────
+// variant="detailed"
+// ─────────────────────────────────────────────
+$step-detailed-icon-size: 28px;
+$step-detailed-rail-width: 48px;
+// Padding vertical del body — debe coincidir con el offset negativo del ::after
+$step-detailed-padding-block: $spacing-sm;
+// Pequeño hueco entre el ícono y el inicio de la línea conectora
+$step-detailed-connector-gap: 4px;
+
+.#{$steps-prefix-cls}-detailed {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.#{$step-item-prefix-cls}-detailed {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch; // rail y body comparten la misma altura
+  border-radius: $border-radius-base;
+  transition: background-color $transition-fast;
+
+  // ── Rail (ícono + línea conectora via ::after) ──
+  &-rail {
+    position: relative; // ancla el ::after de la línea conectora
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    width: $step-detailed-rail-width;
+    padding-top: var(--step-d-padding);
+
+    // Línea conectora: parte desde debajo del ícono y se extiende
+    // con bottom negativo para atravesar el borde del item y alcanzar
+    // el ícono del siguiente step.
+    &::after {
+      content: "";
+      position: absolute;
+      inset-inline-start: calc(50% - 1px);
+      width: 0;
+      border-inline-start: 2px solid $border-color-secondary;
+      top: calc(var(--step-d-padding) + var(--step-d-icon) + var(--step-d-gap));
+      bottom: calc(-0.5 * var(--step-d-padding));
+      transition: border-color $transition-fast;
+    }
+  }
+
+  // Último item: sin línea conectora
+  &:last-child &-rail::after {
+    display: none;
+  }
+
+  &-icon-wrapper {
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+  }
+
+  &-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--step-d-icon);
+    height: var(--step-d-icon);
+    border: 2px solid $border-color-secondary;
+    border-radius: 50%;
+    font-size: $font-size-sm;
+    font-weight: 600;
+    background-color: $bg-container;
+    color: $text-color-tertiary;
+    transition:
+      background-color $transition-fast,
+      border-color $transition-fast,
+      color $transition-fast;
+  }
+
+  // Número del paso — solo en finish porque el ícono muestra ✓ en ese estado
+  &-step-number {
+    flex-shrink: 0;
+    font-size: $font-size-sm;
+    font-weight: 500;
+    color: $text-color-quaternary;
+    min-width: 1.2em;
+    text-align: end;
+  }
+
+  // ── Body (content + aside) ────────────────
+  &-body {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    align-items: center;
+    gap: $spacing-sm;
+    padding-block: var(--step-d-padding);
+    padding-inline-end: $spacing-md;
+    min-width: 0;
+  }
+
+  &-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+    gap: $spacing-xxs;
+  }
+
+  &-title {
+    font-size: var(--step-d-title);
+    font-weight: 500;
+    color: $text-color-secondary;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color $transition-fast;
+  }
+
+  &-description {
+    font-size: var(--step-d-desc);
+    color: $text-color-tertiary;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  // ── Aside (meta + badge + extra) ─────────
+  &-aside {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-shrink: 0;
+    gap: $spacing-sm;
+  }
+
+  // ── Status variants ───────────────────────
+  &-finish {
+    .#{$step-item-prefix-cls}-detailed-icon {
+      border-color: $success-color;
+      background-color: $success-color;
+      color: $text-color-light-solid;
+      opacity: 0.7;
+    }
+
+    .#{$step-item-prefix-cls}-detailed-rail::after {
+      border-color: $border-color;
+    }
+
+    .#{$step-item-prefix-cls}-detailed-title {
+      color: $text-color-secondary;
+    }
+  }
+
+  &-process {
+    background-color: $color-primary-bg;
+    border: 1px solid $color-primary-border;
+    border-radius: $border-radius-base;
+
+    .#{$step-item-prefix-cls}-detailed-icon {
+      border-color: $primary-color;
+      background-color: $primary-color;
+      color: $text-color-light-solid;
+    }
+
+    .#{$step-item-prefix-cls}-detailed-title {
+      color: $text-color;
+      font-weight: 600;
+    }
+  }
+
+  &-error {
+    .#{$step-item-prefix-cls}-detailed-icon {
+      border-color: $error-color;
+      background-color: $color-error-bg;
+      color: $color-error-text;
+    }
+
+    .#{$step-item-prefix-cls}-detailed-title {
+      color: $error-color;
+    }
+  }
+
+  &-wait {
+    .#{$step-item-prefix-cls}-detailed-title {
+      color: $text-color-quaternary;
+    }
+  }
+}
+
+// ─────────────────────────────────────────────
+// size="small" | "middle"
+// ─────────────────────────────────────────────
+
+// -- Default variant: small overrides font sizes --
+// El tamaño del ícono lo maneja --step-icon-size definida en .fi-steps-small
+.#{$steps-prefix-cls}-small .#{$step-item-prefix-cls} {
+  &-icon {
+    font-size: $font-size-sm;
+  }
+  &-title {
+    font-size: $font-size-sm;
+  }
+  &-description {
+    font-size: $font-size-sm;
+  }
+}
+
+// -- Detailed variant --
+// CSS custom properties permiten que los cálculos del connector escalen
+// sin duplicar las reglas de posicionamiento.
+.#{$steps-prefix-cls}-detailed {
+  // middle (default)
+  --step-d-icon: 28px;
+  --step-d-padding: #{$spacing-sm};
+  --step-d-gap: 4px;
+  --step-d-title: #{$font-size-md};
+  --step-d-desc: #{$font-size-sm};
+
+  &.#{$steps-prefix-cls}-small {
+    --step-d-icon: 22px;
+    --step-d-padding: #{$spacing-xs};
+    --step-d-gap: 3px;
+    --step-d-title: #{$font-size-sm};
+    --step-d-desc: #{$font-size-sm};
+  }
+}
+// Las CSS vars --step-d-* definidas arriba son heredadas automáticamente
+// por todos los elementos del bloque base .steps-item-detailed.
+
+// Dark mode — detailed
+[data-theme="dark"] .#{$step-item-prefix-cls}-detailed {
+  &-icon {
+    background-color: $bg-container;
+  }
+
+  &-rail::after {
+    border-color: $border-color;
+  }
+
+  &-process {
+    background-color: $color-primary-bg;
+
+    .#{$step-item-prefix-cls}-detailed-icon {
+      background-color: $primary-color;
+    }
+  }
+}

@@ -1,0 +1,76 @@
+@use "../../styles/variables" as *;
+
+$rate-prefix-cls: "#{$prefix}-rate";
+
+.#{$rate-prefix-cls} {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: $warning-color; // Elegant gold
+  font-size: $font-size-xl;
+  list-style: none;
+  display: inline-block;
+  outline: none;
+
+  &-star {
+    position: relative;
+    display: inline-block;
+    margin-inline-end: $spacing-sm;
+    transition: all $transition-base;
+    cursor: pointer;
+
+    &-first,
+    &-second {
+      transition: all $transition-base;
+      svg {
+        fill: currentColor;
+        width: 1em;
+        height: 1em;
+      }
+    }
+
+    &-first {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 100%;
+      overflow: hidden;
+      color: transparent;
+      pointer-events: none;
+    }
+
+    &-second {
+      color: $fill-secondary;
+    }
+
+    &-full {
+      .#{$rate-prefix-cls}-star-second {
+        color: inherit;
+      }
+    }
+
+    &-half {
+      .#{$rate-prefix-cls}-star-first {
+        color: inherit;
+      }
+    }
+
+    &:hover {
+      transform: scale(1.15);
+    }
+
+    &:active {
+      transform: scale(0.9);
+    }
+  }
+
+  &-disabled {
+    .#{$rate-prefix-cls}-star {
+      cursor: default;
+      &:hover {
+        transform: none;
+      }
+    }
+  }
+}

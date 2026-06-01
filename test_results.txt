@@ -1,0 +1,145 @@
+
+> fast-ui@1.0.0 test /Users/soporte/Documents/FASTDEV_V2/fast-development/fast-ui
+> vitest --run
+
+
+ RUN  v4.1.5 /Users/soporte/Documents/FASTDEV_V2/fast-development/fast-ui
+
+ ❯ src/components/Notification/Notification.test.tsx (1 test | 1 failed) 17ms
+     × dynamically injects a notification into the DOM upon trigger 15ms
+ ✓ src/components/Upload/Upload.test.tsx (2 tests) 42ms
+ ❯ src/components/Input/Input.test.tsx (4 tests | 1 failed) 46ms
+     ✓ renders correctly with default props 19ms
+     ✓ handles value changes accurately 10ms
+     × respects disabled state and prevents interactions 10ms
+     ✓ renders prefix and suffix adornments 4ms
+ ❯ src/components/Select/Select.test.tsx (3 tests | 1 failed) 60ms
+     ✓ renders wrapper correctly 40ms
+     ✓ applies the disabled class correctly 8ms
+     × renders different sizes by applying the correct css classes 9ms
+ ✓ src/components/Drawer/Drawer.test.tsx (3 tests) 56ms
+stderr | src/components/Modal/Modal.test.tsx > Modal Component > mounts and renders content correctly when open is true
+Warning: wrapClassName is deprecated, please use classNames instead.
+Warning: wrapClassName is deprecated, please use classNames instead.
+
+stderr | src/components/Modal/Modal.test.tsx > Modal Component > triggers onCancel callback when the close button is clicked
+Warning: wrapClassName is deprecated, please use classNames instead.
+Warning: wrapClassName is deprecated, please use classNames instead.
+
+ ✓ src/components/Button/Button.test.tsx (6 tests) 35ms
+stderr | src/components/Modal/Modal.test.tsx > Modal Component > triggers onOk callback when the default confirm button is clicked
+Warning: wrapClassName is deprecated, please use classNames instead.
+Warning: wrapClassName is deprecated, please use classNames instead.
+
+ ✓ src/components/Modal/Modal.test.tsx (4 tests) 90ms
+ ❯ src/components/Table/Table.test.tsx (3 tests | 2 failed) 38ms
+     ✓ renders headers and data rows correctly 26ms
+     × gracefully renders an empty state when no data is provided 6ms
+     × applies loading class when loading state is true 4ms
+ ✓ src/components/DatePicker/DatePicker.test.tsx (3 tests) 42ms
+ ✓ src/components/Form/Form.test.tsx (2 tests) 22ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/Input/Input.test.tsx > Input Component > respects disabled state and prevents interactions
+AssertionError: expected "vi.fn()" to not be called at all, but actually been called 1 times
+
+Received:
+
+  1st vi.fn() call:
+
+    Array [
+      SyntheticBaseEvent {},
+    ]
+
+
+Number of calls: 1
+
+ ❯ src/components/Input/Input.test.tsx:33:30
+     31|
+     32|     fireEvent.change(input, { target: { value: 'Hack' } });
+     33|     expect(handleChange).not.toHaveBeenCalled();
+       |                              ^
+     34|   });
+     35|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  src/components/Notification/Notification.test.tsx > Notification System (useNotification) > dynamically injects a notification into the DOM upon trigger
+TypeError: useNotification is not a function or its return value is not iterable
+ ❯ NotificationTestRunner src/components/Notification/Notification.test.tsx:8:32
+      6| // Componente de prueba para consumir el hook de notificaciones
+      7| const NotificationTestRunner = () => {
+      8|   const [api, contextHolder] = useNotification();
+       |                                ^
+      9|
+     10|   return (
+ ❯ Object.react_stack_bottom_frame node_modules/.pnpm/react-dom@19.2.4_react@19.2.4/node_modules/react-dom/cjs/react-dom-client.development.js:25904:20
+ ❯ renderWithHooks node_modules/.pnpm/react-dom@19.2.4_react@19.2.4/node_modules/react-dom/cjs/react-dom-client.development.js:7662:22
+ ❯ updateFunctionComponent node_modules/.pnpm/react-dom@19.2.4_react@19.2.4/node_modules/react-dom/cjs/react-dom-client.development.js:10166:19
+ ❯ beginWork node_modules/.pnpm/react-dom@19.2.4_react@19.2.4/node_modules/react-dom/cjs/react-dom-client.development.js:11778:18
+ ❯ runWithFiberInDEV node_modules/.pnpm/react-dom@19.2.4_react@19.2.4/node_modules/react-dom/cjs/react-dom-client.development.js:874:13
+ ❯ performUnitOfWork node_modules/.pnpm/react-dom@19.2.4_react@19.2.4/node_modules/react-dom/cjs/react-dom-client.development.js:17641:22
+ ❯ workLoopSync node_modules/.pnpm/react-dom@19.2.4_react@19.2.4/node_modules/react-dom/cjs/react-dom-client.development.js:17469:41
+ ❯ renderRootSync node_modules/.pnpm/react-dom@19.2.4_react@19.2.4/node_modules/react-dom/cjs/react-dom-client.development.js:17450:11
+ ❯ performWorkOnRoot node_modules/.pnpm/react-dom@19.2.4_react@19.2.4/node_modules/react-dom/cjs/react-dom-client.development.js:16583:35
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  src/components/Select/Select.test.tsx > Select Component > renders different sizes by applying the correct css classes
+Error: expect(element).toHaveClass("fi-select-lg")
+
+Expected the element to have class:
+  fi-select-lg
+Received:
+  fi-select fi-select fi-select-large fi-select-single fi-select-show-arrow
+ ❯ src/components/Select/Select.test.tsx:32:47
+     30|   it('renders different sizes by applying the correct css classes', ()…
+     31|     const { rerender } = render(<Select size="large" data-testid="test…
+     32|     expect(screen.getByTestId('test-select')).toHaveClass('fi-select-l…
+       |                                               ^
+     33|
+     34|     rerender(<Select size="small" data-testid="test-select" />);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  src/components/Table/Table.test.tsx > Table Component > gracefully renders an empty state when no data is provided
+Error: expect(received).toBeInTheDocument()
+
+received value must be an HTMLElement or an SVGElement.
+Received has type:  Null
+Received has value: null
+ ❯ src/components/Table/Table.test.tsx:36:26
+     34|     // Verify the empty state component is integrated and visible
+     35|     const emptyWrapper = document.querySelector('.fi-empty');
+     36|     expect(emptyWrapper).toBeInTheDocument();
+       |                          ^
+     37|   });
+     38|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  src/components/Table/Table.test.tsx > Table Component > applies loading class when loading state is true
+Error: expect(element).toHaveClass("fi-table-wrapper-loading")
+
+Expected the element to have class:
+  fi-table-wrapper-loading
+Received:
+  fi-table-wrapper
+ ❯ src/components/Table/Table.test.tsx:43:21
+     41|
+     42|     const wrapper = document.querySelector('.fi-table-wrapper');
+     43|     expect(wrapper).toHaveClass('fi-table-wrapper-loading');
+       |                     ^
+     44|   });
+     45| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  4 failed | 6 passed (10)
+      Tests  5 failed | 26 passed (31)
+   Start at  09:16:54
+   Duration  2.13s (transform 2.43s, setup 1.14s, import 6.45s, tests 448ms, environment 4.89s)
+
+ ELIFECYCLE  Test failed. See above for more details.

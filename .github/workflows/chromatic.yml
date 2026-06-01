@@ -1,0 +1,46 @@
+name: Chromatic Visual Regression
+
+# Runs on every push/PR so visual diffs are always captured.
+# Chromatic itself blocks merges via its own PR check — not via this workflow's exit code.
+on:
+  push:
+    branches: ['main', 'master']
+  pull_request:
+    branches: ['main', 'master']
+
+jobs:
+  chromatic:
+    name: Visual Regression Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          # Full history is required for TurboSnap (onlyChanged) to work correctly.
+          fetch-depth: 0
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Publish to Chromatic
+        uses: chromaui/action@latest
+        with:
+          # Store CHROMATIC_PROJECT_TOKEN as a GitHub Actions secret.
+          # In the repo: Settings → Secrets → Actions → New secret
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          # Use our config file so settings are version-controlled.
+          configFile: chromatic.config.json
+          # On main, auto-accept all changes to update the baseline.
+          autoAcceptChanges: ${{ github.ref == 'refs/heads/main' }}

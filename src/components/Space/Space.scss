@@ -1,0 +1,104 @@
+@use "../../styles/_variables.scss" as *;
+
+.#{$prefix}-space {
+  display: inline-flex;
+
+  &-horizontal {
+    flex-direction: row;
+  }
+
+  &-vertical {
+    flex-direction: column;
+  }
+
+  &-align-center {
+    align-items: center;
+  }
+
+  &-align-start {
+    align-items: flex-start;
+  }
+
+  &-align-end {
+    align-items: flex-end;
+  }
+
+  &-align-baseline {
+    align-items: baseline;
+  }
+
+  &-wrap {
+    flex-wrap: wrap;
+  }
+}
+
+.#{$prefix}-space-compact {
+  display: inline-flex;
+
+  &-block {
+    display: flex;
+    width: 100%;
+  }
+
+  &-horizontal {
+    flex-direction: row;
+    align-items: center;
+
+    > * {
+      // Collapse adjacent borders
+      &:not(:first-child) {
+        margin-inline-start: calc(#{$spacing-xxs} * -0.5);
+      }
+
+      // Keep focused/hovered element on top
+      &:hover,
+      &:focus-within {
+        z-index: 1;
+        position: relative;
+      }
+    }
+
+    // Button-specific: flatten inner border-radius on adjacent items
+    > .#{$prefix}-btn:not(:first-child):not(:last-child),
+    > *:not(:first-child):not(:last-child) > .#{$prefix}-btn {
+      border-radius: 0;
+    }
+
+    > .#{$prefix}-btn:first-child,
+    > *:first-child > .#{$prefix}-btn {
+      border-start-end-radius: 0;
+      border-end-end-radius: 0;
+    }
+
+    > .#{$prefix}-btn:last-child,
+    > *:last-child > .#{$prefix}-btn {
+      border-start-start-radius: 0;
+      border-end-start-radius: 0;
+    }
+  }
+
+  &-vertical {
+    flex-direction: column;
+
+    > *:not(:first-child) {
+      margin-top: calc(#{$spacing-xxs} * -0.5);
+    }
+
+    > .#{$prefix}-btn:not(:first-child):not(:last-child),
+    > *:not(:first-child):not(:last-child) > .#{$prefix}-btn {
+      border-radius: 0;
+    }
+
+    > .#{$prefix}-btn:first-child,
+    > *:first-child > .#{$prefix}-btn {
+      border-end-start-radius: 0;
+      border-end-end-radius: 0;
+    }
+
+    > .#{$prefix}-btn:last-child,
+    > *:last-child > .#{$prefix}-btn {
+      border-start-start-radius: 0;
+      border-start-end-radius: 0;
+    }
+  }
+}

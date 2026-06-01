@@ -1,0 +1,130 @@
+@use "../../styles/_variables.scss" as *;
+
+.#{$prefix}-form {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: var(--#{$prefix}-color-text, #{$text-color});
+  font-size: $font-size-base;
+  font-family: $font-family;
+  line-height: $line-height;
+
+  &-item {
+    margin-bottom: $spacing-lg;
+    vertical-align: top;
+    transition: all $transition-base;
+
+    &-label {
+      display: inline-block;
+      flex-grow: 0;
+      white-space: nowrap;
+      text-align: right;
+      vertical-align: middle;
+      margin-bottom: $spacing-xs;
+
+      label {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        height: auto;
+        min-height: 22px;
+        color: var(--#{$prefix}-color-text, #{$text-color});
+        font-size: $font-size-md;
+        font-weight: 500;
+
+        &::after {
+          content: ":";
+          position: relative;
+          margin-inline: $spacing-xxs $spacing-sm;
+        }
+      }
+    }
+
+    &-control {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      align-items: flex-start;
+    }
+
+    &-explain {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      color: var(--#{$prefix}-error-color, #{$error-color});
+      font-size: $font-size-sm;
+      line-height: $line-height;
+      margin-top: $spacing-xxs;
+      animation: formErrorIn $transition-base both;
+    }
+
+    &-required {
+      .#{$prefix}-form-item-label > label::before {
+        display: inline-block;
+        margin-inline-end: $spacing-xs;
+        color: var(--#{$prefix}-error-color, #{$error-color});
+        font-size: $font-size-md;
+        content: "*";
+      }
+    }
+  }
+
+  // Layouts
+  &-vertical {
+    .#{$prefix}-form-item {
+      flex-direction: column;
+      &-label {
+        text-align: left;
+        label::after {
+          display: none;
+        }
+      }
+    }
+  }
+
+  &-horizontal {
+    .#{$prefix}-form-item {
+      display: flex;
+      flex-wrap: nowrap;
+      &-label {
+        flex: 0 0 auto;
+        width: 140px;
+        margin-right: $spacing-md;
+      }
+      &-control {
+        flex: 1 1 auto;
+      }
+    }
+  }
+
+  &-inline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-lg;
+    .#{$prefix}-form-item {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-bottom: 0;
+      &-label {
+        margin-bottom: 0;
+        margin-right: $spacing-sm;
+        label::after {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+@keyframes formErrorIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,107 @@
+@use "../../styles/_variables.scss" as *;
+
+.#{$prefix}-divider {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: $text-color;
+  font-size: $font-size-md;
+  font-variant: tabular-nums;
+  line-height: $line-height;
+  list-style: none;
+  background: $border-color-secondary;
+
+  // Custom variables with defaults
+  --#{$prefix}-divider-orientation-margin: 5%;
+  --#{$prefix}-divider-text-padding-inline: 1em;
+  --#{$prefix}-divider-vertical-margin-inline: #{$spacing-sm};
+
+  &-horizontal {
+    display: flex;
+    clear: both;
+    width: 100%;
+    min-width: 100%;
+    height: 1px;
+  }
+
+  &-vertical {
+    position: relative;
+    top: -0.06em;
+    display: inline-block;
+    width: 1px;
+    height: 0.9em;
+    margin: 0 var(--#{$prefix}-divider-vertical-margin-inline);
+    vertical-align: middle;
+    background: $border-color-secondary;
+  }
+
+  // --- Sizes ---
+  &-size-small {
+    margin: $spacing-sm 0;
+  }
+  &-size-medium {
+    margin: $spacing-lg 0;
+  }
+  &-size-large {
+    margin: calc(#{$spacing-xl} + #{$spacing-xl}) 0;
+  }
+
+  &-dashed {
+    background: none;
+    border-top: 1px dashed $border-color-secondary;
+  }
+
+  // --- With Text ---
+  &-with-text {
+    display: flex;
+    align-items: center; // Vertically center the lines and text
+    margin: $spacing-md 0;
+    color: $text-color;
+    font-weight: 500;
+    font-size: $font-size-lg;
+    white-space: nowrap;
+    text-align: center;
+    background: transparent;
+    border-top: 0;
+
+    &::before,
+    &::after {
+      content: "";
+      flex: 1;
+      border-top: 1px solid $border-color-secondary;
+    }
+
+    .#{$prefix}-divider-inner-text {
+      display: inline-block;
+      padding: 0 var(--#{$prefix}-divider-text-padding-inline);
+    }
+
+    &-left {
+      &::before {
+        flex: 0 0 var(--#{$prefix}-divider-orientation-margin);
+      }
+    }
+
+    &-right {
+      &::after {
+        flex: 0 0 var(--#{$prefix}-divider-orientation-margin);
+      }
+    }
+  }
+
+  &-plain {
+    font-weight: normal;
+    font-size: $font-size-md;
+    .#{$prefix}-divider-inner-text {
+      font-weight: normal;
+    }
+  }
+}
+
+// Special case for dashed with text
+.#{$prefix}-divider-dashed.#{$prefix}-divider-with-text {
+  &::before,
+  &::after {
+    border-top-style: dashed;
+  }
+}

@@ -1,0 +1,216 @@
+@use "../../styles/variables" as *;
+
+$upload-prefix-cls: "#{$prefix}-upload";
+
+.#{$prefix}-upload {
+  &-container {
+    display: inline-block;
+    width: 100%;
+  }
+
+  &-picture-card-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-sm;
+  }
+}
+
+.#{$upload-prefix-cls} {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: var(--#{$prefix}-color-text, #{$text-color});
+  font-size: $font-size-md;
+  list-style: none;
+  outline: 0;
+
+  &-select {
+    display: inline-block;
+  }
+
+  // Dragger Variant
+  &-drag {
+    position: relative;
+    width: 100%;
+    background: var(--#{$prefix}-color-fill-quaternary, #{$fill-quaternary});
+    border: 1px dashed var(--#{$prefix}-color-border, #{$border-color});
+    border-radius: $border-radius-base;
+    cursor: pointer;
+    transition:
+      border-color $transition-base,
+      background-color $transition-base;
+    text-align: center;
+
+    .#{$upload-prefix-cls}-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: $spacing-xl $spacing-md;
+    }
+
+    &:hover {
+      border-color: $primary-color;
+      background-color: var(--#{$prefix}-color-fill-tertiary, #{$fill-tertiary});
+    }
+
+    &-icon {
+      font-size: $font-size-heading-1;
+      color: $primary-color;
+      margin-bottom: $spacing-lg;
+      line-height: 1;
+    }
+
+    &-text {
+      margin: 0 0 $spacing-sm;
+      color: var(--#{$prefix}-color-text-heading, #{$text-color-heading});
+      font-size: $font-size-lg;
+      font-weight: 500;
+    }
+
+    &-hint {
+      color: var(--#{$prefix}-color-text-secondary, #{$text-color-secondary});
+      font-size: $font-size-md;
+      line-height: $line-height;
+    }
+  }
+
+  // Picture Card & Circle Variants
+  &-picture-card-wrapper {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: $spacing-sm;
+  }
+
+  &-picture-card,
+  &-picture-circle {
+    width: 104px;
+    height: 104px;
+    margin: 0;
+    padding: $spacing-sm;
+    vertical-align: top;
+    background-color: var(--#{$prefix}-color-fill-quaternary, #{$fill-quaternary});
+    border: 1px dashed var(--#{$prefix}-color-border, #{$border-color});
+    border-radius: $border-radius-base;
+    cursor: pointer;
+    transition: all $transition-base;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+
+    > .#{$upload-prefix-cls} {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+    }
+
+    &:hover {
+      border-color: $primary-color;
+      background-color: $color-primary-bg;
+    }
+
+    .#{$upload-prefix-cls}-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      color: var(--#{$prefix}-color-text, #{$text-color});
+
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+
+  &-picture-circle {
+    border-radius: 50%;
+
+    .#{$upload-prefix-cls}-btn {
+      border-radius: 50%;
+      overflow: hidden;
+
+      img {
+        border-radius: 50%;
+      }
+    }
+  }
+
+  input[type="file"] {
+    cursor: pointer;
+  }
+}
+
+// List of uploaded files
+.#{$upload-prefix-cls}-list {
+  box-sizing: border-box;
+  margin-top: $spacing-sm;
+  padding: 0;
+  list-style: none;
+
+  &-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-sm $spacing-sm;
+    margin-top: $spacing-sm;
+    background-color: transparent;
+    border-radius: $border-radius-sm;
+    transition: background-color $transition-base;
+    font-size: $font-size-md;
+
+    &:hover {
+      background-color: var(--#{$prefix}-color-fill-quaternary, rgba(0, 0, 0, 0.02));
+
+      .#{$upload-prefix-cls}-list-item-actions {
+        opacity: 1;
+      }
+    }
+
+    &-info {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      gap: $spacing-sm;
+      color: var(--#{$prefix}-color-text, #{$text-color});
+    }
+
+    &-name {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      text-decoration: none;
+      color: inherit;
+      transition: color $transition-base;
+
+      &:hover {
+        color: $primary-color;
+      }
+    }
+
+    &-actions {
+      margin-left: $spacing-sm;
+      color: var(--#{$prefix}-color-text-secondary, #{$text-color-secondary});
+      cursor: pointer;
+      opacity: 0;
+      transition: all $transition-base;
+      display: flex;
+      align-items: center;
+
+      &:hover {
+        color: var(--#{$prefix}-color-error, #{$error-color});
+      }
+    }
+  }
+}

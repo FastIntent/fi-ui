@@ -1,0 +1,49 @@
+@use "../../styles/_variables.scss" as *;
+
+.#{$prefix}-popconfirm {
+  // We use the same base structure as Popover, but within the body content area
+  &-inner-content {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+    max-width: 250px; // Constraint specifically for confirm modals
+  }
+
+  &-message {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-sm;
+
+    &-icon {
+      font-size: $font-size-md;
+      margin-top: $spacing-xxs; // Optical alignment with the first line of text
+      color: var(--#{$prefix}-color-warning, #{$warning-color}); // Warning yellow by default
+      display: flex;
+    }
+
+    &-text {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-xs;
+      flex: 1;
+    }
+  }
+
+  &-title {
+    font-weight: 600;
+    font-size: $font-size-md;
+    color: var(--#{$prefix}-color-text, rgba(0, 0, 0, 0.88));
+  }
+
+  &-description {
+    font-size: $font-size-md;
+    color: var(--#{$prefix}-color-text-secondary, rgba(0, 0, 0, 0.65));
+  }
+
+  &-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: $spacing-sm;
+    margin-top: $spacing-sm;
+  }
+}

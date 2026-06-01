@@ -1,0 +1,41 @@
+@use "../../styles/variables" as *;
+
+$empty-prefix-cls: "#{$prefix}-empty";
+
+.#{$empty-prefix-cls} {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-xl 0;
+  text-align: center;
+  box-sizing: border-box;
+
+  &-image {
+    margin-bottom: $spacing-md;
+    color: $text-color-quaternary;
+
+    img,
+    svg {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+
+  &-description {
+    color: $text-color-secondary;
+    font-size: $font-size-md;
+    margin-bottom: $spacing-md;
+  }
+
+  &-footer {
+    margin-top: $spacing-sm;
+  }
+}
+
+// Dark Mode Support
+[data-theme="dark"] .#{$empty-prefix-cls} {
+  &-description {
+    color: $text-color-tertiary;
+  }
+}

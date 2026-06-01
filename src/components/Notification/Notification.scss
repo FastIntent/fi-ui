@@ -1,0 +1,173 @@
+@use "../../styles/_variables.scss" as *;
+
+$notification-prefix-cls: "#{$prefix}-notification";
+
+// Placement containers
+.#{$notification-prefix-cls} {
+  position: fixed;
+  z-index: 1010;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  width: 384px;
+  max-width: calc(100vw - 48px);
+
+  &-topRight {
+    top: 24px;
+    right: 24px;
+    align-items: flex-end;
+  }
+  &-topLeft {
+    top: 24px;
+    left: 24px;
+    align-items: flex-start;
+  }
+  &-bottomRight {
+    bottom: 24px;
+    right: 24px;
+    align-items: flex-end;
+    flex-direction: column-reverse;
+  }
+  &-bottomLeft {
+    bottom: 24px;
+    left: 24px;
+    align-items: flex-start;
+    flex-direction: column-reverse;
+  }
+  &-top {
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    align-items: center;
+  }
+  &-bottom {
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    align-items: center;
+    flex-direction: column-reverse;
+  }
+}
+
+// Individual notice
+.#{$notification-prefix-cls}-notice {
+  pointer-events: all;
+  position: relative;
+  background: $bg-container;
+  border: 1px solid var(--#{$prefix}-color-border-secondary, rgba(0, 0, 0, 0.06));
+  border-radius: $border-radius-lg;
+  box-shadow:
+    0 6px 24px rgba(0, 0, 0, 0.1),
+    0 2px 8px rgba(0, 0, 0, 0.06);
+  padding: $spacing-md calc(#{$spacing-xl} + #{$spacing-xs}) $spacing-md $spacing-md;
+  min-width: 280px;
+  max-width: 100%;
+  animation: #{$prefix}-notification-in 0.25s cubic-bezier(0.215, 0.61, 0.355, 1) both;
+  cursor: default;
+
+  &-content {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-sm;
+  }
+
+  &-message-wrapper {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &-message {
+    font-weight: 600;
+    font-size: $font-size-md;
+    color: $text-color;
+    line-height: $line-height-sm;
+  }
+
+  &-description {
+    margin-top: $spacing-xs;
+    font-size: $font-size-sm;
+    color: $text-color-secondary;
+    line-height: $line-height;
+  }
+
+  &-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    font-size: $font-size-xl;
+    line-height: 1;
+    margin-top: $spacing-xxs;
+  }
+
+  &-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: $text-color-tertiary;
+    font-size: $font-size-sm;
+    line-height: 1;
+    padding: $spacing-xxs $spacing-xs;
+    border-radius: $border-radius-sm;
+    transition:
+      color $transition-fast,
+      background $transition-fast;
+
+    &:hover {
+      color: $text-color;
+      background: var(--#{$prefix}-color-border-secondary, rgba(0, 0, 0, 0.06));
+    }
+  }
+
+  // Type variants — SVG icons are already circular filled
+  &-success .#{$prefix}-notification-icon {
+    color: $success-color;
+  }
+  &-error .#{$prefix}-notification-icon {
+    color: $error-color;
+  }
+  &-warning .#{$prefix}-notification-icon {
+    color: $warning-color;
+  }
+  &-info .#{$prefix}-notification-icon {
+    color: $primary-color;
+  }
+}
+
+@keyframes #{$prefix}-notification-in {
+  from {
+    opacity: 0;
+    transform: translateX(30px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes #{$prefix}-notification-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+    max-height: 200px;
+    margin-bottom: 0;
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+    max-height: 0;
+    /* stylelint-disable-next-line scale-unlimited/declaration-strict-value */
+    margin-bottom: -#{$spacing-sm};
+  }
+}
+
+.#{$notification-prefix-cls}-notice-leaving {
+  animation: #{$prefix}-notification-out 0.2s ease-in forwards;
+  overflow: hidden;
+}

@@ -1,0 +1,68 @@
+@use "./variables" as *;
+
+/* Amber Theme (Golden UI) */
+[data-theme="amber"] {
+  /* --- Primary Palette --- */
+  /* Main golden color matching the provided design */
+  --#{$prefix}-primary-color: #e99900;
+
+  /* Hover state: softer gold/tan */
+  --#{$prefix}-primary-color-hover: #d9b674;
+
+  /* Active state (click): slightly darker gold */
+  --#{$prefix}-primary-color-active: #cc8400;
+
+  /* --- Functional Colors --- */
+  /* Warning mapped to the lightest gold for harmony */
+  --#{$prefix}-warning-color: #e7c684;
+
+  /* Info color mapped to primary to keep the layout cohesive */
+  --#{$prefix}-info-color: var(--#{$prefix}-primary-color);
+
+  /* --- Neutral Colors --- */
+  /* Clean dark gray text to contrast the golden accents */
+  --#{$prefix}-color-text: #1a1b1e;
+  --#{$prefix}-color-text-secondary: #5c5f66;
+  --#{$prefix}-color-text-tertiary: #868e96;
+  --#{$prefix}-color-text-quaternary: #ced4da;
+
+  /* Soft borders */
+  --#{$prefix}-color-border: #e9ecef;
+  --#{$prefix}-color-border-secondary: #f1f3f5;
+
+  /* Background colors (A very faint warm tint to match the gold) */
+  --#{$prefix}-color-bg-layout: #faf9f7;
+  --#{$prefix}-color-bg-container: #ffffff;
+  --#{$prefix}-color-bg-elevated: #ffffff;
+
+  /* --- Layout Specific Overrides --- */
+  /* Uses a faint primary color background for active states in the sidebar */
+  --#{$prefix}-layout-sider-active-color: var(--#{$prefix}-primary-color);
+
+  /* --- Menu Item Structural Overrides (Sidebar only) --- */
+  .#{$prefix}-menu-sidebar {
+    .#{$prefix}-menu-item,
+    .#{$prefix}-menu-submenu-title {
+      margin: 0 !important;
+      width: 100% !important;
+      border-radius: 0 !important;
+    }
+
+    /* Selected item gold styling with vertical bar */
+    .#{$prefix}-menu-item-selected,
+    .#{$prefix}-menu-submenu-selected > .#{$prefix}-menu-submenu-title {
+      background-color: #fff7e2 !important;
+      color: #1a1b1e !important;
+      box-shadow: inset 3px 0 0 0 #c29f59 !important;
+    }
+  }
+
+  /* Regular Menu selection (when not in sidebar, e.g. Dropdowns) */
+  .#{$prefix}-menu:not(.#{$prefix}-menu-sidebar) {
+    .#{$prefix}-menu-item-selected {
+      background-color: color-mix(in srgb, var(--#{$prefix}-primary-color) 10%, transparent);
+      color: var(--#{$prefix}-primary-color);
+      font-weight: 600;
+    }
+  }
+}

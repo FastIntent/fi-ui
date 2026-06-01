@@ -1,0 +1,459 @@
+@use "sass:math";
+@use "../../styles/_variables.scss" as *;
+
+.#{$prefix}-select {
+  box-sizing: border-box;
+  margin: 0;
+  color: var(--#{$prefix}-color-text, #{$text-color});
+  font-size: $font-size-md;
+  font-family: $font-family;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  width: 100%;
+  vertical-align: middle;
+
+  background-color: var(--#{$prefix}-select-color-bg, #{$bg-container});
+  border: 1px solid var(--#{$prefix}-select-color-border, #{$border-color});
+  border-radius: var(--#{$prefix}-select-border-radius, #{$border-radius-base});
+  transition: all $transition-base;
+  height: $control-height-md;
+  padding: 0 $padding-inline-md;
+  outline: none;
+
+  // --- rc-select internal structure ---
+  &-selector {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-height: inherit;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  &-selection-item {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  &-selection-placeholder {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: $text-color-quaternary;
+    pointer-events: none;
+  }
+
+  &-selection-search {
+    position: relative;
+    max-width: 100%;
+
+    &-input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: inherit;
+      cursor: pointer;
+      width: 100%;
+      padding: 0;
+      font-size: inherit;
+    }
+  }
+
+  // --- Multiple / Tags mode ---
+  &-multiple {
+    height: auto;
+    min-height: $control-height-md;
+    // Keep right padding so arrow has space; remove left (selector handles it)
+    padding-inline-start: 0;
+    padding-inline-end: $padding-inline-md;
+
+    // Content/selector wrapper: must grow with tags
+    .#{$prefix}-select-content,
+    .#{$prefix}-select-selector {
+      height: auto !important;
+      min-height: 0 !important;
+      overflow: visible !important;
+      flex-wrap: wrap;
+      padding-inline: $padding-inline-sm;
+      padding-block: calc(
+        (#{$control-height-md} - #{$select-multiple-item-height} - 2 * #{$border-width}) / 2
+      );
+      align-items: center;
+    }
+
+    .#{$prefix}-select-selection-overflow {
+      display: flex;
+      flex: auto;
+      flex-wrap: wrap;
+      min-width: 0;
+      align-items: center;
+      gap: $spacing-xs;
+    }
+
+    .#{$prefix}-select-selection-overflow-item {
+      flex: none;
+      max-width: 100%;
+    }
+
+    // Tag pill
+    .#{$prefix}-select-selection-item {
+      display: inline-flex !important;
+      align-items: center;
+      flex: none !important;
+      box-sizing: border-box;
+      height: $select-multiple-item-height;
+      line-height: 1;
+      padding-inline-start: $spacing-xs;
+      padding-inline-end: $margin-xxs;
+      margin-inline-end: $margin-xxs;
+      background: var(--#{$prefix}-select-multiple-item-bg, #{$fill-secondary}) !important;
+      border-radius: $border-radius-sm;
+      border: $border-width $border-style
+        var(--#{$prefix}-select-multiple-item-border-color, #{$border-color-secondary});
+      white-space: nowrap;
+      cursor: default;
+      user-select: none;
+      overflow: visible !important;
+      text-overflow: unset !important;
+      white-space: nowrap !important;
+    }
+
+    .#{$prefix}-select-selection-item-content {
+      margin-inline-end: $spacing-xs;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .#{$prefix}-select-selection-item-remove {
+      display: inline-flex;
+      align-items: center;
+      color: $color-icon;
+      font-size: $font-size-icon;
+      line-height: 0;
+      cursor: pointer;
+      transition: color $transition-fast;
+      &:hover {
+        color: $color-icon-hover;
+      }
+    }
+
+    .#{$prefix}-select-selection-search {
+      display: inline-flex;
+      align-items: center;
+      max-width: 100%;
+      height: $select-multiple-item-height;
+    }
+
+    .#{$prefix}-select-selection-search-input {
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      border: none;
+      outline: none;
+      box-sizing: border-box;
+      height: $select-multiple-item-height;
+      font-size: $font-size-md;
+      font-family: $font-family;
+      line-height: 1;
+      flex: auto;
+      min-width: 4px;
+    }
+
+    .#{$prefix}-select-selection-search-mirror {
+      position: absolute;
+      top: 0;
+      inset-inline-start: 0;
+      z-index: -1;
+      white-space: pre;
+      visibility: hidden;
+      pointer-events: none;
+    }
+  }
+
+  // Legacy selectors (kept for backward compat)
+  &-content {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    height: 100%;
+  }
+
+  &-input {
+    cursor: pointer;
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    width: 100%;
+    height: 100%;
+    padding: 0 !important;
+    color: inherit;
+    caret-color: $primary-color;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  &:focus-within,
+  &.#{$prefix}-select-focused,
+  &.#{$prefix}-select-open {
+    border-color: $primary-color !important;
+    box-shadow: 0 0 0 2px $primary-color-outline !important;
+  }
+
+  &:not(&-disabled):hover {
+    border-color: $primary-color-hover;
+  }
+
+  &-suffix {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $text-color-quaternary;
+    font-size: $font-size-sm;
+    transition: transform $transition-base;
+    pointer-events: none;
+    margin-left: $spacing-sm;
+    z-index: 10;
+  }
+
+  &-open &-suffix {
+    transform: rotate(180deg);
+  }
+
+  &-clear {
+    position: absolute;
+    right: 12px;
+    background: inherit;
+    cursor: pointer;
+    pointer-events: auto;
+    opacity: 0;
+    transition: opacity $transition-fast;
+
+    &-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      height: 16px;
+      background-color: $border-color-secondary;
+      border-radius: 50%;
+      font-size: $font-size-md;
+      transition: all $transition-fast;
+
+      &:hover {
+        color: $text-color-secondary;
+        background-color: color-mix(in srgb, $text-color 8%, transparent);
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  &:hover &-clear {
+    opacity: 1;
+  }
+
+  &-disabled {
+    cursor: not-allowed;
+    background-color: $bg-layout;
+    color: $text-color-quaternary;
+
+    .#{$prefix}-select-input {
+      cursor: not-allowed;
+    }
+  }
+
+  &-large {
+    height: $control-height-lg;
+    &.#{$prefix}-select-multiple {
+      min-height: $control-height-lg;
+      .#{$prefix}-select-content,
+      .#{$prefix}-select-selector {
+        padding-block: calc(
+          (#{$control-height-lg} - #{$select-multiple-item-height-lg} - 2 * #{$border-width}) / 2
+        );
+      }
+      .#{$prefix}-select-selection-item {
+        height: $select-multiple-item-height-lg;
+        line-height: 1;
+      }
+      .#{$prefix}-select-selection-search,
+      .#{$prefix}-select-selection-search-input {
+        height: $select-multiple-item-height-lg;
+      }
+    }
+  }
+
+  &-small {
+    height: $control-height-sm;
+    padding: 0 $padding-inline-sm;
+    &.#{$prefix}-select-multiple {
+      min-height: $control-height-sm;
+      padding-inline-start: 0;
+      padding-inline-end: $padding-inline-sm;
+      .#{$prefix}-select-content,
+      .#{$prefix}-select-selector {
+        padding-inline: $spacing-xs;
+        padding-block: calc(
+          (#{$control-height-sm} - #{$select-multiple-item-height-sm} - 2 * #{$border-width}) / 2
+        );
+      }
+      .#{$prefix}-select-selection-item {
+        height: $select-multiple-item-height-sm;
+        line-height: 1;
+        font-size: $font-size-sm;
+      }
+      .#{$prefix}-select-selection-search,
+      .#{$prefix}-select-selection-search-input {
+        height: $select-multiple-item-height-sm;
+      }
+    }
+  }
+
+  &-status-error {
+    border-color: $error-color !important;
+    &:not(.#{$prefix}-select-disabled):hover {
+      border-color: $error-color-hover !important;
+    }
+    &:focus-within,
+    &.#{$prefix}-select-focused,
+    &.#{$prefix}-select-open {
+      box-shadow: 0 0 0 2px $error-color-outline !important;
+    }
+  }
+
+  &-dropdown {
+    position: absolute;
+    z-index: 1050 !important;
+    font-size: $font-size-md;
+    font-family: $font-family;
+    background: $bg-elevated;
+    border-radius: $border-radius-base;
+    box-shadow: $shadow-popup;
+    padding: $spacing-xs;
+
+    &-hidden {
+      display: none;
+    }
+
+    .#{$prefix}-select-item {
+      display: flex;
+      align-items: center;
+      min-height: 32px;
+      padding: $spacing-xs $padding-inline-md;
+      color: $text-color;
+      cursor: pointer;
+      transition: background $transition-fast;
+      border-radius: $border-radius-sm;
+      margin-bottom: $spacing-xxs;
+      user-select: none;
+
+      &-option-active {
+        background-color: $border-color-secondary;
+      }
+
+      &-option-selected {
+        font-weight: 600;
+        background-color: color-mix(in srgb, $primary-color 12%, transparent);
+        color: $primary-color;
+      }
+
+      &-option-state {
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+        padding-left: $spacing-sm;
+        color: $primary-color;
+        font-size: $font-size-sm;
+        flex-shrink: 0;
+      }
+    }
+  }
+
+  // --- Animations ---
+  &-slide-up-enter,
+  &-slide-up-appear {
+    animation-duration: 0.2s;
+    animation-fill-mode: both;
+    animation-play-state: paused;
+    opacity: 0;
+  }
+
+  &-slide-up-leave {
+    animation-duration: 0.2s;
+    animation-fill-mode: both;
+    animation-play-state: paused;
+  }
+
+  &-slide-up-enter.#{$prefix}-select-slide-up-enter-active,
+  &-slide-up-appear.#{$prefix}-select-slide-up-appear-active {
+    animation-name: fiSelectSlideUpIn;
+    animation-play-state: running;
+  }
+
+  &-slide-up-leave.#{$prefix}-select-slide-up-leave-active {
+    animation-name: fiSelectSlideUpOut;
+    animation-play-state: running;
+  }
+
+  @keyframes fiSelectSlideUpIn {
+    0% {
+      transform: scaleY(0.8);
+      transform-origin: 0% 0%;
+      opacity: 0;
+    }
+    100% {
+      transform: scaleY(1);
+      transform-origin: 0% 0%;
+      opacity: 1;
+    }
+  }
+  @keyframes fiSelectSlideUpOut {
+    0% {
+      transform: scaleY(1);
+      transform-origin: 0% 0%;
+      opacity: 1;
+    }
+    100% {
+      transform: scaleY(0.8);
+      transform-origin: 0% 0%;
+      opacity: 0;
+    }
+  }
+
+  // Loading state
+  &-loading {
+    cursor: wait;
+  }
+
+  &-loading-icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: fi-select-spin 0.7s linear infinite;
+    opacity: 0.65;
+  }
+
+  @keyframes fi-select-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}

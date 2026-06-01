@@ -1,0 +1,146 @@
+@use "../../styles/variables" as *;
+
+// ─── Animaciones ──────────────────────────────────────────────────────────────
+@keyframes #{$prefix}-easy-crop-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes #{$prefix}-easy-crop-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes #{$prefix}-easy-crop-shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
+
+// ─── Skeleton (estado de carga, visible ~350ms durante animación del Modal) ───
+.#{$prefix}-easy-crop-skeleton {
+  position: relative;
+  width: 100%;
+  height: 40vh;
+  min-height: 300px;
+  border-radius: $border-radius-base;
+  overflow: hidden;
+  background: color-mix(in srgb, $bg-mask 93%, $bg-container);
+
+  // Shimmer sutil sobre el fondo oscuro
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.03) 50%,
+      transparent 100%
+    );
+    background-size: 400px 100%;
+    animation: #{$prefix}-easy-crop-shimmer 1.4s ease-in-out infinite;
+  }
+}
+
+.#{$prefix}-easy-crop-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 36px;
+  height: 36px;
+  margin: calc(-1 * $spacing-lg) 0 0 calc(-1 * $spacing-lg);
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  border-top-color: color-mix(in srgb, $bg-container 55%, transparent);
+  animation: #{$prefix}-easy-crop-spin 0.75s linear infinite;
+  z-index: 1;
+}
+
+// ─── CRÍTICO: el container de react-easy-crop usa position:absolute por defecto.
+// Sobrescribimos a position:relative para que getBoundingClientRect() retorne
+// las dimensiones correctas (equivalente al containerClassName del image cropper).
+// La animación fade-in se aplica cuando EasyCrop monta (post-animación del Modal).
+.#{$prefix}-easy-crop-container {
+  position: relative !important;
+  width: 100% !important;
+  height: 40vh !important;
+  min-height: 300px !important;
+  overflow: hidden !important;
+  background: color-mix(in srgb, $bg-mask 90%, $bg-container);
+  border-radius: $border-radius-base;
+  animation: #{$prefix}-easy-crop-fade-in 0.25s ease-out;
+}
+
+// ─── Wrapper que agrupa el cropper + controles dentro del modal ───────────────
+.#{$prefix}-easy-crop-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+// ─── Controles (sliders + botones) ───────────────────────────────────────────
+.#{$prefix}-easy-crop-controls {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  padding: $spacing-md $spacing-xs 0;
+  animation: #{$prefix}-easy-crop-fade-in 0.3s ease-out 0.1s both; // ligero delay para efecto escalonado
+}
+
+.#{$prefix}-easy-crop-control {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.#{$prefix}-easy-crop-slider {
+  flex: 1;
+}
+
+.#{$prefix}-easy-crop-control-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  color: var(--#{$prefix}-color-text-secondary, #8c8c8c);
+  transition:
+    color $transition-fast,
+    opacity $transition-fast;
+  flex-shrink: 0;
+
+  &:hover:not(:disabled) {
+    color: var(--#{$prefix}-primary-color, #1677ff);
+  }
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+}
+
+.#{$prefix}-easy-crop-reset-btn {
+  align-self: center;
+  margin-top: $spacing-xs;
+}
+
+// ─── Footer del modal ─────────────────────────────────────────────────────────
+.#{$prefix}-easy-crop-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: $spacing-sm;
+}

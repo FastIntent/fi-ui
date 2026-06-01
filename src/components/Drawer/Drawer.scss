@@ -1,0 +1,214 @@
+@use "../../styles/_variables.scss" as *;
+
+$drawer-prefix-cls: "#{$prefix}-drawer";
+
+.#{$drawer-prefix-cls} {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  pointer-events: none;
+
+  // Transition the visibility so it stays visible during exit animations
+  visibility: hidden;
+  transition: visibility $transition-base;
+
+  &-open,
+  &-mask-motion-appear,
+  &-mask-motion-enter,
+  &-mask-motion-leave {
+    visibility: visible;
+  }
+
+  &-mask {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: $bg-mask;
+    pointer-events: auto;
+    opacity: 1; // Default to visible so it stays opaque after motion ends
+
+    &-motion-enter,
+    &-motion-appear {
+      opacity: 0;
+      transition: opacity $transition-base;
+    }
+
+    &-motion-enter-active,
+    &-motion-appear-active {
+      opacity: 1;
+    }
+
+    &-motion-leave {
+      opacity: 1;
+      transition: opacity $transition-base;
+    }
+
+    &-motion-leave-active {
+      opacity: 0;
+    }
+  }
+
+  &-content-wrapper {
+    position: fixed;
+    z-index: 1001;
+    background: var(--#{$prefix}-drawer-color-bg, #{$bg-elevated});
+    pointer-events: auto;
+
+    // Default Placement constraints
+    .#{$drawer-prefix-cls}-left & {
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 378px;
+    }
+    .#{$drawer-prefix-cls}-right & {
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 378px;
+    }
+    .#{$drawer-prefix-cls}-top & {
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 378px;
+    }
+    .#{$drawer-prefix-cls}-bottom & {
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 378px;
+    }
+  }
+
+  &-panel-motion-left,
+  &-panel-motion-right,
+  &-panel-motion-top,
+  &-panel-motion-bottom {
+    &-enter,
+    &-appear,
+    &-leave {
+      transition:
+        transform $transition-base,
+        box-shadow $transition-base;
+    }
+  }
+
+  /* Initial states (Off-screen) */
+  &-panel-motion-left-enter,
+  &-panel-motion-left-appear {
+    transform: translateX(-100%);
+  }
+  &-panel-motion-right-enter,
+  &-panel-motion-right-appear {
+    transform: translateX(100%);
+  }
+  &-panel-motion-top-enter,
+  &-panel-motion-top-appear {
+    transform: translateY(-100%);
+  }
+  &-panel-motion-bottom-enter,
+  &-panel-motion-bottom-appear {
+    transform: translateY(100%);
+  }
+
+  /* Active states (In-screen) */
+  &-panel-motion-left-enter-active,
+  &-panel-motion-left-appear-active,
+  &-panel-motion-right-enter-active,
+  &-panel-motion-right-appear-active,
+  &-panel-motion-top-enter-active,
+  &-panel-motion-top-appear-active,
+  &-panel-motion-bottom-enter-active,
+  &-panel-motion-bottom-appear-active {
+    transform: none;
+    box-shadow: $shadow-popup;
+  }
+
+  /* Leave states (Going back off-screen) */
+  &-panel-motion-left-leave-active {
+    transform: translateX(-100%);
+    box-shadow: none;
+  }
+  &-panel-motion-right-leave-active {
+    transform: translateX(100%);
+    box-shadow: none;
+  }
+  &-panel-motion-top-leave-active {
+    transform: translateY(-100%);
+    box-shadow: none;
+  }
+  &-panel-motion-bottom-leave-active {
+    transform: translateY(100%);
+    box-shadow: none;
+  }
+
+  /* Structure... */
+  &-content {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--#{$prefix}-drawer-color-bg, #{$bg-elevated});
+    display: flex;
+    flex-direction: column;
+  }
+
+  &-wrapper-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background: var(--#{$prefix}-drawer-color-bg, #{$bg-elevated});
+  }
+
+  &-header {
+    padding: $spacing-md $spacing-lg;
+    border-bottom: 1px solid $border-color-secondary;
+    background: var(--#{$prefix}-drawer-color-bg, #{$bg-elevated});
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &-title {
+      display: flex;
+      align-items: center;
+      gap: $spacing-sm;
+    }
+  }
+
+  &-title {
+    margin: 0;
+    color: var(--#{$prefix}-color-text, #{$text-color});
+    font-weight: 600;
+    font-size: $font-size-lg;
+  }
+
+  &-close {
+    display: flex;
+    color: var(--#{$prefix}-color-text-secondary, #{$text-color-secondary});
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    font-size: $font-size-lg;
+    transition: color $transition-base;
+    &:hover {
+      color: var(--#{$prefix}-color-text, #{$text-color});
+    }
+  }
+
+  &-body {
+    flex: 1 1;
+    min-width: 0;
+    min-height: 0;
+    padding: var(--#{$prefix}-padding-lg, 24px);
+    overflow: auto;
+    font-size: $font-size-md;
+    line-height: $line-height;
+    background: var(--#{$prefix}-drawer-color-bg, #{$bg-elevated});
+  }
+
+  &-footer {
+    padding: $spacing-md $spacing-lg;
+    border-top: 1px solid $border-color-secondary;
+    background: var(--#{$prefix}-drawer-color-bg, #{$bg-elevated});
+  }
+}

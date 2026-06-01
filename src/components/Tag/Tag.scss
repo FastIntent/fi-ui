@@ -1,0 +1,89 @@
+@use "../../styles/_variables.scss" as *;
+
+.#{$prefix}-tag {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  margin-inline-end: $spacing-sm;
+  padding: 0 calc(#{$spacing-sm} - 1px);
+  color: $text-color;
+  font-size: $font-size-sm;
+  line-height: $line-height;
+  white-space: nowrap;
+  background: $bg-layout;
+  border: 1px solid $border-color-secondary;
+  border-radius: $border-radius-sm;
+  opacity: 1;
+  transition: all $transition-base;
+  cursor: default;
+
+  &-content {
+    display: inline-block;
+  }
+
+  &-icon {
+    margin-inline-end: $spacing-xs;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  &-close-icon {
+    margin-inline-start: $spacing-xs;
+    color: $text-color-tertiary;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    transition: color $transition-base;
+
+    &:hover {
+      color: $text-color;
+    }
+  }
+
+  // --- Presets ---
+  &-default {
+    background: $bg-layout;
+    color: $text-color;
+    border-color: $border-color;
+  }
+
+  &-success {
+    color: $success-color;
+    background: color-mix(in srgb, $success-color 10%, $bg-container);
+    border-color: color-mix(in srgb, $success-color 30%, $bg-container);
+  }
+
+  &-processing {
+    color: $primary-color;
+    background: color-mix(in srgb, $primary-color 10%, $bg-container);
+    border-color: color-mix(in srgb, $primary-color 30%, $bg-container);
+  }
+
+  &-error {
+    color: $error-color;
+    background: color-mix(in srgb, $error-color 10%, $bg-container);
+    border-color: color-mix(in srgb, $error-color 30%, $bg-container);
+  }
+
+  &-warning {
+    color: $warning-color;
+    background: color-mix(in srgb, $warning-color 10%, $bg-container);
+    border-color: color-mix(in srgb, $warning-color 30%, $bg-container);
+  }
+
+  // --- States ---
+  &-borderless {
+    border-color: transparent;
+  }
+
+  &-has-color {
+    border: none;
+    line-height: $line-height; // Adjust for no border
+  }
+}
+
+// Fade out animation for closing
+.#{$prefix}-tag-hidden {
+  opacity: 0;
+  transform: scale(0.8);
+}
