@@ -26,6 +26,9 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
   defaultView,
   itemSize,
   itemMinWidth,
+  // Inside a modal we always want the items area to scroll internally,
+  // never to push the modal off-screen. 65vh leaves room for header/footer.
+  height = '50vh',
   emptyState,
 }) => {
   const [paths, setPaths] = useState<string[]>(defaultSelected ?? EMPTY_PATHS);
@@ -78,6 +81,7 @@ export const ImageManagerModal: React.FC<ImageManagerModalProps> = ({
         defaultView={defaultView}
         itemSize={itemSize}
         itemMinWidth={itemMinWidth}
+        height={height}
         emptyState={emptyState}
       />
     </Modal>

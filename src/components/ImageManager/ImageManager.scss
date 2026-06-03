@@ -137,6 +137,11 @@
     padding: $spacing-md;
     background: $bg-layout;
     min-width: 0;
+    // Critical for flex column scroll: default min-height: auto would
+    // prevent the body from shrinking below its intrinsic content height,
+    // disabling overflow-y: auto. Forcing min-height: 0 lets it shrink to
+    // the available space and scroll its grid internally.
+    min-height: 0;
   }
 
   &-empty {

@@ -82,6 +82,12 @@ export interface ImageManagerProps {
   itemSize?: ImageManagerSize;
   /** Override the card min-width in pixels (advanced; ignores itemSize). */
   itemMinWidth?: number;
+  /**
+   * Fixed height of the manager. When set, the items area scrolls internally
+   * instead of pushing the parent. Accepts any CSS height value (e.g. 480,
+   * "70vh", "100%"). Default: undefined (uses min-height: 360px, no max).
+   */
+  height?: number | string;
   /** Render a custom empty state. */
   emptyState?: React.ReactNode;
   /** className for the root container. */

@@ -54,6 +54,7 @@ export const ImageManager: React.FC<ImageManagerProps> = ({
   defaultView = 'grid',
   itemSize = 'md',
   itemMinWidth,
+  height,
   emptyState,
   className,
   style,
@@ -328,12 +329,11 @@ export const ImageManager: React.FC<ImageManagerProps> = ({
         className
       )}
       style={
-        itemMinWidth
-          ? ({
-              ...style,
-              ['--fi-image-manager-item-min']: `${itemMinWidth}px`,
-            } as React.CSSProperties)
-          : style
+        {
+          ...style,
+          ...(itemMinWidth ? { ['--fi-image-manager-item-min']: `${itemMinWidth}px` } : null),
+          ...(height !== undefined ? { height } : null),
+        } as React.CSSProperties
       }
       data-mode={mode}
     >
