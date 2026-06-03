@@ -6,12 +6,14 @@ const shared = {
     'src/index.ts',
     'src/design-system.ts',
     'src/components/*/index.{ts,tsx}',
+    'src/server/index.ts',
     'src/styles/global.scss',
   ],
   sourcemap: process.env.SOURCE_MAP === 'true',
   minify: true,
   treeshake: true,
-  external: ['react', 'react-dom'],
+  // Node built-ins are server-only — never inlined into the client barrel.
+  external: ['react', 'react-dom', 'node:fs', 'node:fs/promises', 'node:path'],
   esbuildPlugins: [sassPlugin()],
   tsconfig: 'tsconfig.build.json',
 } as const;

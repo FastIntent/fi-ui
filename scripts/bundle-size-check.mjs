@@ -29,7 +29,9 @@ const BUDGETS = {
   // Increased from 200 KB → 215 KB after migrating all hardcoded values to
   // CSS custom properties (design tokens). Raw size grows because var(--fi-*)
   // is longer than e.g. "8px", but gzip lands at ~28 KB — acceptable.
-  'dist/index.css':           215_000, // 215 KB raw
+  // Bumped to 235 KB after adding ImageManager + ImagePickerInput (two
+  // dense, composite components with grid/list views, DnD states and RTL).
+  'dist/index.css':           235_000, // 235 KB raw
   'dist/design-system.css':    40_000, //  40 KB raw
 
   // Full barrel bundle (ESM, includes all 45 components + rc-component deps).

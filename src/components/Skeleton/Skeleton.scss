@@ -52,7 +52,12 @@ $skeleton-bg: rgba(0, 0, 0, 0.06);
       right: 0;
       bottom: 0;
       content: "";
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+      background: linear-gradient(
+        90deg,
+        transparent,
+        color-mix(in srgb, var(--#{$prefix}-color-white) 50%, transparent),
+        transparent
+      );
       animation: fiSkeletonWave 1.6s linear infinite;
       transform: translateX(-100%);
     }
@@ -88,6 +93,11 @@ $skeleton-bg: rgba(0, 0, 0, 0.06);
   background-color: $fill-secondary;
 
   &::after {
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, var(--#{$prefix}-color-white) 8%, transparent),
+      transparent
+    );
   }
 }

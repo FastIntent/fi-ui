@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { Input, TextArea } from './Input';
+import { SearchOutlined, UserOutlined, EyeOutlined } from '../_icons';
 
 const meta: Meta<typeof Input> = {
   title: 'Components/Input',
@@ -33,7 +34,7 @@ export const Default: Story = {
 
 export const WithPrefix: Story = {
   args: {
-    prefix: '👤',
+    prefix: <UserOutlined />,
     placeholder: 'Username',
     style: { width: 300 },
   },
@@ -41,8 +42,8 @@ export const WithPrefix: Story = {
 
 export const WithSuffix: Story = {
   args: {
-    suffix: '.com',
-    placeholder: 'Domain',
+    suffix: <EyeOutlined />,
+    placeholder: 'Password',
     style: { width: 300 },
   },
 };
@@ -69,6 +70,38 @@ export const Disabled: Story = {
     placeholder: 'Disabled input',
     style: { width: 300 },
   },
+};
+
+export const Sizes = {
+  name: 'Sizes',
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16, width: 300 }}>
+      <Input size="small" placeholder="Small" />
+      <Input size="middle" placeholder="Middle (default)" />
+      <Input size="large" placeholder="Large" />
+      <Input size="small" prefix={<UserOutlined />} placeholder="Small with prefix" />
+      <Input size="middle" prefix={<UserOutlined />} placeholder="Middle with prefix" />
+      <Input size="large" prefix={<UserOutlined />} placeholder="Large with prefix" />
+      <Input
+        size="small"
+        prefix={<SearchOutlined />}
+        suffix={<EyeOutlined />}
+        placeholder="Small prefix+suffix"
+      />
+      <Input
+        size="middle"
+        prefix={<SearchOutlined />}
+        suffix={<EyeOutlined />}
+        placeholder="Middle prefix+suffix"
+      />
+      <Input
+        size="large"
+        prefix={<SearchOutlined />}
+        suffix={<EyeOutlined />}
+        placeholder="Large prefix+suffix"
+      />
+    </div>
+  ),
 };
 
 export const TextAreaStory = {

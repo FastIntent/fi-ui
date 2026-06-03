@@ -5,6 +5,7 @@ import { Breadcrumb, BreadcrumbItem } from './Breadcrumb';
 const meta: Meta<typeof Breadcrumb> = {
   title: 'Navigation/Breadcrumb',
   component: Breadcrumb,
+  tags: ['autodocs'],
 };
 export default meta;
 type Story = StoryObj<typeof Breadcrumb>;

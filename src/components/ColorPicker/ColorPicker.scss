@@ -1,0 +1,243 @@
+@use "../../styles/variables" as *;
+
+$cp: "#{$prefix}-color-picker";
+
+// ── Checkerboard mixin (alpha visualization) ────────────────────────
+
+@mixin checkerboard {
+  /* stylelint-disable scale-unlimited/declaration-strict-value */
+  background-image:
+    linear-gradient(45deg, #ddd 25%, transparent 25%),
+    linear-gradient(-45deg, #ddd 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #ddd 75%),
+    linear-gradient(-45deg, transparent 75%, #ddd 75%);
+  background-size: 8px 8px;
+  background-position:
+    0 0,
+    0 4px,
+    4px -4px,
+    -4px 0;
+  /* stylelint-enable scale-unlimited/declaration-strict-value */
+}
+
+// Component-level tokens
+:root {
+  --#{$cp}-panel-width: 240px;
+  --#{$cp}-saturation-height: 160px;
+  --#{$cp}-slider-height: 12px;
+  --#{$cp}-thumb-size: #{$control-interactive-size};
+  --#{$cp}-preset-size: 24px;
+  --#{$cp}-panel-padding: #{$spacing-sm};
+  --#{$cp}-gap: #{$spacing-xs};
+}
+
+// ── Trigger ─────────────────────────────────────────────────────────
+
+.#{$cp}-trigger {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: $spacing-xxs;
+  background: $bg-container;
+  border: $border-width $border-style $border-color;
+  border-radius: $border-radius-base;
+  cursor: pointer;
+  transition: border-color $transition-fast;
+  font: inherit;
+
+  &:hover:not(.#{$cp}-trigger-disabled) {
+    border-color: $primary-color;
+  }
+
+  &-disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+  }
+
+  &-color {
+    display: block;
+    width: calc(#{$control-height-md} - #{$spacing-md});
+    height: calc(#{$control-height-md} - #{$spacing-md});
+    border-radius: $border-radius-sm;
+    @include checkerboard;
+
+    &-inner {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+    }
+  }
+
+  &-sm &-color {
+    width: calc(#{$control-height-sm} - #{$spacing-md});
+    height: calc(#{$control-height-sm} - #{$spacing-md});
+  }
+
+  &-lg &-color {
+    width: calc(#{$control-height-lg} - #{$spacing-md});
+    height: calc(#{$control-height-lg} - #{$spacing-md});
+  }
+
+  &-text {
+    color: $text-color;
+    font-size: $font-size-md;
+    line-height: 1;
+    user-select: all;
+  }
+
+  &-clear {
+    display: inline-flex;
+    align-items: center;
+    color: $text-color-quaternary;
+    cursor: pointer;
+    font-size: $font-size-sm;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: $text-color-secondary;
+    }
+  }
+}
+
+// ── Panel ───────────────────────────────────────────────────────────
+
+.#{$cp}-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--#{$cp}-gap);
+  width: var(--#{$cp}-panel-width);
+  padding: var(--#{$cp}-panel-padding);
+}
+
+// ── Saturation canvas ───────────────────────────────────────────────
+
+.#{$cp}-saturation {
+  position: relative;
+  width: 100%;
+  height: var(--#{$cp}-saturation-height);
+  border-radius: $border-radius-base;
+  overflow: hidden;
+  cursor: crosshair;
+  touch-action: none;
+
+  canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.#{$cp}-thumb {
+  position: absolute;
+  width: var(--#{$cp}-thumb-size);
+  height: var(--#{$cp}-thumb-size);
+  border: $spacing-xxs solid var(--#{$prefix}-color-white, #fff);
+  border-radius: 50%;
+  box-shadow: $shadow-sm;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+// ── Sliders (hue & alpha) ───────────────────────────────────────────
+
+.#{$cp}-slider {
+  position: relative;
+  width: 100%;
+  height: var(--#{$cp}-slider-height);
+  border-radius: calc(var(--#{$cp}-slider-height) / 2);
+  cursor: pointer;
+  touch-action: none;
+
+  &-thumb {
+    position: absolute;
+    top: 50%;
+    width: var(--#{$cp}-thumb-size);
+    height: var(--#{$cp}-thumb-size);
+    border: $spacing-xxs solid var(--#{$prefix}-color-white, #fff);
+    border-radius: 50%;
+    box-shadow: $shadow-sm;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    background: var(--#{$prefix}-color-white, #fff);
+  }
+}
+
+.#{$cp}-hue {
+  /* stylelint-disable-next-line scale-unlimited/declaration-strict-value */
+  background: linear-gradient(
+    to right,
+    hsl(0deg 100% 50%),
+    hsl(60deg 100% 50%),
+    hsl(120deg 100% 50%),
+    hsl(180deg 100% 50%),
+    hsl(240deg 100% 50%),
+    hsl(300deg 100% 50%),
+    hsl(360deg 100% 50%)
+  );
+}
+
+.#{$cp}-alpha {
+  @include checkerboard;
+
+  &-gradient {
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+  }
+}
+
+// ── Hex input ───────────────────────────────────────────────────────
+
+.#{$cp}-panel .#{$prefix}-input-wrapper {
+  font-family: $font-family-code;
+}
+
+// ── Presets ──────────────────────────────────────────────────────────
+
+.#{$cp}-presets {
+  &-label {
+    color: $text-color-secondary;
+    font-size: $font-size-sm;
+    margin-bottom: $spacing-xxs;
+  }
+
+  &-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-xs;
+  }
+
+  &-swatch {
+    appearance: none;
+    width: var(--#{$cp}-preset-size);
+    height: var(--#{$cp}-preset-size);
+    border: $border-width $border-style $border-color;
+    border-radius: $border-radius-sm;
+    cursor: pointer;
+    padding: 0;
+    transition: transform $transition-fast;
+
+    &:hover {
+      transform: scale(1.15);
+    }
+
+    &-active {
+      box-shadow: 0 0 0 $spacing-xxs $primary-color;
+    }
+  }
+
+  & + & {
+    margin-top: $spacing-xs;
+    padding-top: $spacing-xs;
+    border-top: $border-width $border-style $border-color-secondary;
+  }
+}
+
+// ── Dark Mode ───────────────────────────────────────────────────────
+
+[data-theme="dark"] .#{$cp}-trigger {
+  background: $bg-container;
+  border-color: $border-color;
+}

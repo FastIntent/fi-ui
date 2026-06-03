@@ -86,7 +86,6 @@
       --#{$prefix}-modal-header-bg,
       var(--#{$prefix}-modal-color-bg, #{$bg-container})
     );
-    border-bottom: 1px solid $border-color-secondary;
     border-radius: var(--#{$prefix}-modal-border-radius, #{$border-radius-lg})
       var(--#{$prefix}-modal-border-radius, #{$border-radius-lg}) 0 0;
   }
@@ -100,21 +99,24 @@
   }
 
   &-body {
-    padding: $spacing-lg;
+    padding: 0 $spacing-lg;
     font-size: $font-size-md;
     line-height: $line-height;
     word-wrap: break-word;
     background: var(--#{$prefix}-modal-color-bg, #{$bg-container}); // Fallback directly on body
+
+    & > * {
+      margin: 0;
+    }
   }
 
   &-footer {
-    padding: $spacing-sm $spacing-lg;
+    padding: var(--fi-spacing-md) var(--fi-spacing-lg);
     text-align: right;
     background: var(
       --#{$prefix}-modal-footer-bg,
       var(--#{$prefix}-modal-color-bg, #{$bg-container})
     ); // Fallback directly on footer
-    border-top: 1px solid $border-color-secondary;
     border-radius: 0 0 var(--#{$prefix}-modal-border-radius, #{$border-radius-lg})
       var(--#{$prefix}-modal-border-radius, #{$border-radius-lg});
 

@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { ConfigProvider } from '../src/components/ConfigProvider';
 import { DEFAULT_PREFIX } from '../src/components/ConfigProvider/prefix';
 import '../src/styles/index.scss';
+import './docs-overrides.css';
 
 const tokenVar = (token: string) => `var(--${DEFAULT_PREFIX}-${token})`;
 
@@ -11,7 +12,6 @@ const themes = {
   light: {},
   dark: {
     common: {
-      primaryColor: '#1677ff',
       bgColorLayout: '#000000',
       bgColorContainer: '#141414',
       textColor: 'rgba(255, 255, 255, 0.85)',
@@ -19,33 +19,38 @@ const themes = {
       borderColorSecondary: '#202020',
     },
   },
+  blue: {
+    common: {
+      primaryColor: '#1677ff',
+    },
+  },
   emerald: {
     common: {
-      primaryColor: '#10b981', // Emerald Green
+      primaryColor: '#10b981',
       borderRadius: '6px',
     },
   },
   royal: {
     common: {
-      primaryColor: '#7c3aed', // Royal Purple
-      borderRadius: '0px', // Sharp edges
+      primaryColor: '#7c3aed',
+      borderRadius: '0px',
     },
   },
   sunset: {
     common: {
-      primaryColor: '#f97316', // Sunset Orange
-      borderRadius: '24px', // Extremely rounded
+      primaryColor: '#f97316',
+      borderRadius: '24px',
     },
   },
   ocean: {
     common: {
-      primaryColor: '#06b6d4', // Cyan/Teal
+      primaryColor: '#06b6d4',
       borderRadius: '8px',
     },
   },
   vibrant: {
     common: {
-      primaryColor: '#eb2f96', // Pink
+      primaryColor: '#eb2f96',
       borderRadius: '12px',
       successColor: '#b7eb8f',
     },
@@ -70,8 +75,9 @@ const preview: Preview = {
         title: 'Theme',
         icon: 'paintbrush',
         items: [
-          { value: 'light', icon: 'sun', title: 'Light Default (Blue)' },
+          { value: 'light', icon: 'sun', title: 'Light Default (Green)' },
           { value: 'dark', icon: 'moon', title: 'Dark Mode' },
+          { value: 'blue', icon: 'circle', title: 'Classic Blue' },
           { value: 'emerald', icon: 'leaf', title: 'Emerald Green' },
           { value: 'royal', icon: 'starhollow', title: 'Royal Purple (Sharp)' },
           { value: 'sunset', icon: 'sun', title: 'Sunset Orange (Rounded)' },

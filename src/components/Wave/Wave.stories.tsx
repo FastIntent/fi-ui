@@ -5,6 +5,7 @@ import { Wave } from './Wave';
 const meta: Meta<typeof Wave> = {
   title: 'Utility/Wave',
   component: Wave,
+  tags: ['autodocs'],
   parameters: {
     docs: {
       description: {

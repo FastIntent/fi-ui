@@ -5,6 +5,7 @@ import { Timeline, TimelineItem } from './Timeline';
 const meta: Meta<typeof Timeline> = {
   title: 'Display/Timeline',
   component: Timeline,
+  tags: ['autodocs'],
 };
 export default meta;
 type Story = StoryObj<typeof Timeline>;

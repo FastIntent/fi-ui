@@ -29,7 +29,7 @@
     "paths": {
       "@/*": ["src/*"]
     },
-    "types": ["vitest/globals", "@testing-library/jest-dom", "jest-axe"]
+    "types": ["vitest/globals", "@testing-library/jest-dom", "jest-axe", "node"]
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]

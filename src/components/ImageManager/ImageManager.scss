@@ -1,0 +1,422 @@
+@use "../../styles/_variables.scss" as *;
+
+.#{$prefix}-image-manager {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  // Establish a layout containment context so the manager's width is
+  // determined exclusively by its parent — never by its descendants'
+  // min-content (which would happen when e.g. the edit toolbar grows
+  // from "New folder + Upload" to "New folder + Upload + Delete (N)").
+  contain: layout;
+  font-family: $font-family;
+  font-size: $font-size-base;
+  color: $text-color;
+  background: $bg-container;
+  border: 1px solid $border-color-secondary;
+  border-radius: $border-radius-lg;
+  overflow: hidden;
+  min-height: 360px;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  &-toolbar {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+    padding: $spacing-md;
+    border-bottom: 1px solid $border-color-secondary;
+    background: $bg-container;
+    min-width: 0;
+
+    &-nav {
+      min-height: 24px;
+      min-width: 0;
+    }
+
+    &-home {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    &-crumb {
+      display: inline-flex;
+      align-items: center;
+      border-radius: $border-radius-sm;
+      padding: 0 $spacing-xxs;
+      transition:
+        background $transition-fast,
+        box-shadow $transition-fast;
+
+      &-drop-over {
+        background: $primary-color-outline;
+        box-shadow: 0 0 0 2px $primary-color;
+      }
+    }
+
+    &-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: $spacing-sm;
+      min-width: 0;
+    }
+
+    &-search {
+      flex: 1 1 200px;
+      min-width: 160px;
+    }
+
+    &-view {
+      display: inline-flex;
+      border: 1px solid $border-color-secondary;
+      border-radius: $border-radius-base;
+      overflow: hidden;
+      background: $bg-container;
+    }
+
+    &-view-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: $text-color-secondary;
+      cursor: pointer;
+      transition:
+        background $transition-fast,
+        color $transition-fast;
+
+      &:hover {
+        background: $fill-tertiary;
+        color: $text-color;
+      }
+
+      &-active {
+        background: $primary-color-outline;
+        color: $primary-color;
+      }
+
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    &-edit {
+      // Flex (block) with wrap so the edit buttons can break to a new
+      // row instead of forcing the toolbar (and the whole manager) wider.
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: $spacing-sm;
+      min-width: 0;
+    }
+  }
+
+  &-error {
+    padding: $spacing-sm $spacing-md;
+  }
+
+  &-body {
+    flex: 1 1 auto;
+    position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
+    // Reserve scrollbar width permanently so the grid track count
+    // doesn't recalculate when the scrollbar appears/disappears.
+    scrollbar-gutter: stable;
+    padding: $spacing-md;
+    background: $bg-layout;
+    min-width: 0;
+  }
+
+  &-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+  }
+
+  // Loading is rendered as a non-blocking overlay on top of the existing
+  // grid so the body height never collapses during a reload (no jump).
+  &-loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: color-mix(in srgb, $bg-layout 60%, transparent);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  &-body-loading &-items {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  // Grid layout (default). Card min-width is driven by a CSS variable so
+  // the consumer can control it via the `itemSize` preset or the
+  // `itemMinWidth` escape hatch. The root has `contain: layout`, so the
+  // grid never reflows the container — `auto-fill` is now safe and stable.
+  --#{$prefix}-image-manager-item-min: 160px;
+
+  &-size-sm {
+    --#{$prefix}-image-manager-item-min: 120px;
+  }
+
+  &-size-md {
+    --#{$prefix}-image-manager-item-min: 160px;
+  }
+
+  &-size-lg {
+    --#{$prefix}-image-manager-item-min: 220px;
+  }
+
+  &-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(var(--#{$prefix}-image-manager-item-min), 1fr));
+    gap: $spacing-md;
+    min-width: 0;
+  }
+
+  // List layout
+  &-list &-items {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+  }
+
+  &-list &-card {
+    flex-direction: row;
+    align-items: center;
+    padding: $spacing-sm;
+    gap: $spacing-sm;
+  }
+
+  &-list &-card-thumb,
+  &-list &-card-folder-icon {
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+  }
+
+  // ── Card base ───────────────────────────────────────────────
+  &-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: $bg-container;
+    border: 1px solid $border-color-secondary;
+    border-radius: $border-radius-base;
+    overflow: hidden;
+    cursor: pointer;
+    transition:
+      border-color $transition-fast,
+      box-shadow $transition-fast,
+      transform $transition-fast;
+    outline: none;
+
+    &:hover {
+      border-color: $border-color;
+      box-shadow: $shadow-sm;
+    }
+
+    &:focus-visible {
+      border-color: $primary-color;
+      box-shadow: 0 0 0 2px $primary-color-outline;
+    }
+
+    &-selected {
+      border-color: $primary-color;
+      box-shadow: 0 0 0 2px $primary-color-outline;
+    }
+
+    &-drop-over {
+      border-color: $primary-color;
+      background: $primary-color-outline;
+    }
+
+    &-dragging {
+      cursor: grabbing;
+    }
+
+    &-thumb {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: $fill-quaternary;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      &-fallback {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $text-color-quaternary;
+        font-size: var(--#{$prefix}-font-size-heading-2);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      img + &-fallback {
+        display: none;
+      }
+    }
+
+    &-folder-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: $fill-quaternary;
+      color: $primary-color;
+      font-size: var(--#{$prefix}-font-size-heading-1);
+    }
+
+    &-body {
+      padding: $spacing-sm;
+      min-width: 0;
+      // Prevent flex children from forcing the card wider than its track
+      overflow: hidden;
+    }
+
+    &-name {
+      font-size: $font-size-sm;
+      color: $text-color;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-width: 0;
+    }
+
+    &-meta {
+      font-size: $font-size-sm;
+      color: $text-color-tertiary;
+      margin-top: $spacing-xxs;
+    }
+
+    &-select {
+      position: absolute;
+      top: $spacing-xs;
+      left: $spacing-xs;
+      opacity: 0;
+      transition: opacity $transition-fast;
+      background: $bg-container;
+      border-radius: $border-radius-sm;
+      padding: $spacing-xxs;
+      z-index: 1;
+    }
+
+    &:hover &-select,
+    &-selected &-select,
+    &-select:focus-within {
+      opacity: 1;
+    }
+
+    &-actions {
+      position: absolute;
+      top: $spacing-xs;
+      right: $spacing-xs;
+      opacity: 0;
+      transition: opacity $transition-fast;
+      z-index: 1;
+    }
+
+    &:hover &-actions,
+    &-actions:focus-within {
+      opacity: 1;
+    }
+
+    &-action-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      padding: 0;
+      border: 0;
+      border-radius: $border-radius-sm;
+      background: $bg-container;
+      color: $text-color-secondary;
+      cursor: pointer;
+      box-shadow: $shadow-sm;
+      transition: background $transition-fast;
+
+      &:hover {
+        background: $fill-tertiary;
+        color: $text-color;
+      }
+    }
+
+    &-folder {
+      cursor: pointer;
+    }
+  }
+
+  &-drag-preview {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-xs;
+    padding: $spacing-xs $spacing-sm;
+    background: $bg-container;
+    border: 1px solid $primary-color;
+    border-radius: $border-radius-base;
+    box-shadow: $shadow-lg;
+    color: $text-color;
+    font-size: $font-size-sm;
+    pointer-events: none;
+
+    // Image variant: small thumbnail of the actual image being dragged.
+    &-image {
+      width: 96px;
+      height: 96px;
+      padding: 0;
+      overflow: hidden;
+      background: $fill-quaternary;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        user-select: none;
+        -webkit-user-drag: none;
+      }
+    }
+  }
+}
+
+// RTL
+[dir="rtl"] .#{$prefix}-image-manager {
+  &-card-select {
+    left: auto;
+    right: $spacing-xs;
+  }
+  &-card-actions {
+    right: auto;
+    left: $spacing-xs;
+  }
+}

@@ -1,0 +1,12 @@
+/* Allow popups/popovers to overflow story containers in Docs page */
+.docs-story,
+.docs-story > div,
+.sbdocs-preview,
+.sbdocs .sbdocs-preview,
+#storybook-docs .sb-story,
+#storybook-docs [id^='story--'],
+#storybook-docs [id^='story--'] > div,
+.sb-unstyled,
+.sb-story {
+  overflow: visible !important;
+}

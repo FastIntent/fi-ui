@@ -6,6 +6,7 @@ import { Tag } from '../Tag';
 const meta: Meta<typeof Steps> = {
   title: 'Navigation/Steps',
   component: Steps,
+  tags: ['autodocs'],
 };
 export default meta;
 type Story = StoryObj<typeof Steps>;

@@ -39,6 +39,7 @@ export type { TooltipProps } from './components/Tooltip';
 export * from './components/Popover';
 export * from './components/Popconfirm';
 export * from './components/Collapse';
+export * from './components/ColorPicker';
 export * from './components/Skeleton';
 export * from './components/Empty';
 export * from './components/Result';
@@ -48,10 +49,11 @@ export * from './components/Timeline';
 export * from './components/Tag';
 export * from './components/Divider';
 export * from './components/Pagination';
-export * from './components/Popover';
 export * from './components/Spin';
 export * from './components/Flex';
 export * from './components/Calendar';
+export * from './components/ImageManager';
+export * from './components/ImagePickerInput';
 
 // Locale exports
 export { enUS, esES, ptBR, frFR, deDE } from './components/locale';

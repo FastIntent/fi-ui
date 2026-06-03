@@ -1,0 +1,133 @@
+@use "../../styles/_variables.scss" as *;
+
+.#{$prefix}-image-picker-input {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-sm;
+  width: 100%;
+  min-height: 56px;
+  padding: $spacing-sm $spacing-md;
+  background: $bg-container;
+  border: 1px solid $border-color-secondary;
+  border-radius: $border-radius-base;
+  font-family: $font-family;
+  font-size: $font-size-base;
+  color: $text-color;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color $transition-fast,
+    box-shadow $transition-fast;
+
+  &:hover {
+    border-color: $primary-color;
+  }
+
+  &:focus-visible {
+    border-color: $primary-color;
+    box-shadow: 0 0 0 2px $primary-color-outline;
+    outline: none;
+  }
+
+  &-disabled {
+    cursor: not-allowed;
+    background: $fill-quaternary;
+    color: $text-color-disabled;
+
+    &:hover {
+      border-color: $border-color-secondary;
+    }
+  }
+
+  &-placeholder {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-xs;
+    color: $text-color-placeholder;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  &-previews {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-xs;
+    flex-wrap: wrap;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  &-preview {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-xs;
+    padding: $spacing-xxs $spacing-sm $spacing-xxs $spacing-xxs;
+    background: $fill-quaternary;
+    border-radius: $border-radius-sm;
+    max-width: 220px;
+    min-width: 0;
+
+    img {
+      width: 32px;
+      height: 32px;
+      object-fit: cover;
+      border-radius: $border-radius-sm;
+      flex: 0 0 32px;
+    }
+
+    &-fallback {
+      width: 32px;
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: $fill-tertiary;
+      color: $text-color-quaternary;
+      border-radius: $border-radius-sm;
+      flex: 0 0 32px;
+
+      svg {
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+    &-name {
+      font-size: $font-size-sm;
+      color: $text-color;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-width: 0;
+    }
+  }
+
+  &-clear {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    color: $text-color-tertiary;
+    font-size: $font-size-lg;
+    cursor: pointer;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: $text-color;
+    }
+  }
+}
+
+[dir="rtl"] .#{$prefix}-image-picker-input {
+  text-align: right;
+
+  &-clear {
+    margin-left: 0;
+    margin-right: auto;
+  }
+}

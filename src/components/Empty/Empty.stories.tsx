@@ -6,6 +6,7 @@ import { Button } from '../Button';
 const meta: Meta<typeof Empty> = {
   title: 'Feedback/Empty',
   component: Empty,
+  tags: ['autodocs'],
 };
 export default meta;
 type Story = StoryObj<typeof Empty>;

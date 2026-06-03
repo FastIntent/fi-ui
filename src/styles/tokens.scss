@@ -2,9 +2,9 @@
 
 :root {
   /* --- Primary Palette --- */
-  --#{$prefix}-primary-color: #1677ff;
-  --#{$prefix}-primary-color-hover: #4096ff;
-  --#{$prefix}-primary-color-active: #0958d9;
+  --#{$prefix}-primary-color: #25ac01;
+  --#{$prefix}-primary-color-hover: #4cc328;
+  --#{$prefix}-primary-color-active: #1d8a01;
   --#{$prefix}-primary-color-outline: color-mix(
     in srgb,
     var(--#{$prefix}-primary-color) 15%,
@@ -37,7 +37,7 @@
     var(--#{$prefix}-error-color) 15%,
     transparent
   );
-  --#{$prefix}-info-color: var(--#{$prefix}-primary-color);
+  --#{$prefix}-info-color: #1677ff;
 
   /* --- Typography --- */
   --#{$prefix}-font-family:
@@ -149,11 +149,11 @@
   --#{$prefix}-color-info-bg-hover: color-mix(in srgb, var(--#{$prefix}-info-color) 20%, white);
   --#{$prefix}-color-info-border: color-mix(in srgb, var(--#{$prefix}-info-color) 40%, white);
   --#{$prefix}-color-info-border-hover: color-mix(in srgb, var(--#{$prefix}-info-color) 60%, white);
-  --#{$prefix}-color-info-hover: var(--#{$prefix}-primary-color-hover);
-  --#{$prefix}-color-info-active: var(--#{$prefix}-primary-color-active);
+  --#{$prefix}-color-info-hover: #4096ff;
+  --#{$prefix}-color-info-active: #0958d9;
   --#{$prefix}-color-info-text: var(--#{$prefix}-info-color);
-  --#{$prefix}-color-info-text-hover: var(--#{$prefix}-primary-color-hover);
-  --#{$prefix}-color-info-text-active: var(--#{$prefix}-primary-color-active);
+  --#{$prefix}-color-info-text-hover: #4096ff;
+  --#{$prefix}-color-info-text-active: #0958d9;
 
   /* --- Constants --- */
   --#{$prefix}-color-white: #ffffff;
@@ -220,9 +220,9 @@
   --#{$prefix}-control-item-bg-active-disabled: rgba(0, 0, 0, 0.15);
   --#{$prefix}-control-outline-width: 2px;
 
-  --#{$prefix}-padding-inline-sm: 8px;
-  --#{$prefix}-padding-inline-md: 16px;
-  --#{$prefix}-padding-inline-lg: 24px;
+  --#{$prefix}-padding-inline-sm: 7px;
+  --#{$prefix}-padding-inline-md: 11px;
+  --#{$prefix}-padding-inline-lg: 11px;
   --#{$prefix}-control-padding-horizontal: 12px;
   --#{$prefix}-select-color-bg: var(--#{$prefix}-color-bg-container);
   --#{$prefix}-select-color-border: var(--#{$prefix}-color-border);
@@ -239,9 +239,9 @@
   --#{$prefix}-select-multiple-item-border-color: var(--#{$prefix}-color-border-secondary);
 
   /* --- Spacing Scale (generic: gap, margin, padding uses) --- */
-  --#{$prefix}-spacing-xxs: 2px;
+  --#{$prefix}-spacing-xxs: 3px;
   --#{$prefix}-spacing-xs: 4px;
-  --#{$prefix}-spacing-sm: 8px;
+  --#{$prefix}-spacing-sm: 4px;
   --#{$prefix}-spacing-md: 16px;
   --#{$prefix}-spacing-lg: 24px;
   --#{$prefix}-spacing-xl: 32px;
@@ -328,9 +328,9 @@
 
 // Shared dark token values via SCSS map to avoid duplication
 $dark-tokens: (
-  primary-color: #3c89e8,
-  primary-color-hover: #65a9f3,
-  primary-color-active: #1668dc,
+  primary-color: #3cb82a,
+  primary-color-hover: #5ecc45,
+  primary-color-active: #2a9118,
   color-text: #f8f9fa,
   color-text-secondary: #adb5bd,
   color-text-tertiary: #868e96,
