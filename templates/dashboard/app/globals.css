@@ -1,0 +1,69 @@
+/*
+ * Atomize UI design tokens (light + dark). Imported once at the app root.
+ * Each component's CSS is bundled automatically via tree-shaking when you
+ * import from '@atomizeui/core'.
+ */
+@import "@atomizeui/core/design-system.css";
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--atom-color-bg-layout);
+  color: var(--atom-color-text);
+  font-family: var(--atom-font-family);
+  font-size: var(--atom-font-size);
+  line-height: var(--atom-line-height);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  min-height: 100vh;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* Theme toggle button shared style */
+.dashboard-theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--atom-color-border-secondary);
+  border-radius: var(--atom-border-radius);
+  background: var(--atom-color-bg-container);
+  color: var(--atom-color-text-secondary);
+  cursor: pointer;
+  transition:
+    border-color 0.2s,
+    color 0.2s,
+    background 0.2s;
+}
+
+.dashboard-theme-toggle:hover {
+  border-color: var(--atom-primary-color);
+  color: var(--atom-color-text);
+}
+
+.dashboard-theme-toggle:focus-visible {
+  outline: none;
+  border-color: var(--atom-primary-color);
+  box-shadow: 0 0 0 2px var(--atom-primary-color-outline);
+}
+
+.dashboard-theme-toggle-icon {
+  display: inline-flex;
+}

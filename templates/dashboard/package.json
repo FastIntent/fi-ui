@@ -1,11 +1,27 @@
 {
-  "name": "@atomizeui/template-saas-starter",
+  "name": "@atomizeui/template-dashboard",
   "version": "0.0.0",
   "private": true,
-  "description": "SaaS starter template built with Atomize UI — Next.js 16 + App Router. Coming soon.",
+  "description": "Dashboard Kit — a production-ready MIT-licensed admin dashboard built on @atomizeui/core. Overview, team, media, and settings out of the box. Next.js 16 App Router.",
+  "homepage": "https://atomizeui.com/templates/dashboard",
+  "license": "MIT",
   "scripts": {
-    "build": "echo 'TODO: build saas-starter' && exit 0",
-    "dev": "echo 'TODO: saas-starter dev' && exit 0",
-    "typecheck": "echo 'TODO: saas-starter typecheck' && exit 0"
+    "dev": "next dev -p 3001",
+    "build": "next build",
+    "start": "next start -p 3001",
+    "typecheck": "tsc --noEmit",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@atomizeui/core": "workspace:*",
+    "next": "^16.0.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.1",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.9.3"
   }
 }
