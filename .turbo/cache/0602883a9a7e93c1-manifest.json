@@ -1,0 +1,11 @@
+{
+  "files": {
+    "templates/saas-starter/.turbo/turbo-typecheck.log": {
+      "size": 214,
+      "mtime_nanos": 1780801150502438645,
+      "mode": 420,
+      "is_dir": false
+    }
+  },
+  "order": ["templates/saas-starter/.turbo/turbo-typecheck.log"]
+}

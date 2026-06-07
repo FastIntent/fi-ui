@@ -4,9 +4,9 @@ name: Chromatic Visual Regression
 # Chromatic itself blocks merges via its own PR check — not via this workflow's exit code.
 on:
   push:
-    branches: ['main', 'master']
+    branches: ["main", "master"]
   pull_request:
-    branches: ['main', 'master']
+    branches: ["main", "master"]
 
 jobs:
   chromatic:
@@ -29,7 +29,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
+          cache: "pnpm"
 
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
@@ -40,7 +40,8 @@ jobs:
           # Store CHROMATIC_PROJECT_TOKEN as a GitHub Actions secret.
           # In the repo: Settings → Secrets → Actions → New secret
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          # Use our config file so settings are version-controlled.
+          # Config and Storybook live inside the core package
+          workingDir: packages/core
           configFile: chromatic.config.json
           # On main, auto-accept all changes to update the baseline.
           autoAcceptChanges: ${{ github.ref == 'refs/heads/main' }}

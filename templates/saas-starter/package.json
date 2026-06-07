@@ -1,0 +1,11 @@
+{
+  "name": "@atomizeui/template-saas-starter",
+  "version": "0.0.0",
+  "private": true,
+  "description": "SaaS starter template built with Atomize UI — Next.js 16 + App Router. Coming soon.",
+  "scripts": {
+    "build": "echo 'TODO: build saas-starter' && exit 0",
+    "dev": "echo 'TODO: saas-starter dev' && exit 0",
+    "typecheck": "echo 'TODO: saas-starter typecheck' && exit 0"
+  }
+}

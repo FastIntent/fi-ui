@@ -1,0 +1,64 @@
+{
+  "$schema": "https://turborepo.com/schema.json",
+  "ui": "tui",
+  "globalDependencies": ["**/.env.*local", "tsconfig.base.json", ".npmrc"],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
+      "inputs": ["src/**", "package.json", "tsconfig.json", "tsup.config.ts"]
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "outputs": ["coverage/**"],
+      "inputs": ["src/**", "test/**", "vitest.config.ts", "vitest.setup.ts"]
+    },
+    "typecheck": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
+    "lint": {
+      "outputs": []
+    },
+    "lint:styles": {
+      "outputs": [],
+      "inputs": ["src/**/*.scss", "src/**/*.css"]
+    },
+    "validate": {
+      "outputs": [],
+      "inputs": ["src/**"]
+    },
+    "token-audit": {
+      "outputs": []
+    },
+    "size-check": {
+      "dependsOn": ["build"],
+      "outputs": [],
+      "inputs": ["dist/**", "scripts/bundle-size-check.mjs"]
+    },
+    "size-baseline": {
+      "dependsOn": ["build"],
+      "outputs": ["bundle-baseline.json"]
+    },
+    "storybook": {
+      "cache": false,
+      "persistent": true
+    },
+    "build-storybook": {
+      "dependsOn": ["^build"],
+      "outputs": ["storybook-static/**"]
+    },
+    "chromatic": {
+      "dependsOn": ["build-storybook"],
+      "outputs": []
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "clean": {
+      "cache": false,
+      "outputs": []
+    }
+  }
+}

@@ -22,15 +22,6 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "declaration": true,
-    "declarationDir": "dist/types",
-    "emitDeclarationOnly": false,
-    "outDir": "dist",
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    },
-    "types": ["vitest/globals", "@testing-library/jest-dom", "jest-axe", "node"]
-  },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist"]
+    "emitDeclarationOnly": false
+  }
 }

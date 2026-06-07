@@ -1,0 +1,11 @@
+{
+  "name": "@atomizeui/docs",
+  "version": "0.0.0",
+  "private": true,
+  "description": "atomizeui.com — documentation site for Atomize UI",
+  "scripts": {
+    "build": "echo 'TODO: build docs site' && exit 0",
+    "dev": "echo 'TODO: docs dev' && exit 0",
+    "typecheck": "echo 'TODO: docs typecheck' && exit 0"
+  }
+}

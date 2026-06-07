@@ -1,0 +1,18 @@
+{
+  "name": "@atomizeui/blocks",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Atomize UI Blocks — production-ready composed components (Hero, Pricing, LoginCard, etc.). Coming soon.",
+  "license": "MIT",
+  "scripts": {
+    "build": "echo 'TODO: build blocks' && exit 0",
+    "test": "echo 'TODO: blocks tests' && exit 0",
+    "typecheck": "echo 'TODO: blocks typecheck' && exit 0"
+  },
+  "peerDependencies": {
+    "@atomizeui/core": "workspace:*",
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  }
+}
