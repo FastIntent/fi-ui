@@ -69,13 +69,14 @@ const esmLines = exports_list.map(({ kind, names, path }) => {
     : `export { ${names.join(', ')} } from '${resolved}';`;
 });
 
-const esm = esmLines.join('\n') + '\n';
+const esm = `"use client";\n` + esmLines.join('\n') + '\n';
 writeFileSync(ESM_OUT, esm, 'utf8');
 
 // ---------------------------------------------------------------------------
 // CJS barrel
 // ---------------------------------------------------------------------------
 const cjsLines = [
+  '"use client";',
   "'use strict';",
   "Object.defineProperty(exports, '__esModule', { value: true });",
   '',
@@ -283,10 +284,63 @@ for (const comp of readdirSync(COMPONENTS_DIST)) {
 }
 
 // ---------------------------------------------------------------------------
+// Inject `"use client"` directive into every component entry and shared chunk.
+//
+// Required by the Next.js App Router: any module that uses React hooks,
+// browser APIs, or event handlers must declare itself a Client Component.
+// Without this directive, importing @atomizeui/core from a Server Component
+// page (the default in App Router) throws:
+//
+//   You're importing a module that depends on `useState` into a React
+//   Server Component module.
+//
+// Excluded — these are not interactive React code:
+//   - dist/server/**        (Node-only filesystem adapters)
+//   - dist/design-system.*  (token script, no React)
+//   - dist/styles/**        (raw CSS or empty placeholders)
+// ---------------------------------------------------------------------------
+const DIRECTIVE = '"use client";';
+let directiveInjected = 0;
+
+function injectDirective(filePath) {
+  if (!existsSync(filePath)) return false;
+  const src = readFileSync(filePath, 'utf8');
+  if (src.startsWith('"use client"') || src.startsWith("'use client'")) return false;
+  writeFileSync(filePath, DIRECTIVE + '\n' + src, 'utf8');
+  return true;
+}
+
+function shouldInject(relPath) {
+  // Server adapters run in Node — never client.
+  if (relPath.startsWith('dist/server/')) return false;
+  // Raw CSS / SCSS outputs.
+  if (relPath.startsWith('dist/styles/')) return false;
+  // Only JS modules — skip declarations, sourcemaps, css.
+  if (!relPath.endsWith('.js') && !relPath.endsWith('.cjs')) return false;
+  // index.js / index.cjs already received the directive above.
+  if (relPath === ESM_OUT || relPath === CJS_OUT) return false;
+  return true;
+}
+
+function walkAndInject(dir) {
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const full = join(dir, entry.name);
+    if (entry.isDirectory()) {
+      walkAndInject(full);
+    } else if (shouldInject(full)) {
+      if (injectDirective(full)) directiveInjected++;
+    }
+  }
+}
+
+walkAndInject('dist');
+
+// ---------------------------------------------------------------------------
 // Report
 // ---------------------------------------------------------------------------
 console.log(`✓ barrel  ${ESM_OUT}  (${esm.length} B, ${exports_list.length} modules)`);
 console.log(`✓ barrel  ${CJS_OUT} (${cjs.length} B, ${exports_list.length} modules)`);
 if (cssDeduped > 0) console.log(`✓ css     deduped ${cssDeduped} component CSS files (saved ${(cssSaved / 1024).toFixed(1)} KB)`);
 if (cssInjected > 0) console.log(`✓ css     injected CSS import into ${cssInjected} component entries`);
+if (directiveInjected > 0) console.log(`✓ "use client" injected into ${directiveInjected} client-side modules`);
 if (removed > 0) console.log(`✓ removed ${removed} empty chunk(s)`);
