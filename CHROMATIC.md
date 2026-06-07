@@ -4,7 +4,7 @@
 
 1. Cuenta en [chromatic.com](https://chromatic.com) (el plan gratuito cubre
    5,000 snapshots/mes).
-2. El proyecto `fast-ui` enlazado en el dashboard de Chromatic.
+2. El proyecto `@atomizeui/core` enlazado en el dashboard de Chromatic.
 3. El **Project Token** disponible.
 
 ---

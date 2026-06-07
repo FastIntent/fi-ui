@@ -25,26 +25,26 @@ describe('ConfigProvider prefixCls', () => {
       </ConfigProvider>
     );
 
-    expect(screen.getByTestId('prefix-probe')).toHaveAttribute('data-prefix', 'fi');
-    expect(screen.getByTestId('prefix-probe')).toHaveAttribute('data-button-prefix', 'fi-btn');
+    expect(screen.getByTestId('prefix-probe')).toHaveAttribute('data-prefix', 'atom');
+    expect(screen.getByTestId('prefix-probe')).toHaveAttribute('data-button-prefix', 'atom-btn');
   });
 
-  it('provides a custom prefix while keeping fi theme variables for bundled styles', () => {
+  it('provides a custom prefix while keeping atom theme variables for bundled styles', () => {
     const { container } = render(
       <ConfigProvider prefixCls="acme">
         <PrefixProbe />
       </ConfigProvider>
     );
 
-    const provider = container.querySelector('.fi-config-provider.acme-config-provider');
+    const provider = container.querySelector('.atom-config-provider.acme-config-provider');
 
     expect(provider).toBeInTheDocument();
-    expect(provider).toHaveStyle({ '--fi-prefix': 'acme' });
+    expect(provider).toHaveStyle({ '--atom-prefix': 'acme' });
     expect(screen.getByTestId('prefix-probe')).toHaveAttribute('data-prefix', 'acme');
     expect(screen.getByTestId('prefix-probe')).toHaveAttribute('data-button-prefix', 'acme-btn');
   });
 
-  it('adds custom-prefixed class aliases while preserving bundled fi styles', () => {
+  it('adds custom-prefixed class aliases while preserving bundled atom styles', () => {
     render(
       <ConfigProvider prefixCls="acme">
         <Button type="primary" loading>
@@ -55,16 +55,16 @@ describe('ConfigProvider prefixCls', () => {
     );
 
     const button = screen.getByRole('button');
-    const spinner = button.querySelector('.fi-btn-loading-icon');
+    const spinner = button.querySelector('.atom-btn-loading-icon');
     const avatar = screen.getByText('FD').closest('span')?.parentElement;
 
-    expect(button).toHaveClass('fi-btn');
-    expect(button).toHaveClass('fi-btn-primary');
+    expect(button).toHaveClass('atom-btn');
+    expect(button).toHaveClass('atom-btn-primary');
     expect(button).toHaveClass('acme-btn');
     expect(button).toHaveClass('acme-btn-primary');
-    expect(spinner).toHaveClass('fi-btn-loading-icon');
+    expect(spinner).toHaveClass('atom-btn-loading-icon');
     expect(spinner).toHaveClass('acme-btn-loading-icon');
-    expect(avatar).toHaveClass('fi-avatar');
+    expect(avatar).toHaveClass('atom-avatar');
     expect(avatar).toHaveClass('acme-avatar');
   });
 });

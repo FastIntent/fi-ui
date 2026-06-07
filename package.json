@@ -1,8 +1,8 @@
 {
-  "name": "@fastintent/fi-ui",
-  "version": "1.1.1",
+  "name": "@atomizeui/core",
+  "version": "2.0.0",
   "type": "module",
-  "description": "Enterprise-class React UI component library",
+  "description": "Atomize UI — enterprise-class React component library for the Next.js App Router. Atomic, composable, themeable.",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",

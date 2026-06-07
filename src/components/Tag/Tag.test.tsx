@@ -11,12 +11,12 @@ describe('Tag Component', () => {
 
   it('applies preset color class', () => {
     const { container } = render(<Tag color="success">Done</Tag>);
-    expect(container.querySelector('.fi-tag-success')).toBeInTheDocument();
+    expect(container.querySelector('.atom-tag-success')).toBeInTheDocument();
   });
 
   it('applies borderless class when bordered is false', () => {
     const { container } = render(<Tag bordered={false}>Flat</Tag>);
-    expect(container.querySelector('.fi-tag-borderless')).toBeInTheDocument();
+    expect(container.querySelector('.atom-tag-borderless')).toBeInTheDocument();
   });
 
   it('renders close button when closable is true', () => {

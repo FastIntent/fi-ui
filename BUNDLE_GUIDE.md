@@ -1,4 +1,4 @@
-# fast-ui — Import Guide & Bundle Governance
+# Atomize UI — Import Guide & Bundle Governance
 
 ## Recommended Import Patterns
 
@@ -10,8 +10,8 @@ component you do **not** import.
 
 ```tsx
 // ✅ Best practice — only the components you use are bundled
-import { Button, Input, Modal } from 'fast-ui';
-import 'fast-ui/index.css'; // full token + reset sheet (~22 KB gzip)
+import { Button, Input, Modal } from '@atomizeui/core';
+import '@atomizeui/core/index.css'; // full token + reset sheet (~22 KB gzip)
 ```
 
 ### ✅ Per-component CSS (maximum tree-shaking)
@@ -19,21 +19,21 @@ import 'fast-ui/index.css'; // full token + reset sheet (~22 KB gzip)
 For performance-critical apps, import only the CSS for each component you use:
 
 ```tsx
-import { Button } from 'fast-ui';
-import { Modal } from 'fast-ui';
-import { DatePicker } from 'fast-ui';
+import { Button } from '@atomizeui/core';
+import { Modal } from '@atomizeui/core';
+import { DatePicker } from '@atomizeui/core';
 
-import 'fast-ui/Button/index.css';
-import 'fast-ui/Modal/index.css';
-import 'fast-ui/DatePicker/index.css';
+import '@atomizeui/core/Button/index.css';
+import '@atomizeui/core/Modal/index.css';
+import '@atomizeui/core/DatePicker/index.css';
 // plus always the design tokens:
-import 'fast-ui/design-system.css'; // ~3.8 KB gzip — CSS vars & tokens only
+import '@atomizeui/core/design-system.css'; // ~3.8 KB gzip — CSS vars & tokens only
 ```
 
 ### ✅ Design tokens only (zero component JS)
 
 ```tsx
-import 'fast-ui/design-system.css';
+import '@atomizeui/core/design-system.css';
 // Gives you all CSS custom properties: --fi-color-primary, --fi-spacing-*, etc.
 ```
 
@@ -41,7 +41,7 @@ import 'fast-ui/design-system.css';
 
 ```tsx
 // ❌ Never do this — imports every component including ones you don't use
-import FastUI from 'fast-ui';
+import AtomizeUI from '@atomizeui/core';
 ```
 
 ---
@@ -50,14 +50,14 @@ import FastUI from 'fast-ui';
 
 ```tsx
 // app/layout.tsx
-import 'fast-ui/index.css';
+import '@atomizeui/core/index.css';
 
 // app/my-page/page.tsx  (Server Component — works fine, SSR-safe)
-import { Card, Badge } from 'fast-ui';
+import { Card, Badge } from '@atomizeui/core';
 
 // app/my-page/client-widget.tsx  (needs 'use client' only for interactive components)
 ('use client');
-import { Modal, DatePicker } from 'fast-ui';
+import { Modal, DatePicker } from '@atomizeui/core';
 ```
 
 > **Note:** Components that manage their own open/close state (`Modal`,
@@ -130,7 +130,7 @@ parsing) and `rc-picker` (calendar logic). It is loaded lazily only when
 
 ```tsx
 const DatePicker = React.lazy(() =>
-  import('fast-ui').then((m) => ({ default: m.DatePicker }))
+  import('@atomizeui/core').then((m) => ({ default: m.DatePicker }))
 );
 ```
 

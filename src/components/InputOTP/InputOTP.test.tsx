@@ -18,12 +18,12 @@ describe('InputOTP Component', () => {
 
   it('applies base class to container', () => {
     const { container } = render(<InputOTP />);
-    expect(container.querySelector('.fi-otp')).toBeInTheDocument();
+    expect(container.querySelector('.atom-otp')).toBeInTheDocument();
   });
 
   it('applies error status class', () => {
     const { container } = render(<InputOTP status="error" />);
-    expect(container.querySelector('.fi-otp-status-error')).toBeInTheDocument();
+    expect(container.querySelector('.atom-otp-status-error')).toBeInTheDocument();
   });
 
   it('disables all inputs when disabled prop is true', () => {

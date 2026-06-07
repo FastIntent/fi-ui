@@ -5,7 +5,7 @@
  *
  *   // app/actions/images.ts
  *   'use server';
- *   import { createFsImageManagerActions } from '@fastintent/fi-ui/server';
+ *   import { createFsImageManagerActions } from '@atomizeui/core/server';
  *
  *   export const imageActions = createFsImageManagerActions({
  *     rootDir: 'public/uploads',
@@ -14,7 +14,7 @@
  *
  *   // app/media/page.tsx
  *   'use client';
- *   import { ImageManager } from '@fastintent/fi-ui';
+ *   import { ImageManager } from '@atomizeui/core';
  *   import { imageActions } from '../actions/images';
  *   export default function Page() {
  *     return <ImageManager mode="edit" multiple actions={imageActions} />;

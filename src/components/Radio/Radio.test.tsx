@@ -31,7 +31,7 @@ describe('Radio Component', () => {
 
   it('applies disabled wrapper class and attribute when disabled standalone', () => {
     const { container } = render(<Radio disabled>Option A</Radio>);
-    expect(container.querySelector('.fi-radio-wrapper-disabled')).toBeInTheDocument();
+    expect(container.querySelector('.atom-radio-wrapper-disabled')).toBeInTheDocument();
     const input = container.querySelector('input[type="radio"]') as HTMLInputElement;
     expect(input.disabled).toBe(true);
   });
@@ -42,7 +42,7 @@ describe('Radio Component', () => {
         <Radio value="a">Option A</Radio>
       </Radio.Group>
     );
-    expect(container.querySelector('.fi-radio-wrapper-disabled')).toBeInTheDocument();
+    expect(container.querySelector('.atom-radio-wrapper-disabled')).toBeInTheDocument();
   });
 
   describe('Radio.Group', () => {

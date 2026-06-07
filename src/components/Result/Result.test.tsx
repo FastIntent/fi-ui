@@ -12,17 +12,17 @@ describe('Result Component', () => {
 
   it('applies correct status class', () => {
     const { container } = render(<Result status="success" title="Done" />);
-    expect(container.querySelector('.fi-result-status-success')).toBeInTheDocument();
+    expect(container.querySelector('.atom-result-status-success')).toBeInTheDocument();
   });
 
   it('applies error status class', () => {
     const { container } = render(<Result status="error" title="Failed" />);
-    expect(container.querySelector('.fi-result-status-error')).toBeInTheDocument();
+    expect(container.querySelector('.atom-result-status-error')).toBeInTheDocument();
   });
 
   it('applies 404 status class', () => {
     const { container } = render(<Result status="404" title="Not Found" />);
-    expect(container.querySelector('.fi-result-status-404')).toBeInTheDocument();
+    expect(container.querySelector('.atom-result-status-404')).toBeInTheDocument();
   });
 
   it('renders extra content (action buttons)', () => {

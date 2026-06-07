@@ -6,13 +6,13 @@ import { Progress } from './index';
 describe('Progress Component', () => {
   it('renders line progress by default', () => {
     const { container } = render(<Progress percent={50} />);
-    expect(container.querySelector('.fi-progress')).toBeInTheDocument();
-    expect(container.querySelector('.fi-progress-line')).toBeInTheDocument();
+    expect(container.querySelector('.atom-progress')).toBeInTheDocument();
+    expect(container.querySelector('.atom-progress-line')).toBeInTheDocument();
   });
 
   it('renders circle progress when type is circle', () => {
     const { container } = render(<Progress type="circle" percent={75} />);
-    expect(container.querySelector('.fi-progress-circle')).toBeInTheDocument();
+    expect(container.querySelector('.atom-progress-circle')).toBeInTheDocument();
   });
 
   it('displays percent text by default', () => {
@@ -27,12 +27,12 @@ describe('Progress Component', () => {
 
   it('applies success status class', () => {
     const { container } = render(<Progress percent={100} status="success" />);
-    expect(container.querySelector('.fi-progress-status-success')).toBeInTheDocument();
+    expect(container.querySelector('.atom-progress-status-success')).toBeInTheDocument();
   });
 
   it('applies exception status class', () => {
     const { container } = render(<Progress percent={50} status="exception" />);
-    expect(container.querySelector('.fi-progress-status-exception')).toBeInTheDocument();
+    expect(container.querySelector('.atom-progress-status-exception')).toBeInTheDocument();
   });
 
   it('renders custom format text', () => {

@@ -1,6 +1,6 @@
 /**
  * Sandbox-safe path helpers. All "path" values here are relative to the
- * consumer's rootDir; the rootDir itself is opaque to fi-ui (the server
+ * consumer's rootDir; the rootDir itself is opaque to atomize ui (the server
  * adapter is responsible for resolving it against the real filesystem).
  */
 

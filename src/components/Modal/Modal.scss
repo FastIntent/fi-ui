@@ -111,7 +111,7 @@
   }
 
   &-footer {
-    padding: var(--fi-spacing-md) var(--fi-spacing-lg);
+    padding: var(--atom-spacing-md) var(--atom-spacing-lg);
     text-align: right;
     background: var(
       --#{$prefix}-modal-footer-bg,

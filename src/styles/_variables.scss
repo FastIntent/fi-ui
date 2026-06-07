@@ -1,5 +1,5 @@
 /* Design tokens as SCSS variables mapping to CSS variables */
-$prefix: "fi" !default;
+$prefix: "atom" !default;
 
 $primary-color: var(--#{$prefix}-primary-color);
 $primary-color-hover: var(--#{$prefix}-primary-color-hover);

@@ -57,7 +57,7 @@ describe('Collapse', () => {
         </Collapse.Panel>
       </Collapse>
     );
-    expect(container.querySelector('.fi-collapse-ghost')).toBeInTheDocument();
+    expect(container.querySelector('.atom-collapse-ghost')).toBeInTheDocument();
   });
 
   it('passes accessibility tests', async () => {

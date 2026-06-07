@@ -5,9 +5,9 @@ Botón versátil con soporte para diferentes tamaños, tipos y efectos.
 ## Importación
 
 ```tsx
-import { Button } from 'fast-ui';
+import { Button } from 'Atomize UI';
 // o
-import { Button } from 'fast-ui/Button';
+import { Button } from 'Atomize UI/Button';
 ```
 
 ## Props

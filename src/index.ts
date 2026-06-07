@@ -57,7 +57,7 @@ export * from './components/ImagePickerInput';
 
 // Locale exports
 export { enUS, esES, ptBR, frFR, deDE } from './components/locale';
-export type { FastUILocale } from './components/locale';
+export type { AtomizeUILocale } from './components/locale';
 
 // Design tokens
 import './styles/tokens.scss';

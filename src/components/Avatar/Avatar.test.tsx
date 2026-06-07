@@ -18,20 +18,20 @@ describe('Avatar Component', () => {
 
   it('applies circle shape class by default', () => {
     const { container } = render(<Avatar>JD</Avatar>);
-    expect(container.firstChild).toHaveClass('fi-avatar-circle');
+    expect(container.firstChild).toHaveClass('atom-avatar-circle');
   });
 
   it('applies square shape class when specified', () => {
     const { container } = render(<Avatar shape="square">JD</Avatar>);
-    expect(container.firstChild).toHaveClass('fi-avatar-square');
+    expect(container.firstChild).toHaveClass('atom-avatar-square');
   });
 
   it('applies size class for named sizes', () => {
     const { container: large } = render(<Avatar size="large">A</Avatar>);
-    expect(large.firstChild).toHaveClass('fi-avatar-large');
+    expect(large.firstChild).toHaveClass('atom-avatar-large');
 
     const { container: small } = render(<Avatar size="small">A</Avatar>);
-    expect(small.firstChild).toHaveClass('fi-avatar-small');
+    expect(small.firstChild).toHaveClass('atom-avatar-small');
   });
 
   it('applies numeric size as inline style', () => {

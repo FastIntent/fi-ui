@@ -1,4 +1,4 @@
-name: Fast-UI CI/CD Pipeline
+name: Atomize UI CI/CD Pipeline
 
 on:
   push:

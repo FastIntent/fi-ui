@@ -84,7 +84,7 @@ export const DelayAndToggle: Story = {
           <div
             style={{
               padding: 24,
-              background: 'var(--fi-color-fill-quaternary)',
+              background: 'var(--atom-color-fill-quaternary)',
               borderRadius: 8,
               width: 300,
             }}
@@ -110,7 +110,7 @@ export const Fullscreen: Story = {
           }}
           style={{
             padding: '6px 16px',
-            background: 'var(--fi-primary-color)',
+            background: 'var(--atom-primary-color)',
             color: '#fff',
             border: 'none',
             borderRadius: 4,

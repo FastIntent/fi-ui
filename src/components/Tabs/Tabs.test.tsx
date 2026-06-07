@@ -37,11 +37,11 @@ describe('Tabs Component', () => {
 
   it('applies card type class', () => {
     const { container } = render(<Tabs items={items} type="card" />);
-    expect(container.querySelector('.fi-tabs-card')).toBeInTheDocument();
+    expect(container.querySelector('.atom-tabs-card')).toBeInTheDocument();
   });
 
   it('applies size class', () => {
     const { container } = render(<Tabs items={items} size="large" />);
-    expect(container.querySelector('.fi-tabs-lg')).toBeInTheDocument();
+    expect(container.querySelector('.atom-tabs-lg')).toBeInTheDocument();
   });
 });

@@ -19,7 +19,13 @@ const UploadIcon = () => (
 
 // Helper Components for Stories
 const LoadingIcon = () => (
-  <svg className="fi-anim-spin" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor">
+  <svg
+    className="atom-anim-spin"
+    viewBox="0 0 1024 1024"
+    width="24"
+    height="24"
+    fill="currentColor"
+  >
     <path d="M512 1024c-69.1 0-136.2-13.5-199.3-40.2C251.7 957.7 195.9 921 149 874s-83.7-102.7-110.4-163.7C11.5 648.2 0 581.1 0 512c0-13.8 11.2-25 25-25s25 11.2 25 25c0 62.4 12.2 122.9 36.2 179.8C110.2 746.2 143.2 796.5 185.3 838.7c42.2 42.2 92.5 75.1 146.9 99.1 56.9 24 117.4 36.2 179.8 36.2s122.9-12.2 179.8-36.2c54.4-24 104.7-56.9 146.9-99.1 42.2-42.2 75.1-92.5 99.1-146.9 24-56.9 36.2-117.4 36.2-179.8s-12.2-122.9-36.2-179.8c-24-54.4-56.9-104.7-99.1-146.9S746.2 110.2 691.8 86.2C634.9 62.2 574.4 50 512 50c-13.8 0-25-11.2-25-25s11.2-25 25-25c69.1 0 136.2 13.5 199.3 40.2 61 25.8 116.8 62.5 163.7 109.5s83.7 102.7 110.4 163.7c26.7 61 40.2 128.1 40.2 199.3s-13.5 136.2-40.2 199.3c-26.7 61-63.5 116.8-110.4 163.7s-102.7 83.7-163.7 110.4C648.2 1010.5 581.1 1024 512 1024z" />
   </svg>
 );
@@ -83,9 +89,9 @@ export const AvatarUpload = () => {
   };
 
   const uploadButton = (
-    <div className="fi-upload-btn">
+    <div className="atom-upload-btn">
       {loading ? <LoadingIcon /> : <PlusIcon />}
-      <div className="fi-upload-text" style={{ marginTop: 8 }}>
+      <div className="atom-upload-text" style={{ marginTop: 8 }}>
         Upload
       </div>
     </div>
@@ -124,7 +130,7 @@ export const WithImageCrop: Story = {
             showGrid: true,
           }}
         >
-          <div className="fi-upload-btn">
+          <div className="atom-upload-btn">
             <PlusIcon />
             <div style={{ marginTop: 8 }}>Avatar</div>
           </div>

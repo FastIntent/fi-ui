@@ -1,7 +1,7 @@
 /**
- * Server-only entry point for @fastintent/fi-ui.
+ * Server-only entry point for @atomizeui/core.
  *
- * Import as: `@fastintent/fi-ui/server`.
+ * Import as: `@atomizeui/core/server`.
  *
  * Contains Node.js-only adapters and helpers (filesystem-backed
  * ImageManager actions, sandbox utilities). Importing this from a client

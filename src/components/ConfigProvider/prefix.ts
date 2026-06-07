@@ -1,4 +1,4 @@
-export const DEFAULT_PREFIX = 'fi';
+export const DEFAULT_PREFIX = 'atom';
 
 export const getDefaultPrefixCls = (suffixCls?: string) =>
   suffixCls ? `${DEFAULT_PREFIX}-${suffixCls}` : DEFAULT_PREFIX;

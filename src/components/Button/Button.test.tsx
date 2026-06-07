@@ -9,8 +9,8 @@ describe('Button Component', () => {
     render(<Button>Click me</Button>);
     const button = screen.getByRole('button', { name: /click me/i });
     expect(button).toBeInTheDocument();
-    expect(button).toHaveClass('fi-btn');
-    expect(button).toHaveClass('fi-btn-default');
+    expect(button).toHaveClass('atom-btn');
+    expect(button).toHaveClass('atom-btn-default');
   });
 
   it('triggers onClick event when clicked', () => {
@@ -29,7 +29,7 @@ describe('Button Component', () => {
     );
     const button = screen.getByRole('button');
     expect(button).toBeDisabled();
-    expect(button).toHaveClass('fi-btn-disabled');
+    expect(button).toHaveClass('atom-btn-disabled');
 
     fireEvent.click(button);
     expect(handleClick).not.toHaveBeenCalled();
@@ -45,11 +45,11 @@ describe('Button Component', () => {
     const button = screen.getByRole('button');
 
     // Check loading class and disabled attribute
-    expect(button).toHaveClass('fi-btn-loading');
+    expect(button).toHaveClass('atom-btn-loading');
     expect(button).toBeDisabled();
 
     // Ensure spinner element is rendered
-    const spinner = button.querySelector('.fi-btn-loading-icon');
+    const spinner = button.querySelector('.atom-btn-loading-icon');
     expect(spinner).toBeInTheDocument();
 
     // Ensure click is intercepted
@@ -64,8 +64,8 @@ describe('Button Component', () => {
       </Button>
     );
     const button = screen.getByRole('button');
-    expect(button).toHaveClass('fi-btn-danger');
-    expect(button).toHaveClass('fi-btn-block');
+    expect(button).toHaveClass('atom-btn-danger');
+    expect(button).toHaveClass('atom-btn-block');
   });
 
   it('renders icons when provided', () => {
@@ -86,13 +86,13 @@ describe('Button Component', () => {
     );
 
     const button = screen.getByRole('button', { name: /save changes/i });
-    const spinner = button.querySelector('.fi-btn-loading-icon');
+    const spinner = button.querySelector('.atom-btn-loading-icon');
 
-    expect(button).toHaveClass('fi-btn');
-    expect(button).toHaveClass('fi-btn-primary');
+    expect(button).toHaveClass('atom-btn');
+    expect(button).toHaveClass('atom-btn-primary');
     expect(button).toHaveClass('acme-btn');
     expect(button).toHaveClass('acme-btn-primary');
-    expect(spinner).toHaveClass('fi-btn-loading-icon');
+    expect(spinner).toHaveClass('atom-btn-loading-icon');
     expect(spinner).toHaveClass('acme-btn-loading-icon');
   });
 });

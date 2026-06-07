@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * fast-ui Bundle Size Governance
+ * Atomize UI Bundle Size Governance
  *
  * Measures the size of every artifact in dist/ and enforces hard budgets.
  * Run manually:  node scripts/bundle-size-check.mjs
@@ -27,11 +27,13 @@ const SHOULD_UPDATE_BASELINE = process.argv.includes('--update-baseline');
 const BUDGETS = {
   // The aggregated CSS file ships with every import. Keep it lean.
   // Increased from 200 KB → 215 KB after migrating all hardcoded values to
-  // CSS custom properties (design tokens). Raw size grows because var(--fi-*)
+  // CSS custom properties (design tokens). Raw size grows because var(--atom-*)
   // is longer than e.g. "8px", but gzip lands at ~28 KB — acceptable.
-  // Bumped to 235 KB after adding ImageManager + ImagePickerInput (two
-  // dense, composite components with grid/list views, DnD states and RTL).
-  'dist/index.css':           235_000, // 235 KB raw
+  // Bumped to 235 KB after adding ImageManager + ImagePickerInput.
+  // Bumped to 250 KB after the brand rename: CSS prefix grew from `fi-` (2 chars)
+  // to `atom-` (4 chars), so every selector and CSS var token gained ~2 chars.
+  // Total raw delta ≈ +12 KB, gzip delta is much smaller thanks to compression.
+  'dist/index.css':           250_000, // 250 KB raw
   'dist/design-system.css':    40_000, //  40 KB raw
 
   // Full barrel bundle (ESM, includes all 45 components + rc-component deps).
@@ -125,7 +127,7 @@ if (totalJs > BUDGETS['__total_js__']) {
 // ---------------------------------------------------------------------------
 // Report
 // ---------------------------------------------------------------------------
-console.log('\n📦  fast-ui Bundle Size Report\n');
+console.log('\n📦  Atomize UI Bundle Size Report\n');
 console.log('─'.repeat(72));
 console.log(
   'File'.padEnd(48) + 'Raw'.padStart(10) + 'Gzip'.padStart(10) + 'Status'.padStart(8)

@@ -6,9 +6,9 @@ Potente sistema de gestión de formularios y validación basado en
 ## Importación
 
 ```tsx
-import { Form, useForm } from 'fast-ui';
+import { Form, useForm } from 'Atomize UI';
 // o
-import { Form, useForm } from 'fast-ui/Form';
+import { Form, useForm } from 'Atomize UI/Form';
 ```
 
 ## Form Props

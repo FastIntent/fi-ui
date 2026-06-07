@@ -24,7 +24,7 @@ describe('Breadcrumb Component', () => {
         <Breadcrumb.Item>B</Breadcrumb.Item>
       </Breadcrumb>
     );
-    expect(container.querySelectorAll('.fi-breadcrumb-item')).toHaveLength(2);
+    expect(container.querySelectorAll('.atom-breadcrumb-item')).toHaveLength(2);
   });
 
   it('calls onClick when a breadcrumb item is clicked', () => {

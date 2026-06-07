@@ -23,6 +23,7 @@ pnpm-debug.log*
 !.vscode/extensions.json
 .idea
 .shrx
+.claude
 *.suo
 *.ntvs*
 *.njsproj

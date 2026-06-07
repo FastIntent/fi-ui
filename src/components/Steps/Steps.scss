@@ -365,7 +365,7 @@ $step-detailed-connector-gap: 4px;
 // ─────────────────────────────────────────────
 
 // -- Default variant: small overrides font sizes --
-// El tamaño del ícono lo maneja --step-icon-size definida en .fi-steps-small
+// El tamaño del ícono lo maneja --step-icon-size definida en .atom-steps-small
 .#{$steps-prefix-cls}-small .#{$step-item-prefix-cls} {
   &-icon {
     font-size: $font-size-sm;

@@ -28,16 +28,16 @@ describe('Form Component', () => {
     const { rerender } = render(<Form layout="horizontal" data-testid="test-form" />);
     const form = screen.getByTestId('test-form');
 
-    expect(form).toHaveClass('fi-form');
-    expect(form).toHaveClass('fi-form-horizontal');
+    expect(form).toHaveClass('atom-form');
+    expect(form).toHaveClass('atom-form-horizontal');
 
     rerender(<Form layout="inline" data-testid="test-form" />);
-    expect(form).toHaveClass('fi-form-inline');
-    expect(form).not.toHaveClass('fi-form-horizontal');
+    expect(form).toHaveClass('atom-form-inline');
+    expect(form).not.toHaveClass('atom-form-horizontal');
   });
 
   it('renders vertical layout by default', () => {
     const { container } = render(<Form data-testid="test-form" />);
-    expect(container.querySelector('.fi-form')).toBeInTheDocument();
+    expect(container.querySelector('.atom-form')).toBeInTheDocument();
   });
 });

@@ -1,6 +1,6 @@
-import { FastUILocale } from './interface';
+import { AtomizeUILocale } from './interface';
 
-export const deDE: FastUILocale = {
+export const deDE: AtomizeUILocale = {
   locale: 'de',
   DatePicker: {
     locale: 'de_DE',

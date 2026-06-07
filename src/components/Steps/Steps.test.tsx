@@ -34,9 +34,9 @@ describe('Steps Component', () => {
         <Steps.Step title="Wait" />
       </Steps>
     );
-    expect(container.querySelector('.fi-steps-item-status-finish')).toBeInTheDocument();
-    expect(container.querySelector('.fi-steps-item-status-process')).toBeInTheDocument();
-    expect(container.querySelector('.fi-steps-item-status-wait')).toBeInTheDocument();
+    expect(container.querySelector('.atom-steps-item-status-finish')).toBeInTheDocument();
+    expect(container.querySelector('.atom-steps-item-status-process')).toBeInTheDocument();
+    expect(container.querySelector('.atom-steps-item-status-wait')).toBeInTheDocument();
   });
 
   it('applies vertical direction class', () => {
@@ -45,7 +45,7 @@ describe('Steps Component', () => {
         <Steps.Step title="Step 1" />
       </Steps>
     );
-    expect(container.querySelector('.fi-steps-vertical')).toBeInTheDocument();
+    expect(container.querySelector('.atom-steps-vertical')).toBeInTheDocument();
   });
 
   it('applies error status class when a step has status="error"', () => {
@@ -55,7 +55,7 @@ describe('Steps Component', () => {
         <Steps.Step title="Failed" status="error" />
       </Steps>
     );
-    expect(container.querySelector('.fi-steps-item-status-error')).toBeInTheDocument();
+    expect(container.querySelector('.atom-steps-item-status-error')).toBeInTheDocument();
   });
 });
 
@@ -66,7 +66,7 @@ describe('Steps — variant="detailed"', () => {
         <Steps.Step title="Paso 1" />
       </Steps>
     );
-    expect(container.querySelector('.fi-steps-detailed')).toBeInTheDocument();
+    expect(container.querySelector('.atom-steps-detailed')).toBeInTheDocument();
   });
 
   it('renders detailed item class for each step', () => {
@@ -77,7 +77,7 @@ describe('Steps — variant="detailed"', () => {
         <Steps.Step title="Paso 3" />
       </Steps>
     );
-    expect(container.querySelectorAll('.fi-steps-item-detailed')).toHaveLength(3);
+    expect(container.querySelectorAll('.atom-steps-item-detailed')).toHaveLength(3);
   });
 
   it('applies correct status modifier classes', () => {
@@ -88,9 +88,9 @@ describe('Steps — variant="detailed"', () => {
         <Steps.Step title="Pendiente" />
       </Steps>
     );
-    expect(container.querySelector('.fi-steps-item-detailed-finish')).toBeInTheDocument();
-    expect(container.querySelector('.fi-steps-item-detailed-process')).toBeInTheDocument();
-    expect(container.querySelector('.fi-steps-item-detailed-wait')).toBeInTheDocument();
+    expect(container.querySelector('.atom-steps-item-detailed-finish')).toBeInTheDocument();
+    expect(container.querySelector('.atom-steps-item-detailed-process')).toBeInTheDocument();
+    expect(container.querySelector('.atom-steps-item-detailed-wait')).toBeInTheDocument();
   });
 
   it('renders children inside the aside section', () => {
@@ -117,7 +117,7 @@ describe('Steps — variant="detailed"', () => {
         <Steps.Step title="Pendiente" />
       </Steps>
     );
-    const icons = container.querySelectorAll('.fi-steps-item-detailed-icon');
+    const icons = container.querySelectorAll('.atom-steps-item-detailed-icon');
     expect(icons[0].textContent).toBe('✓'); // finish
     expect(icons[1].textContent).toBe('✓'); // finish
     expect(icons[2].textContent).toBe('3'); // process
@@ -131,7 +131,7 @@ describe('Steps — variant="detailed"', () => {
         <Steps.Step title="En curso" />
       </Steps>
     );
-    expect(container.querySelectorAll('.fi-steps-item-detailed-step-number')).toHaveLength(0);
+    expect(container.querySelectorAll('.atom-steps-item-detailed-step-number')).toHaveLength(0);
   });
 
   it('shows step numbers in body when showStepNumber=true on Steps', () => {
@@ -142,7 +142,7 @@ describe('Steps — variant="detailed"', () => {
         <Steps.Step title="En curso" />
       </Steps>
     );
-    const numbers = container.querySelectorAll('.fi-steps-item-detailed-step-number');
+    const numbers = container.querySelectorAll('.atom-steps-item-detailed-step-number');
     expect(numbers).toHaveLength(3);
     expect(numbers[0].textContent).toBe('1');
     expect(numbers[1].textContent).toBe('2');
@@ -156,7 +156,7 @@ describe('Steps — variant="detailed"', () => {
         <Steps.Step title="En curso" />
       </Steps>
     );
-    const numbers = container.querySelectorAll('.fi-steps-item-detailed-step-number');
+    const numbers = container.querySelectorAll('.atom-steps-item-detailed-step-number');
     expect(numbers).toHaveLength(1);
     expect(numbers[0].textContent).toBe('1');
   });
@@ -167,7 +167,7 @@ describe('Steps — variant="detailed"', () => {
         <Steps.Step title="Custom" stepNumber={42} />
       </Steps>
     );
-    const icon = container.querySelector('.fi-steps-item-detailed-icon');
+    const icon = container.querySelector('.atom-steps-item-detailed-icon');
     expect(icon?.textContent).toBe('42');
   });
 
@@ -177,7 +177,7 @@ describe('Steps — variant="detailed"', () => {
         <Steps.Step title="Solo título" />
       </Steps>
     );
-    expect(container.querySelector('.fi-steps-item-detailed-aside')).not.toBeInTheDocument();
+    expect(container.querySelector('.atom-steps-item-detailed-aside')).not.toBeInTheDocument();
   });
 
   it('does not break default variant when detailed is not set', () => {
@@ -187,7 +187,7 @@ describe('Steps — variant="detailed"', () => {
         <Steps.Step title="B" />
       </Steps>
     );
-    expect(container.querySelector('.fi-steps-horizontal')).toBeInTheDocument();
-    expect(container.querySelector('.fi-steps-detailed')).not.toBeInTheDocument();
+    expect(container.querySelector('.atom-steps-horizontal')).toBeInTheDocument();
+    expect(container.querySelector('.atom-steps-detailed')).not.toBeInTheDocument();
   });
 });

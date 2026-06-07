@@ -1,7 +1,7 @@
-import { FastUILocale } from './interface';
+import { AtomizeUILocale } from './interface';
 import 'dayjs/locale/es';
 
-export const esES: FastUILocale = {
+export const esES: AtomizeUILocale = {
   locale: 'es',
   DatePicker: {
     locale: 'es_ES',

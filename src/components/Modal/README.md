@@ -5,9 +5,9 @@ Contenedor de diálogo que se superpone a todo el contenido de la página.
 ## Importación
 
 ```tsx
-import { Modal } from 'fast-ui';
+import { Modal } from 'Atomize UI';
 // o
-import { Modal } from 'fast-ui/Modal';
+import { Modal } from 'Atomize UI/Modal';
 ```
 
 ## Props

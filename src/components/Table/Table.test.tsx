@@ -32,18 +32,18 @@ describe('Table Component', () => {
     render(<Table columns={columns} data={[]} />);
 
     // rc-table internally renders a placeholder for empty states with our custom prefix
-    const emptyWrapper = document.querySelector('.fi-table-placeholder');
+    const emptyWrapper = document.querySelector('.atom-table-placeholder');
     expect(emptyWrapper).toBeInTheDocument();
   });
 
   it('applies loading class when loading state is true', () => {
     const { container } = render(<Table columns={columns} data={mockData} loading={true} />);
-    expect(container.querySelector('.fi-table-loading')).toBeInTheDocument();
+    expect(container.querySelector('.atom-table-loading')).toBeInTheDocument();
   });
 
   it('renders skeleton cells instead of data when loading', () => {
     const { container } = render(<Table columns={columns} data={mockData} loading={true} />);
-    expect(container.querySelector('.fi-skeleton')).toBeInTheDocument();
+    expect(container.querySelector('.atom-skeleton')).toBeInTheDocument();
     expect(screen.queryByText('John Doe')).not.toBeInTheDocument();
   });
 
@@ -51,7 +51,7 @@ describe('Table Component', () => {
     const { container } = render(
       <Table columns={columns} data={mockData} loading={true} skeletonRows={3} />
     );
-    const rows = container.querySelectorAll('.fi-table-tbody tr');
+    const rows = container.querySelectorAll('.atom-table-tbody tr');
     expect(rows).toHaveLength(3);
   });
 });

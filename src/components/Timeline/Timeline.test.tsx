@@ -23,7 +23,7 @@ describe('Timeline Component', () => {
         <Timeline.Item>Event</Timeline.Item>
       </Timeline>
     );
-    expect(container.querySelector('.fi-timeline')).toBeInTheDocument();
+    expect(container.querySelector('.atom-timeline')).toBeInTheDocument();
   });
 
   it('applies item class to each item', () => {
@@ -33,7 +33,7 @@ describe('Timeline Component', () => {
         <Timeline.Item>B</Timeline.Item>
       </Timeline>
     );
-    expect(container.querySelectorAll('.fi-timeline-item')).toHaveLength(2);
+    expect(container.querySelectorAll('.atom-timeline-item')).toHaveLength(2);
   });
 
   it('renders label when provided', () => {
@@ -51,6 +51,6 @@ describe('Timeline Component', () => {
         <Timeline.Item color="success">Done</Timeline.Item>
       </Timeline>
     );
-    expect(container.querySelector('.fi-timeline-item-dot-success')).toBeInTheDocument();
+    expect(container.querySelector('.atom-timeline-item-dot-success')).toBeInTheDocument();
   });
 });

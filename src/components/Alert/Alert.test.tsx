@@ -12,19 +12,19 @@ describe('Alert Component', () => {
 
   it('applies the correct type class', () => {
     const { rerender } = render(<Alert message="Test" type="success" />);
-    expect(screen.getByRole('alert')).toHaveClass('fi-alert-success');
+    expect(screen.getByRole('alert')).toHaveClass('atom-alert-success');
 
     rerender(<Alert message="Test" type="error" />);
-    expect(screen.getByRole('alert')).toHaveClass('fi-alert-error');
+    expect(screen.getByRole('alert')).toHaveClass('atom-alert-error');
 
     rerender(<Alert message="Test" type="warning" />);
-    expect(screen.getByRole('alert')).toHaveClass('fi-alert-warning');
+    expect(screen.getByRole('alert')).toHaveClass('atom-alert-warning');
   });
 
   it('renders description when provided', () => {
     render(<Alert message="Title" description="More details here" />);
     expect(screen.getByText('More details here')).toBeInTheDocument();
-    expect(screen.getByRole('alert')).toHaveClass('fi-alert-with-description');
+    expect(screen.getByRole('alert')).toHaveClass('atom-alert-with-description');
   });
 
   it('does not render close button when closable is false', () => {
@@ -40,7 +40,7 @@ describe('Alert Component', () => {
   it('adds closing class after clicking close button', () => {
     render(<Alert message="Close me" closable />);
     fireEvent.click(screen.getByRole('button'));
-    expect(screen.getByRole('alert')).toHaveClass('fi-alert-closing');
+    expect(screen.getByRole('alert')).toHaveClass('atom-alert-closing');
   });
 
   it('removes alert from DOM after animation ends', () => {
@@ -60,7 +60,7 @@ describe('Alert Component', () => {
 
   it('renders icon when showIcon is true', () => {
     render(<Alert message="Info" type="info" showIcon />);
-    expect(document.querySelector('.fi-alert-icon')).toBeInTheDocument();
+    expect(document.querySelector('.atom-alert-icon')).toBeInTheDocument();
   });
 
   it('renders custom icon when provided', () => {

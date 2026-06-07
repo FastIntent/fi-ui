@@ -23,7 +23,7 @@ describe('Space Component', () => {
         <span>A</span>
       </Space>
     );
-    expect(container.firstChild).toHaveClass('fi-space');
+    expect(container.firstChild).toHaveClass('atom-space');
   });
 
   it('applies vertical direction class', () => {
@@ -32,7 +32,7 @@ describe('Space Component', () => {
         <span>A</span>
       </Space>
     );
-    expect(container.firstChild).toHaveClass('fi-space-vertical');
+    expect(container.firstChild).toHaveClass('atom-space-vertical');
   });
 
   it('applies wrap class when wrap is true', () => {
@@ -41,7 +41,7 @@ describe('Space Component', () => {
         <span>A</span>
       </Space>
     );
-    expect(container.firstChild).toHaveClass('fi-space-wrap');
+    expect(container.firstChild).toHaveClass('atom-space-wrap');
   });
 
   it('renders separator between items', () => {
@@ -60,6 +60,6 @@ describe('Space Component', () => {
         <span>A</span>
       </Space>
     );
-    expect(container.firstChild).toHaveClass('fi-space-align-center');
+    expect(container.firstChild).toHaveClass('atom-space-align-center');
   });
 });

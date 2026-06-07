@@ -132,7 +132,7 @@ export interface PaginationLocale {
   page_size: string;
 }
 
-export interface FastUILocale {
+export interface AtomizeUILocale {
   locale: string;
   DatePicker?: RcPickerLocale & {
     rangeSeparatorAriaLabel?: string;

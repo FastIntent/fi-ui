@@ -17,7 +17,7 @@ describe('Typography Components', () => {
 
     it('applies strong class', () => {
       const { container } = render(<Title strong>Bold</Title>);
-      expect(container.firstChild).toHaveClass('fi-typography-strong');
+      expect(container.firstChild).toHaveClass('atom-typography-strong');
     });
   });
 
@@ -34,22 +34,22 @@ describe('Typography Components', () => {
 
     it('applies secondary color class', () => {
       const { container } = render(<Text color="secondary">Muted</Text>);
-      expect(container.firstChild).toHaveClass('fi-typography-secondary');
+      expect(container.firstChild).toHaveClass('atom-typography-secondary');
     });
 
     it('applies italic class', () => {
       const { container } = render(<Text italic>Italic</Text>);
-      expect(container.firstChild).toHaveClass('fi-typography-italic');
+      expect(container.firstChild).toHaveClass('atom-typography-italic');
     });
 
     it('applies underline class', () => {
       const { container } = render(<Text underline>Underline</Text>);
-      expect(container.firstChild).toHaveClass('fi-typography-underline');
+      expect(container.firstChild).toHaveClass('atom-typography-underline');
     });
 
     it('applies delete class', () => {
       const { container } = render(<Text delete>Deleted</Text>);
-      expect(container.firstChild).toHaveClass('fi-typography-delete');
+      expect(container.firstChild).toHaveClass('atom-typography-delete');
     });
   });
 
@@ -66,7 +66,7 @@ describe('Typography Components', () => {
 
     it('applies success color class', () => {
       const { container } = render(<Paragraph color="success">Success</Paragraph>);
-      expect(container.firstChild).toHaveClass('fi-typography-success');
+      expect(container.firstChild).toHaveClass('atom-typography-success');
     });
   });
 });

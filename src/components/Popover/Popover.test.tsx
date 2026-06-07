@@ -133,9 +133,9 @@ describe('Popover — custom color', () => {
       </Popover>
     );
     // The wrapper style should contain the CSS variable
-    const wrapper = container.querySelector('.fi-popover-wrapper') as HTMLElement | null;
+    const wrapper = container.querySelector('.atom-popover-wrapper') as HTMLElement | null;
     if (wrapper) {
-      expect(wrapper.style.getPropertyValue('--fi-popover-bg')).toBe('#ff0000');
+      expect(wrapper.style.getPropertyValue('--atom-popover-bg')).toBe('#ff0000');
     }
   });
 });

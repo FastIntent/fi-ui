@@ -1,7 +1,7 @@
 /**
  * SSR / Next.js App Router Compatibility Suite
  *
- * Validates that fast-ui components are safe for server-side rendering.
+ * Validates that Atomize UI components are safe for server-side rendering.
  * Strategy mirrors what Next.js does internally:
  *   1. renderToString()  — simulates the Server Component / SSR pass.
  *   2. hydrateRoot()     — simulates the Client Component hydration pass.
@@ -114,17 +114,17 @@ describe('SSR — renderToString (server pass)', () => {
   it('Button', () => {
     const html = renderToString(<Button type="primary">Book</Button>);
     expect(html).toContain('Book');
-    expect(html).toContain('fi-btn');
+    expect(html).toContain('atom-btn');
   });
 
   it('Input', () => {
     const html = renderToString(<Input placeholder="Search" aria-label="Search" />);
-    expect(html).toContain('fi-input');
+    expect(html).toContain('atom-input');
   });
 
   it('TextArea', () => {
     const html = renderToString(<TextArea rows={3} placeholder="Describe your idea" />);
-    expect(html).toContain('fi-input-textarea');
+    expect(html).toContain('atom-input-textarea');
   });
 
   it('Alert', () => {
@@ -153,17 +153,17 @@ describe('SSR — renderToString (server pass)', () => {
 
   it('Spin (spinning)', () => {
     const html = renderToString(<Spin spinning />);
-    expect(html).toContain('fi-spin');
+    expect(html).toContain('atom-spin');
   });
 
   it('Spin (not spinning)', () => {
     const html = renderToString(<Spin spinning={false} />);
-    expect(html).not.toContain('fi-spin-spinning');
+    expect(html).not.toContain('atom-spin-spinning');
   });
 
   it('Skeleton', () => {
     const html = renderToString(<Skeleton />);
-    expect(html).toContain('fi-skeleton');
+    expect(html).toContain('atom-skeleton');
   });
 
   it('Empty', () => {
@@ -196,7 +196,7 @@ describe('SSR — renderToString (server pass)', () => {
         <Button>B</Button>
       </Space>
     );
-    expect(html).toContain('fi-space');
+    expect(html).toContain('atom-space');
   });
 
   it('Row + Col', () => {
@@ -225,7 +225,7 @@ describe('SSR — renderToString (server pass)', () => {
 
   it('Pagination', () => {
     const html = renderToString(<Pagination total={100} pageSize={10} defaultCurrent={1} />);
-    expect(html).toContain('fi-pagination');
+    expect(html).toContain('atom-pagination');
   });
 
   it('Steps', () => {
@@ -316,17 +316,17 @@ describe('SSR — renderToString (server pass)', () => {
 
   it('Switch', () => {
     const html = renderToString(<Switch aria-label="Toggle feature" />);
-    expect(html).toContain('fi-switch');
+    expect(html).toContain('atom-switch');
   });
 
   it('Slider', () => {
     const html = renderToString(<Slider defaultValue={50} aria-label="Volume" />);
-    expect(html).toContain('fi-slider');
+    expect(html).toContain('atom-slider');
   });
 
   it('Rate', () => {
     const html = renderToString(<Rate defaultValue={3} aria-label="Rating" />);
-    expect(html).toContain('fi-rate');
+    expect(html).toContain('atom-rate');
   });
 
   it('Select', () => {
@@ -341,14 +341,14 @@ describe('SSR — renderToString (server pass)', () => {
 
   it('InputNumber', () => {
     const html = renderToString(<InputNumber defaultValue={42} aria-label="Quantity" />);
-    expect(html).toContain('fi-input-number');
+    expect(html).toContain('atom-input-number');
   });
 
   // ── Feedback ─────────────────────────────────────────────────────────────
 
   it('Progress', () => {
     const html = renderToString(<Progress percent={65} />);
-    expect(html).toContain('fi-progress');
+    expect(html).toContain('atom-progress');
   });
 
   it('Timeline', () => {

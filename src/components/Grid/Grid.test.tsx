@@ -21,7 +21,7 @@ describe('Grid Component', () => {
         <Col span={24}>Content</Col>
       </Row>
     );
-    expect(container.firstChild).toHaveClass('fi-row');
+    expect(container.firstChild).toHaveClass('atom-row');
   });
 
   it('applies fi-col class to Col', () => {
@@ -30,7 +30,7 @@ describe('Grid Component', () => {
         <Col span={12}>Col</Col>
       </Row>
     );
-    expect(container.querySelector('.fi-col')).toBeInTheDocument();
+    expect(container.querySelector('.atom-col')).toBeInTheDocument();
   });
 
   it('applies span class to Col', () => {
@@ -39,7 +39,7 @@ describe('Grid Component', () => {
         <Col span={8}>Col 8</Col>
       </Row>
     );
-    expect(container.querySelector('.fi-col-8')).toBeInTheDocument();
+    expect(container.querySelector('.atom-col-8')).toBeInTheDocument();
   });
 
   it('applies gutter spacing to Row', () => {
@@ -59,6 +59,6 @@ describe('Grid Component', () => {
         <Col span={12}>Centered</Col>
       </Row>
     );
-    expect(container.firstChild).toHaveClass('fi-row-justify-center');
+    expect(container.firstChild).toHaveClass('atom-row-justify-center');
   });
 });

@@ -29,7 +29,7 @@ describe('Upload Component', () => {
     // Ensure the specific text is rendered
     expect(screen.getByText('Drag files to this zone')).toBeInTheDocument();
 
-    const draggerWrapper = document.querySelector('.fi-upload-drag');
+    const draggerWrapper = document.querySelector('.atom-upload-drag');
     expect(draggerWrapper).toBeInTheDocument();
   });
 

@@ -6,7 +6,7 @@ import { Empty } from './index';
 describe('Empty Component', () => {
   it('renders default description from locale', () => {
     const { container } = render(<Empty />);
-    expect(container.querySelector('.fi-empty')).toBeInTheDocument();
+    expect(container.querySelector('.atom-empty')).toBeInTheDocument();
   });
 
   it('renders custom description', () => {

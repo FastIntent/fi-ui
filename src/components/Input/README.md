@@ -6,9 +6,9 @@ de validación.
 ## Importación
 
 ```tsx
-import { Input } from 'fast-ui';
+import { Input } from 'Atomize UI';
 // o
-import { Input } from 'fast-ui/Input';
+import { Input } from 'Atomize UI/Input';
 ```
 
 ## Props

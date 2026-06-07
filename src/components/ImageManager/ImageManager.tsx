@@ -331,7 +331,7 @@ export const ImageManager: React.FC<ImageManagerProps> = ({
       style={
         {
           ...style,
-          ...(itemMinWidth ? { ['--fi-image-manager-item-min']: `${itemMinWidth}px` } : null),
+          ...(itemMinWidth ? { ['--atom-image-manager-item-min']: `${itemMinWidth}px` } : null),
           ...(height !== undefined ? { height } : null),
         } as React.CSSProperties
       }

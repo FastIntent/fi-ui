@@ -111,7 +111,7 @@ describe('Message System', () => {
       await new Promise((resolve) => setTimeout(resolve, 0));
     });
     const notice = document.querySelector('[data-message-key="type-test"]');
-    expect(notice).toHaveClass('fi-message-notice-success');
+    expect(notice).toHaveClass('atom-message-notice-success');
   });
 
   it('ejecuta el callback onClose al cerrarse', async () => {

@@ -51,12 +51,12 @@ describe('Badge Component', () => {
 
   it('renders dot badge without children', () => {
     const { container } = render(<Badge dot />);
-    expect(container.querySelector('.fi-badge-dot')).toBeInTheDocument();
+    expect(container.querySelector('.atom-badge-dot')).toBeInTheDocument();
   });
 
   it('renders status badge with text', () => {
     render(<Badge status="success" text="Active" />);
     expect(screen.getByText('Active')).toBeInTheDocument();
-    expect(document.querySelector('.fi-badge-status-success')).toBeInTheDocument();
+    expect(document.querySelector('.atom-badge-status-success')).toBeInTheDocument();
   });
 });

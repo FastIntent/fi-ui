@@ -7,14 +7,14 @@ Importa los estilos en tu layout raíz para aplicar los tokens de diseño.
 ```tsx
 import type { Metadata } from 'next';
 import { Inter } from 'next/font-google';
-import 'fast-ui/design-system.css'; // Estilos base de la librería
+import '@atomizeui/core/design-system.css'; // Estilos base de la librería
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'My Fast App',
-  description: 'Next.js app with fast-ui',
+  description: 'Next.js app with @atomizeui/core',
 };
 
 export default function RootLayout({
@@ -39,14 +39,14 @@ recomendable usarlos en Client Components.
 'use client';
 
 import React, { useState } from 'react';
-import { Button, Input, Modal, Title, Text } from 'fast-ui';
+import { Button, Input, Modal, Title, Text } from '@atomizeui/core';
 
 export default function HomePage() {
   const [open, setOpen] = useState(false);
 
   return (
     <div style={{ padding: 40, maxWidth: 800, margin: '0 auto' }}>
-      <Title level={2}>Bienvenido a fast-ui</Title>
+      <Title level={2}>Bienvenido a @atomizeui/core</Title>
       <Text type="secondary">Una librería ligera para proyectos rápidos.</Text>
 
       <div style={{ marginTop: 24, display: 'flex', gap: 12 }}>
@@ -66,7 +66,7 @@ export default function HomePage() {
         onCancel={() => setOpen(false)}
         onOk={() => setOpen(false)}
       >
-        <p>Este es un modal cargado desde fast-ui.</p>
+        <p>Este es un modal cargado desde @atomizeui/core.</p>
         <Input placeholder="Prueba dentro del modal" />
       </Modal>
     </div>
@@ -79,7 +79,7 @@ export default function HomePage() {
 Si solo necesitas el botón, puedes importar directamente el componente:
 
 ```tsx
-import { Button } from 'fast-ui/Button';
+import { Button } from '@atomizeui/core/Button';
 ```
 
 Nota: Asegúrate de tener configurado los estilos CSS en tu proyecto.

@@ -11,18 +11,18 @@ describe('Switch Component', () => {
 
   it('applies base prefix class', () => {
     const { container } = render(<Switch />);
-    expect(container.querySelector('.fi-switch')).toBeInTheDocument();
+    expect(container.querySelector('.atom-switch')).toBeInTheDocument();
   });
 
   it('renders unchecked by default', () => {
     const { container } = render(<Switch />);
     const btn = container.querySelector('button') as HTMLButtonElement;
-    expect(btn).not.toHaveClass('fi-switch-checked');
+    expect(btn).not.toHaveClass('atom-switch-checked');
   });
 
   it('renders checked when defaultChecked is true', () => {
     const { container } = render(<Switch defaultChecked />);
-    expect(container.querySelector('.fi-switch-checked')).toBeInTheDocument();
+    expect(container.querySelector('.atom-switch-checked')).toBeInTheDocument();
   });
 
   it('calls onChange when toggled', () => {
@@ -42,12 +42,12 @@ describe('Switch Component', () => {
 
   it('applies small size class', () => {
     const { container } = render(<Switch size="small" />);
-    expect(container.querySelector('.fi-switch-small')).toBeInTheDocument();
+    expect(container.querySelector('.atom-switch-small')).toBeInTheDocument();
   });
 
   it('applies loading class and disables when loading', () => {
     const { container } = render(<Switch loading />);
-    expect(container.querySelector('.fi-switch-loading')).toBeInTheDocument();
+    expect(container.querySelector('.atom-switch-loading')).toBeInTheDocument();
     expect(container.querySelector('button')).toBeDisabled();
   });
 });

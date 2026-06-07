@@ -13,22 +13,22 @@ describe('Calendar Component', () => {
 
   it('applies base calendar class', () => {
     const { container } = render(<Calendar defaultValue={fixedDate} />);
-    expect(container.firstChild).toHaveClass('fi-calendar');
+    expect(container.firstChild).toHaveClass('atom-calendar');
   });
 
   it('applies full class by default', () => {
     const { container } = render(<Calendar defaultValue={fixedDate} />);
-    expect(container.firstChild).toHaveClass('fi-calendar-full');
+    expect(container.firstChild).toHaveClass('atom-calendar-full');
   });
 
   it('applies mini class when fullscreen is false', () => {
     const { container } = render(<Calendar defaultValue={fixedDate} fullscreen={false} />);
-    expect(container.firstChild).toHaveClass('fi-calendar-mini');
+    expect(container.firstChild).toHaveClass('atom-calendar-mini');
   });
 
   it('applies custom className', () => {
     const { container } = render(<Calendar defaultValue={fixedDate} className="my-calendar" />);
-    expect(container.firstChild).toHaveClass('fi-calendar', 'my-calendar');
+    expect(container.firstChild).toHaveClass('atom-calendar', 'my-calendar');
   });
 
   it('renders weekday headers', () => {

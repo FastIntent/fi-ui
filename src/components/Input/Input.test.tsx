@@ -8,7 +8,7 @@ describe('Input Component', () => {
     render(<Input placeholder="Enter text" />);
     const input = screen.getByPlaceholderText('Enter text');
     expect(input).toBeInTheDocument();
-    expect(input).toHaveClass('fi-input');
+    expect(input).toHaveClass('atom-input');
   });
 
   it('handles value changes accurately', () => {
@@ -27,7 +27,7 @@ describe('Input Component', () => {
     const input = screen.getByPlaceholderText('Disabled Input');
 
     expect(input).toBeDisabled();
-    expect(input).toHaveClass('fi-input-disabled');
+    expect(input).toHaveClass('atom-input-disabled');
   });
 
   it('renders prefix and suffix adornments', () => {
@@ -44,12 +44,12 @@ describe('Input Component', () => {
 
   it('applies status classes for error, warning and success', () => {
     const { rerender, container } = render(<Input status="error" />);
-    expect(container.querySelector('.fi-input-status-error')).toBeInTheDocument();
+    expect(container.querySelector('.atom-input-status-error')).toBeInTheDocument();
 
     rerender(<Input status="warning" />);
-    expect(container.querySelector('.fi-input-status-warning')).toBeInTheDocument();
+    expect(container.querySelector('.atom-input-status-warning')).toBeInTheDocument();
 
     rerender(<Input status="success" />);
-    expect(container.querySelector('.fi-input-status-success')).toBeInTheDocument();
+    expect(container.querySelector('.atom-input-status-success')).toBeInTheDocument();
   });
 });

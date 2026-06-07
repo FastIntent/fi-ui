@@ -3,11 +3,11 @@
 // --- Table Design Tokens ---
 // Fallback defaults — ConfigProvider overrides all of these via inline CSS vars.
 // Variable names match flattenThemeToCssVars output so they are always in sync:
-//   Table.headerBg      → --fi-table-header-bg
-//   Table.colorBg       → --fi-table-color-bg
-//   Table.colorRowHover → --fi-table-color-row-hover
-//   Table.colorFixedHover → --fi-table-color-fixed-hover
-//   Table.colorBorder   → --fi-table-color-border
+//   Table.headerBg      → --atom-table-header-bg
+//   Table.colorBg       → --atom-table-color-bg
+//   Table.colorRowHover → --atom-table-color-row-hover
+//   Table.colorFixedHover → --atom-table-color-fixed-hover
+//   Table.colorBorder   → --atom-table-color-border
 :root {
   --#{$prefix}-table-header-bg: var(--#{$prefix}-color-bg-layout);
   --#{$prefix}-table-color-bg: var(--#{$prefix}-color-bg-container);

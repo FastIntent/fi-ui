@@ -18,7 +18,7 @@ describe('Flex Component', () => {
         <span>A</span>
       </Flex>
     );
-    expect(container.firstChild).toHaveClass('fi-flex');
+    expect(container.firstChild).toHaveClass('atom-flex');
   });
 
   it('applies block class when block is true', () => {
@@ -27,7 +27,7 @@ describe('Flex Component', () => {
         <span>A</span>
       </Flex>
     );
-    expect(container.firstChild).toHaveClass('fi-flex-block');
+    expect(container.firstChild).toHaveClass('atom-flex-block');
   });
 
   it('sets flexDirection column when vertical is true', () => {

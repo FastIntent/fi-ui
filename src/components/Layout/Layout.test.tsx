@@ -20,14 +20,14 @@ describe('Layout Component', () => {
 
   it('renders notification badge when notificationCount > 0', () => {
     const { container } = render(<Layout showNotifications notificationCount={5} />);
-    expect(container.querySelector('.fi-layout-badge')).toBeInTheDocument();
-    expect(container.querySelector('.fi-layout-badge')?.textContent).toBe('5');
+    expect(container.querySelector('.atom-layout-badge')).toBeInTheDocument();
+    expect(container.querySelector('.atom-layout-badge')?.textContent).toBe('5');
   });
 
   it('calls onCollapse when the toggle button is clicked', () => {
     const onCollapse = vi.fn();
     const { container } = render(<Layout onCollapse={onCollapse} />);
-    const trigger = container.querySelector('.fi-layout-collapse-trigger') as HTMLElement;
+    const trigger = container.querySelector('.atom-layout-collapse-trigger') as HTMLElement;
     fireEvent.click(trigger);
     expect(onCollapse).toHaveBeenCalledWith(true);
   });

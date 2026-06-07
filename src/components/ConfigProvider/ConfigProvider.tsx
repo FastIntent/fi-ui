@@ -1,7 +1,7 @@
 import React, { createContext, useContext, ReactNode, useEffect, useMemo } from 'react';
 import { GlobalThemeOverrides, ResolvedTheme } from './theme/interface';
 import { resolveTheme, flattenThemeToCssVars } from './theme/utils';
-import { FastUILocale } from '../locale/interface';
+import { AtomizeUILocale } from '../locale/interface';
 import defaultLocale from '../locale/en_US';
 import { DEFAULT_PREFIX, getDefaultPrefixCls } from './prefix';
 
@@ -11,7 +11,7 @@ export interface ConfigContextValue {
   size?: ConfigSize;
   theme?: ResolvedTheme;
   getPopupContainer?: (triggerNode?: HTMLElement) => HTMLElement;
-  locale?: FastUILocale;
+  locale?: AtomizeUILocale;
   prefixCls?: string;
   getPrefixCls?: (suffixCls?: string, customPrefixCls?: string) => string;
   dayjsLocaleId?: string;
@@ -109,7 +109,7 @@ export interface ConfigProviderProps {
    * Diccionario de idiomas para internacionalizar los componentes (i18n).
    * @default en_US
    */
-  locale?: FastUILocale;
+  locale?: AtomizeUILocale;
 }
 
 export const ConfigProvider: React.FC<ConfigProviderProps> = ({

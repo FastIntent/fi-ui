@@ -6,29 +6,29 @@ import { Skeleton } from './index';
 describe('Skeleton Component', () => {
   it('renders with default text variant and wave animation', () => {
     const { container } = render(<Skeleton />);
-    expect(container.querySelector('.fi-skeleton')).toBeInTheDocument();
-    expect(container.querySelector('.fi-skeleton-text')).toBeInTheDocument();
-    expect(container.querySelector('.fi-skeleton-animation-wave')).toBeInTheDocument();
+    expect(container.querySelector('.atom-skeleton')).toBeInTheDocument();
+    expect(container.querySelector('.atom-skeleton-text')).toBeInTheDocument();
+    expect(container.querySelector('.atom-skeleton-animation-wave')).toBeInTheDocument();
   });
 
   it('applies circular variant class', () => {
     const { container } = render(<Skeleton variant="circular" />);
-    expect(container.querySelector('.fi-skeleton-circular')).toBeInTheDocument();
+    expect(container.querySelector('.atom-skeleton-circular')).toBeInTheDocument();
   });
 
   it('applies rectangular variant class', () => {
     const { container } = render(<Skeleton variant="rectangular" />);
-    expect(container.querySelector('.fi-skeleton-rectangular')).toBeInTheDocument();
+    expect(container.querySelector('.atom-skeleton-rectangular')).toBeInTheDocument();
   });
 
   it('applies pulse animation class', () => {
     const { container } = render(<Skeleton animation="pulse" />);
-    expect(container.querySelector('.fi-skeleton-animation-pulse')).toBeInTheDocument();
+    expect(container.querySelector('.atom-skeleton-animation-pulse')).toBeInTheDocument();
   });
 
   it('does not apply animation class when animation is false', () => {
     const { container } = render(<Skeleton animation={false} />);
-    expect(container.querySelector('[class*="fi-skeleton-animation"]')).not.toBeInTheDocument();
+    expect(container.querySelector('[class*="atom-skeleton-animation"]')).not.toBeInTheDocument();
   });
 
   it('applies width and height as inline styles', () => {

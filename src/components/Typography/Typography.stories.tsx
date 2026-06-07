@@ -15,11 +15,11 @@ export default meta;
 export const Headers: StoryObj<typeof Title> = {
   render: () => (
     <>
-      <Title>h1. fi-ui</Title>
-      <Title level={2}>h2. fi-ui</Title>
-      <Title level={3}>h3. fi-ui</Title>
-      <Title level={4}>h4. fi-ui</Title>
-      <Title level={5}>h5. fi-ui</Title>
+      <Title>h1. Atomize UI</Title>
+      <Title level={2}>h2. Atomize UI</Title>
+      <Title level={3}>h3. Atomize UI</Title>
+      <Title level={4}>h4. Atomize UI</Title>
+      <Title level={5}>h5. Atomize UI</Title>
     </>
   ),
 };
@@ -28,25 +28,25 @@ export const Texts: StoryObj<typeof Text> = {
   render: () => (
     <>
       <Title level={4}>Text Styles</Title>
-      <Text>fi-ui (default)</Text>
+      <Text>Atomize UI (default)</Text>
       <br />
-      <Text color="secondary">fi-ui (secondary)</Text>
+      <Text color="secondary">Atomize UI (secondary)</Text>
       <br />
-      <Text color="success">fi-ui (success)</Text>
+      <Text color="success">Atomize UI (success)</Text>
       <br />
-      <Text color="warning">fi-ui (warning)</Text>
+      <Text color="warning">Atomize UI (warning)</Text>
       <br />
-      <Text color="error">fi-ui (danger)</Text>
+      <Text color="error">Atomize UI (danger)</Text>
       <br />
-      <Text disabled>fi-ui (disabled)</Text>
+      <Text disabled>Atomize UI (disabled)</Text>
       <br />
-      <Text strong>fi-ui (strong)</Text>
+      <Text strong>Atomize UI (strong)</Text>
       <br />
-      <Text italic>fi-ui (italic)</Text>
+      <Text italic>Atomize UI (italic)</Text>
       <br />
-      <Text underline>fi-ui (underline)</Text>
+      <Text underline>Atomize UI (underline)</Text>
       <br />
-      <Text delete>fi-ui (delete)</Text>
+      <Text delete>Atomize UI (delete)</Text>
     </>
   ),
 };
@@ -55,10 +55,10 @@ export const Paragraphs: StoryObj<typeof Paragraph> = {
   render: () => (
     <>
       <Paragraph>
-        fi-ui provides a set of high-quality components for building modern user interfaces.
+        Atomize UI provides a set of high-quality components for building modern user interfaces.
       </Paragraph>
       <Paragraph color="secondary">
-        fi-ui provides a set of high-quality components for building modern user interfaces.
+        Atomize UI provides a set of high-quality components for building modern user interfaces.
       </Paragraph>
     </>
   ),

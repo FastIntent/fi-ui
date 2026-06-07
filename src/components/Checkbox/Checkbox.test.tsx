@@ -43,6 +43,6 @@ describe('Checkbox Component', () => {
 
   it('applies error status class', () => {
     const { container } = render(<Checkbox status="error">Error</Checkbox>);
-    expect(container.querySelector('.fi-checkbox-wrapper-status-error')).toBeInTheDocument();
+    expect(container.querySelector('.atom-checkbox-wrapper-status-error')).toBeInTheDocument();
   });
 });

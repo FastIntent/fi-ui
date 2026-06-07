@@ -6,7 +6,7 @@
  * re-export barrels so the consumer's bundler (Vite, webpack, etc.) can
  * tree-shake at the per-component level:
  *
- *   import { Button } from '@fastintent/fi-ui'
+ *   import { Button } from '@atomizeui/core'
  *   → only Button's code + its deps land in the consumer's bundle.
  *
  * dist/index.css  → left untouched (already correct from tsup + sass plugin)
@@ -232,7 +232,7 @@ for (const comp of allComps) {
 // After this step, a consumer bundler (Vite, Next.js webpack, Turbopack) will
 // automatically pull in the component's CSS when the component is imported:
 //
-//   import { Button } from '@fastintent/fi-ui'
+//   import { Button } from '@atomizeui/core'
 //   → bundler follows Button/index.js → sees `import './index.css'` → done.
 //
 // For components with CSS dependencies (e.g. Popconfirm → Popover + Button),

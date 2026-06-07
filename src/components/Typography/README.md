@@ -5,9 +5,9 @@ Sistema de tipografía para títulos, textos y párrafos.
 ## Importación
 
 ```tsx
-import { Title, Text, Paragraph } from 'fast-ui';
+import { Title, Text, Paragraph } from 'Atomize UI';
 // o
-import { Title, Text, Paragraph } from 'fast-ui/Typography';
+import { Title, Text, Paragraph } from 'Atomize UI/Typography';
 ```
 
 ## Props (Comunes)

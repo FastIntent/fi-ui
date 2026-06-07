@@ -25,15 +25,15 @@ describe('Card Component', () => {
 
   it('applies base prefix class', () => {
     const { container } = render(<Card>Content</Card>);
-    expect(container.firstChild).toHaveClass('fi-card');
+    expect(container.firstChild).toHaveClass('atom-card');
   });
 
   it('renders head section only when title or extra is provided', () => {
     const { container: noHead } = render(<Card>No head</Card>);
-    expect(noHead.querySelector('.fi-card-head')).not.toBeInTheDocument();
+    expect(noHead.querySelector('.atom-card-head')).not.toBeInTheDocument();
 
     const { container: withHead } = render(<Card title="With Head">Content</Card>);
-    expect(withHead.querySelector('.fi-card-head')).toBeInTheDocument();
+    expect(withHead.querySelector('.atom-card-head')).toBeInTheDocument();
   });
 
   it('applies custom className', () => {

@@ -24,24 +24,24 @@ describe('Select Component', () => {
     );
 
     const select = screen.getByTestId('test-select');
-    expect(select).toHaveClass('fi-select-disabled');
+    expect(select).toHaveClass('atom-select-disabled');
   });
 
   it('renders different sizes by applying the correct css classes', () => {
     const { rerender } = render(<Select size="large" data-testid="test-select" />);
-    expect(screen.getByTestId('test-select')).toHaveClass('fi-select-large');
+    expect(screen.getByTestId('test-select')).toHaveClass('atom-select-large');
 
     rerender(<Select size="small" data-testid="test-select" />);
-    expect(screen.getByTestId('test-select')).toHaveClass('fi-select-small');
+    expect(screen.getByTestId('test-select')).toHaveClass('atom-select-small');
   });
 
   it('applies loading class when loading is true', () => {
     render(<Select loading data-testid="test-select" />);
-    expect(screen.getByTestId('test-select')).toHaveClass('fi-select-loading');
+    expect(screen.getByTestId('test-select')).toHaveClass('atom-select-loading');
   });
 
   it('shows loading spinner instead of arrow when loading', () => {
     const { container } = render(<Select loading data-testid="test-select" />);
-    expect(container.querySelector('.fi-select-loading-icon')).toBeInTheDocument();
+    expect(container.querySelector('.atom-select-loading-icon')).toBeInTheDocument();
   });
 });

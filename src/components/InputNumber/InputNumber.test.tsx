@@ -11,20 +11,20 @@ describe('InputNumber Component', () => {
 
   it('applies the base prefix class', () => {
     const { container } = render(<InputNumber />);
-    expect(container.querySelector('.fi-input-number')).toBeInTheDocument();
+    expect(container.querySelector('.atom-input-number')).toBeInTheDocument();
   });
 
   it('applies disabled class when disabled', () => {
     const { container } = render(<InputNumber disabled />);
-    expect(container.querySelector('.fi-input-number-disabled')).toBeInTheDocument();
+    expect(container.querySelector('.atom-input-number-disabled')).toBeInTheDocument();
   });
 
   it('applies size class correctly', () => {
     const { container: large } = render(<InputNumber size="large" />);
-    expect(large.querySelector('.fi-input-number-lg')).toBeInTheDocument();
+    expect(large.querySelector('.atom-input-number-lg')).toBeInTheDocument();
 
     const { container: small } = render(<InputNumber size="small" />);
-    expect(small.querySelector('.fi-input-number-sm')).toBeInTheDocument();
+    expect(small.querySelector('.atom-input-number-sm')).toBeInTheDocument();
   });
 
   it('renders with a default value', () => {

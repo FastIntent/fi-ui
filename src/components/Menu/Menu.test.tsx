@@ -26,7 +26,7 @@ describe('Menu Component', () => {
         </Menu>
       ));
     });
-    expect(container.querySelector('.fi-menu')).toBeInTheDocument();
+    expect(container.querySelector('.atom-menu')).toBeInTheDocument();
   });
 
   it('applies sidebar class when sidebar prop is true', async () => {
@@ -38,7 +38,7 @@ describe('Menu Component', () => {
         </Menu>
       ));
     });
-    expect(container.querySelector('.fi-menu-sidebar')).toBeInTheDocument();
+    expect(container.querySelector('.atom-menu-sidebar')).toBeInTheDocument();
   });
 
   it('applies horizontal mode class', async () => {
@@ -50,7 +50,7 @@ describe('Menu Component', () => {
         </Menu>
       ));
     });
-    expect(container.querySelector('.fi-menu-horizontal')).toBeInTheDocument();
+    expect(container.querySelector('.atom-menu-horizontal')).toBeInTheDocument();
   });
 
   it('renders SubMenu with title', async () => {
