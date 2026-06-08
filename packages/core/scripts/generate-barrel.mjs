@@ -69,14 +69,20 @@ const esmLines = exports_list.map(({ kind, names, path }) => {
     : `export { ${names.join(', ')} } from '${resolved}';`;
 });
 
-const esm = `"use client";\n` + esmLines.join('\n') + '\n';
+// CRITICAL: the main barrel must NOT carry `"use client"`. With that
+// directive, Next.js treats the whole file as a client boundary and
+// eagerly evaluates every re-export — tree-shaking is disabled at the
+// barrel level. Each component's own `index.js` already carries the
+// directive, so the client boundary stays at the right granularity.
+const esm = esmLines.join('\n') + '\n';
 writeFileSync(ESM_OUT, esm, 'utf8');
 
 // ---------------------------------------------------------------------------
 // CJS barrel
 // ---------------------------------------------------------------------------
 const cjsLines = [
-  '"use client";',
+  // CJS barrel intentionally without `"use client"` (same reasoning as
+  // the ESM barrel — keep tree-shaking working at the per-export level).
   "'use strict';",
   "Object.defineProperty(exports, '__esModule', { value: true });",
   '',
@@ -284,6 +290,72 @@ for (const comp of readdirSync(COMPONENTS_DIST)) {
 }
 
 // ---------------------------------------------------------------------------
+// Inject CSS imports into the per-component shared chunk.
+//
+// THE BUG: Turbopack (and esbuild bundlers) optimize named re-exports by
+// inlining the resolution. When a consumer writes:
+//
+//   import { Switch } from '@atomizeui/core/components/Switch'
+//
+// Turbopack jumps straight from the consumer's source to the anonymous
+// chunk `dist/chunk-KMO43BST.js` that contains Switch's implementation,
+// silently skipping `dist/components/Switch/index.js` — the only file
+// where `import './index.css'` lives. The CSS side-effect is dropped.
+//
+// THE FIX: inject the CSS import into the implementation chunk itself.
+// Each component lives in its own dedicated chunk (one chunk = one
+// component, established by inspecting the `export{X}from'chunk-Y.js'`
+// pattern in barrels). So we only inject ONE component's CSS into ONE
+// chunk — no duplication, no leaking styles between components.
+//
+// We KEEP the side-effect imports in the component barrels too as
+// fallback for bundlers that don't inline re-exports (older webpack,
+// Vite SSR, etc.).
+// ---------------------------------------------------------------------------
+const chunkToComponent = {}; // 'chunk-XXX.js' → 'Switch'
+
+for (const comp of readdirSync(COMPONENTS_DIST)) {
+  const jsFile = join(COMPONENTS_DIST, comp, 'index.js');
+  if (!existsSync(jsFile)) continue;
+  const src = readFileSync(jsFile, 'utf8');
+
+  // Match: export{a as Switch,b as Other}from'../../chunk-KMO43BST.js'
+  // The chunk in the FIRST `from'../../chunk-X.js'` after an `export{}` block
+  // is the implementation chunk.
+  const m = src.match(/export\s*\{[^}]+\}\s*from\s*'\.\.\/\.\.\/(chunk-[A-Z0-9]+\.js)'/);
+  if (!m) continue;
+  const chunkFile = m[1];
+  // First-wins: if two components map to the same chunk (rare with
+  // splitting:true) we'd flag it — but each component has its own
+  // dedicated chunk in this setup.
+  if (!chunkToComponent[chunkFile]) {
+    chunkToComponent[chunkFile] = comp;
+  }
+}
+
+let chunkInjected = 0;
+for (const [chunkFile, comp] of Object.entries(chunkToComponent)) {
+  const full = join('dist', chunkFile);
+  if (!existsSync(full)) continue;
+  const cssFile = join(COMPONENTS_DIST, comp, 'index.css');
+  if (!existsSync(cssFile)) continue;
+  // Relative path from dist/chunk-X.js → dist/components/Comp/index.css
+  const cssImport = `import'./components/${comp}/index.css';`;
+  let src = readFileSync(full, 'utf8');
+  if (src.includes(cssImport)) continue;
+
+  // Insert after the "use client" directive if present
+  if (src.startsWith('"use client"')) {
+    const firstNL = src.indexOf('\n');
+    src = src.slice(0, firstNL + 1) + cssImport + '\n' + src.slice(firstNL + 1);
+  } else {
+    src = cssImport + '\n' + src;
+  }
+  writeFileSync(full, src, 'utf8');
+  chunkInjected++;
+}
+
+// ---------------------------------------------------------------------------
 // Inject `"use client"` directive into every component entry and shared chunk.
 //
 // Required by the Next.js App Router: any module that uses React hooks,
@@ -342,5 +414,6 @@ console.log(`✓ barrel  ${ESM_OUT}  (${esm.length} B, ${exports_list.length} mo
 console.log(`✓ barrel  ${CJS_OUT} (${cjs.length} B, ${exports_list.length} modules)`);
 if (cssDeduped > 0) console.log(`✓ css     deduped ${cssDeduped} component CSS files (saved ${(cssSaved / 1024).toFixed(1)} KB)`);
 if (cssInjected > 0) console.log(`✓ css     injected CSS import into ${cssInjected} component entries`);
+if (chunkInjected > 0) console.log(`✓ css     injected CSS import into ${chunkInjected} implementation chunks (Turbopack inline-re-export workaround)`);
 if (directiveInjected > 0) console.log(`✓ "use client" injected into ${directiveInjected} client-side modules`);
 if (removed > 0) console.log(`✓ removed ${removed} empty chunk(s)`);

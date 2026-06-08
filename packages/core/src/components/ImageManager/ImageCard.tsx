@@ -4,7 +4,7 @@ import { useDraggable } from '@dnd-kit/core';
 import { Checkbox } from '../Checkbox';
 import { Dropdown } from '../Dropdown';
 import { Menu, MenuItem } from '../Menu';
-import { MoreOutlined, PictureOutlined } from '../_icons';
+import { EyeOutlined, MoreOutlined, PictureOutlined } from '../_icons';
 import type { ServerImage } from './types';
 import { formatBytes } from './utils';
 
@@ -16,6 +16,9 @@ export interface ImageCardProps {
   draggable: boolean;
   onToggle: (image: ServerImage, additive: boolean) => void;
   onOpen?: (image: ServerImage) => void;
+  /** Opens the built-in preview modal. When undefined, the eye action
+      is not rendered (preview disabled by the parent). */
+  onPreview?: (image: ServerImage) => void;
   onRename?: (image: ServerImage) => void;
   onDelete?: (image: ServerImage) => void;
 }
@@ -28,6 +31,7 @@ export const ImageCard: React.FC<ImageCardProps> = ({
   draggable,
   onToggle,
   onOpen,
+  onPreview,
   onRename,
   onDelete,
 }) => {
@@ -129,18 +133,30 @@ export const ImageCard: React.FC<ImageCardProps> = ({
         />
       </div>
 
-      {editable && (onRename || onDelete) && (
+      {(onPreview || (editable && (onRename || onDelete))) && (
         <div
           className={`${prefixCls}-card-actions`}
           onPointerDown={stop}
           onClick={stop}
           onDoubleClick={stop}
         >
-          <Dropdown overlay={menu} trigger={['click']}>
-            <button type="button" className={`${prefixCls}-card-action-btn`} aria-label="More">
-              <MoreOutlined />
+          {onPreview && (
+            <button
+              type="button"
+              className={`${prefixCls}-card-action-btn`}
+              aria-label={`Preview ${image.name}`}
+              onClick={() => onPreview(image)}
+            >
+              <EyeOutlined />
             </button>
-          </Dropdown>
+          )}
+          {editable && (onRename || onDelete) && (
+            <Dropdown overlay={menu} trigger={['click']}>
+              <button type="button" className={`${prefixCls}-card-action-btn`} aria-label="More">
+                <MoreOutlined />
+              </button>
+            </Dropdown>
+          )}
         </div>
       )}
     </div>

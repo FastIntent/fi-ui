@@ -72,6 +72,13 @@ export interface ImageManagerProps {
   onSelectionChange?: (paths: string[], images: ServerImage[]) => void;
   /** Fires when the user double-clicks/Enter on an image (quick pick). */
   onImageOpen?: (image: ServerImage) => void;
+  /**
+   * Built-in preview modal. When `true` (default), each image card shows
+   * an eye action on hover that opens a Modal with the full-size image
+   * and metadata (dimensions, size, modified date, path). Set to `false`
+   * if you want to handle previewing yourself via `onImageOpen`.
+   */
+  preview?: boolean;
   /** Accepted MIME types for upload (passed to <Upload>). */
   accept?: string;
   /** Max single-file size for upload, in bytes. */

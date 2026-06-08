@@ -104,6 +104,8 @@
     line-height: $line-height;
     word-wrap: break-word;
     background: var(--#{$prefix}-modal-color-bg, #{$bg-container}); // Fallback directly on body
+    border-radius: 0 0 var(--#{$prefix}-modal-border-radius, #{$border-radius-lg})
+      var(--#{$prefix}-modal-border-radius, #{$border-radius-lg});
 
     & > * {
       margin: 0;

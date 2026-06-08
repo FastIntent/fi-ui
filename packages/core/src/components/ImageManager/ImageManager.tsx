@@ -22,6 +22,7 @@ import { Button } from '../Button/Button';
 import { FolderOutlined, PictureOutlined } from '../_icons';
 import { FolderCard } from './FolderCard';
 import { ImageCard } from './ImageCard';
+import { ImagePreviewModal } from './ImagePreviewModal';
 import { Toolbar } from './Toolbar';
 import type {
   ImageManagerProps,
@@ -49,6 +50,7 @@ export const ImageManager: React.FC<ImageManagerProps> = ({
   selected: controlledSelected,
   onSelectionChange,
   onImageOpen,
+  preview = true,
   accept,
   maxFileSize,
   defaultView = 'grid',
@@ -91,6 +93,7 @@ export const ImageManager: React.FC<ImageManagerProps> = ({
     paths: string[];
     label: string;
   } | null>(null);
+  const [previewing, setPreviewing] = useState<ServerImage | null>(null);
 
   // Keep latest actions in a ref so changes to the object identity
   // (common when consumers build it inline each render) don't retrigger
@@ -401,6 +404,7 @@ export const ImageManager: React.FC<ImageManagerProps> = ({
                   draggable={canMove}
                   onToggle={handleToggleImage}
                   onOpen={onImageOpen}
+                  onPreview={preview ? setPreviewing : undefined}
                   onRename={onRenameImage}
                   onDelete={onDeleteImage}
                 />
@@ -481,6 +485,14 @@ export const ImageManager: React.FC<ImageManagerProps> = ({
             autoFocus
           />
         </Modal>
+
+        {/* Built-in preview */}
+        <ImagePreviewModal
+          prefixCls={prefixCls}
+          image={previewing}
+          open={Boolean(previewing)}
+          onClose={() => setPreviewing(null)}
+        />
 
         {/* Delete confirmation */}
         <Modal

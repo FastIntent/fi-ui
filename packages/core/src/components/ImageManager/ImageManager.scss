@@ -215,6 +215,15 @@
     flex: 0 0 40px;
   }
 
+  // In list mode the row is short and the action cluster (eye + "...")
+  // belongs visually at the end of the row, vertically centered.
+  // Override the grid-mode top anchoring without breaking the absolute
+  // positioning that lets the buttons sit above the row's natural flow.
+  &-list &-card-actions {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
   // ── Card base ───────────────────────────────────────────────
   &-card {
     position: relative;
@@ -345,6 +354,8 @@
       position: absolute;
       top: $spacing-xs;
       right: $spacing-xs;
+      display: inline-flex;
+      gap: $spacing-xxs;
       opacity: 0;
       transition: opacity $transition-fast;
       z-index: 1;
@@ -410,6 +421,127 @@
         user-select: none;
         -webkit-user-drag: none;
       }
+    }
+  }
+}
+
+// ── Preview Modal (opt-in via `preview` prop, default true) ──────────
+//
+// Layout: two columns inside the Modal's own padding. Canvas is a
+// rounded card with internal padding so the image breathes; meta panel
+// is plain text with a consistent vertical rhythm. No border between
+// columns — gap does the separation.
+
+// The Modal's `.atom-modal-body` ships with `padding: 0 lg` (no top, no
+// bottom) and no bottom border-radius. When the preview uses `footer={null}`
+// the body reaches the modal's bottom edge as a square, hiding the
+// content's rounded corners. Clip the content and add a bottom pad to
+// the body so the preview sits inside symmetric rounded corners.
+.#{$prefix}-image-manager-preview-modal {
+  .#{$prefix}-modal-content {
+    overflow: hidden;
+  }
+  .#{$prefix}-modal-body {
+    padding-bottom: $spacing-lg;
+  }
+}
+.#{$prefix}-image-manager-preview {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 240px;
+  gap: $spacing-lg;
+  align-items: stretch;
+  // Cap the canvas growth so the image never pushes the modal taller
+  // than the viewport on short windows.
+  max-height: min(64vh, 600px);
+
+  &-canvas {
+    position: relative;
+    background: var(--#{$prefix}-color-fill-quaternary);
+    border-radius: var(--#{$prefix}-border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    min-height: 320px;
+    padding: $spacing-md;
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      display: block;
+      border-radius: var(--#{$prefix}-border-radius-sm);
+    }
+  }
+
+  &-spinner {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  &-meta {
+    margin: 0;
+    padding: $spacing-xs 0;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+    overflow-y: auto;
+    min-width: 0;
+
+    &-row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+
+      dt {
+        font-size: 11px;
+        color: var(--#{$prefix}-color-text-tertiary);
+        text-transform: uppercase;
+        // Subtle tracking only — at 0.08em "DIMENSIONS" reads as
+        // "D I M E N S I O N S". 0.02em keeps the small-caps cue without
+        // making each letter feel airlocked.
+        letter-spacing: 0.02em;
+        font-weight: 600;
+      }
+
+      dd {
+        margin: 0;
+        font-size: $font-size-base;
+        color: var(--#{$prefix}-color-text);
+        font-variant-numeric: tabular-nums;
+        min-width: 0;
+      }
+    }
+
+    &-path {
+      word-break: break-all;
+      font-family: var(
+        --#{$prefix}-font-family-code,
+        ui-monospace,
+        SFMono-Regular,
+        Menlo,
+        monospace
+      );
+      font-size: $font-size-sm;
+      color: var(--#{$prefix}-color-text-secondary);
+    }
+  }
+}
+
+@media (max-width: 720px) {
+  .#{$prefix}-image-manager-preview {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(220px, 1fr) auto;
+    max-height: none;
+
+    &-meta {
+      padding-top: $spacing-md;
+      border-top: 1px solid var(--#{$prefix}-color-border-secondary);
     }
   }
 }

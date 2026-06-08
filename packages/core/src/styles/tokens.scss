@@ -328,9 +328,12 @@
 
 // Shared dark token values via SCSS map to avoid duplication
 $dark-tokens: (
-  primary-color: #3cb82a,
-  primary-color-hover: #5ecc45,
-  primary-color-active: #2a9118,
+  // Less-saturated emerald for dark surfaces. The light variant (#25ac01)
+  // pops against white, but on near-black it reads as neon. #2f9e44 keeps
+  // the same hue while feeling premium and "enterprise" on dark backgrounds.
+  primary-color: #2f9e44,
+  primary-color-hover: #3eb557,
+  primary-color-active: #25803a,
   color-text: #f8f9fa,
   color-text-secondary: #adb5bd,
   color-text-tertiary: #868e96,
@@ -361,7 +364,7 @@ $dark-tokens: (
   shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2),
   shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3),
   shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4),
-  shadow-xl: 0 12px 32px rgba(0, 0, 0, 0.5),
+  shadow-xl: 0 12px 32px rgba(0, 0, 0, 0.5)
 );
 
 @mixin apply-dark-tokens {

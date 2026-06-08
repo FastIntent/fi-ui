@@ -151,14 +151,29 @@ export const ConfigProvider: React.FC<ConfigProviderProps> = ({
     [parentConfig, size, resolvedTheme, locale, prefixCls, getPrefixCls, dayjsLocaleId]
   );
 
-  const cssVars = useMemo(
-    () => ({
-      ...flattenThemeToCssVars(resolvedTheme, DEFAULT_PREFIX),
-      ...(prefixCls === DEFAULT_PREFIX ? {} : flattenThemeToCssVars(resolvedTheme, prefixCls)),
-      [`--${DEFAULT_PREFIX}-prefix`]: prefixCls,
-    }),
-    [resolvedTheme, prefixCls]
-  );
+  // Only emit CSS variables when the consumer actually overrides something.
+  // When no `theme` or `prefixCls` props are provided, the default tokens
+  // already live in `:root` (loaded once by design-system.css) and writing
+  // them inline on <html> + the provider <div> just duplicates ~150 vars in
+  // the DOM. We keep inline emission for genuine customizations:
+  //   - custom theme overrides (need to win over the :root defaults)
+  //   - custom prefix (needs aliased copies under --{customPrefix}-*)
+  const hasThemeOverride = themeOverrides !== undefined;
+  const hasCustomPrefix = prefixCls !== DEFAULT_PREFIX;
+  const cssVars = useMemo<Record<string, string>>(() => {
+    if (!hasThemeOverride && !hasCustomPrefix) {
+      return {};
+    }
+    const vars: Record<string, string> = {};
+    if (hasThemeOverride) {
+      Object.assign(vars, flattenThemeToCssVars(resolvedTheme, DEFAULT_PREFIX));
+    }
+    if (hasCustomPrefix) {
+      Object.assign(vars, flattenThemeToCssVars(resolvedTheme, prefixCls));
+      vars[`--${DEFAULT_PREFIX}-prefix`] = prefixCls;
+    }
+    return vars;
+  }, [hasThemeOverride, hasCustomPrefix, resolvedTheme, prefixCls]);
 
   const baseProviderCls = getDefaultPrefixCls('config-provider');
   const providerCls =
@@ -168,10 +183,13 @@ export const ConfigProvider: React.FC<ConfigProviderProps> = ({
 
   // Apply theme CSS vars to document.documentElement so portalled popups
   // (Select dropdown, Dropdown, DatePicker, etc.) inherit the active theme.
+  // Skipped entirely when there's nothing to override — the default tokens
+  // already live in `:root` via design-system.css.
   useEffect(() => {
     if (typeof document === 'undefined') return undefined;
-    const el = document.documentElement;
     const entries = Object.entries(cssVars) as [string, string][];
+    if (entries.length === 0) return undefined;
+    const el = document.documentElement;
     entries.forEach(([key, value]) => el.style.setProperty(key, value));
     return () => {
       entries.forEach(([key]) => el.style.removeProperty(key));
@@ -214,7 +232,7 @@ export const ConfigProvider: React.FC<ConfigProviderProps> = ({
         className={providerCls}
         dir={resolvedTheme.common.direction}
         data-density={resolvedTheme.common.density}
-        style={cssVars as React.CSSProperties}
+        style={Object.keys(cssVars).length > 0 ? (cssVars as React.CSSProperties) : undefined}
       >
         {children}
       </div>
