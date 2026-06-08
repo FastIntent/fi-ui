@@ -1,19 +1,32 @@
-import { Button } from "@atomizeui/core";
+import { Button, Divider } from "@atomizeui/core";
 import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import { PageHeader } from "@/components/shared/PageHeader";
-import { KpiCard } from "@/components/overview/KpiCard";
 import { ComponentAdoption } from "@/components/overview/ComponentAdoption";
 import { ActivityFeed } from "@/components/overview/ActivityFeed";
 import { ThemeUsage } from "@/components/overview/ThemeUsage";
+import { RangeTabs } from "@/components/overview/RangeTabs";
+import { KpiSkeletonStrip } from "@/components/overview/KpiSkeletonStrip";
 import { NavIcon } from "@/components/layout/NavIcon";
 import { componentAdoption, kpis, recentActivity, themeUsage } from "@/lib/mock";
 
+/**
+ * Server component. Most of the page (component adoption, activity
+ * feed, theme usage, plan health) is pure render and ships as HTML.
+ *
+ * Two tiny client islands:
+ *   - <RangeTabs /> — owns the filter state
+ *   - <KpiSkeletonStrip /> — initial loading state for the KPI strip
+ *
+ * Each tooltip on a KPI delta also hydrates client-side, but that's
+ * isolated to the KpiCard atom — it doesn't pull the page into the
+ * client bundle.
+ */
 export default function OverviewPage() {
   return (
     <DashboardLayout>
       <PageHeader
         title="Overview"
-        subtitle="What's happening across the Atomize UI ecosystem today."
+        subtitle="What's happening across the AtomizeUI ecosystem today."
         actions={
           <>
             <Button>Export</Button>
@@ -24,16 +37,18 @@ export default function OverviewPage() {
         }
       />
 
+      <RangeTabs />
+
       <div className="dashboard-kpi-grid">
-        {kpis.map((k) => (
-          <KpiCard kpi={k} key={k.id} />
-        ))}
+        <KpiSkeletonStrip kpis={kpis} />
       </div>
 
       <div className="dashboard-two-col">
         <ComponentAdoption data={componentAdoption} />
         <ActivityFeed items={recentActivity} />
       </div>
+
+      <Divider className="dashboard-section-divider" />
 
       <div className="dashboard-two-col">
         <ThemeUsage data={themeUsage} />

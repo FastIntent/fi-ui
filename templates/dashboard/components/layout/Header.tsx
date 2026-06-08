@@ -2,6 +2,7 @@
 
 import { Avatar, Badge, Dropdown, Input, Menu, MenuItem } from "@atomizeui/core";
 import { ThemeToggle } from "@/components/shared/ThemeToggle";
+import { MobileNav } from "./MobileNav";
 import { NavIcon } from "./NavIcon";
 
 const userMenu = (
@@ -39,6 +40,8 @@ const notificationsMenu = (
 export function Header() {
   return (
     <header className="dashboard-header" role="banner">
+      <MobileNav />
+
       <div className="dashboard-header-search">
         <Input
           placeholder="Search components, templates, docs…"

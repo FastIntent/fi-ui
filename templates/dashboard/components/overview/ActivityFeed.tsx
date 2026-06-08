@@ -1,3 +1,4 @@
+import { Tag } from "@atomizeui/core";
 import { NavIcon } from "@/components/layout/NavIcon";
 import type { ActivityItem } from "@/lib/mock";
 
@@ -12,6 +13,20 @@ const iconFor = (type: ActivityItem["type"]) => {
     case "discussion":
       return "MessageCircle";
   }
+};
+
+const TAG_COLOR: Record<ActivityItem["type"], "success" | "processing" | "warning" | "default"> = {
+  release: "success",
+  pr: "processing",
+  issue: "warning",
+  discussion: "default",
+};
+
+const TAG_LABEL: Record<ActivityItem["type"], string> = {
+  release: "Release",
+  pr: "PR",
+  issue: "Issue",
+  discussion: "Discussion",
 };
 
 export function ActivityFeed({ items }: { items: ActivityItem[] }) {
@@ -30,7 +45,10 @@ export function ActivityFeed({ items }: { items: ActivityItem[] }) {
               <NavIcon name={iconFor(item.type)!} size={14} />
             </span>
             <div className="dashboard-activity-body">
-              <div className="dashboard-activity-title">{item.title}</div>
+              <div className="dashboard-activity-title">
+                <Tag color={TAG_COLOR[item.type]}>{TAG_LABEL[item.type]}</Tag>
+                <span>{item.title}</span>
+              </div>
               <div className="dashboard-activity-meta">
                 {item.actor} · {item.timeAgo}
               </div>

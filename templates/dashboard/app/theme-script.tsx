@@ -8,12 +8,12 @@ const themeScript = `
   try {
     var key = 'atomize-theme';
     var stored = localStorage.getItem(key);
-    var theme = stored;
-    if (theme !== 'light' && theme !== 'dark') {
-      theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
+    // Light is the AtomizeUI signature theme — dark is opt-in via the toggle.
+    var theme = (stored === 'dark') ? 'dark' : 'light';
     document.documentElement.setAttribute('data-theme', theme);
-  } catch (e) {}
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
 })();
 `;
 

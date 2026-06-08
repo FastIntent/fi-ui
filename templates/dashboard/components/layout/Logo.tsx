@@ -1,34 +1,49 @@
 /**
- * Atomize UI mark — atom orbital around the "a" nucleus.
+ * Official AtomizeUI lockup (icon + wordmark in one SVG).
+ *
+ * Two variants live in /public/ — one with a black wordmark for light
+ * surfaces, one with white for dark. We render both and let CSS swap
+ * them based on [data-theme] on <html>. This avoids any JS-driven src
+ * swap, hydration mismatch, or theme-flash.
+ *
+ *   light surface →  atomizeui-light.svg  (icon verde + texto negro)
+ *   dark surface  →  atomizeui-dark.svg   (icon verde + texto blanco)
+ *
+ * The SVG aspect ratio is 1363:255 (~5.34:1). Pass `height` to scale —
+ * width is derived automatically.
  */
-export function Logo({ size = 24 }: { size?: number }) {
+interface LogoProps {
+  height?: number;
+  className?: string;
+}
+
+const ASPECT = 1363 / 255;
+
+export function Logo({ height = 28, className }: LogoProps) {
+  const width = Math.round(height * ASPECT);
+
   return (
-    <span className="dashboard-logo" style={{ width: size, height: size }} aria-hidden="true">
-      <svg viewBox="0 0 32 32" width={size} height={size} fill="none">
-        <rect width="32" height="32" rx="8" fill="var(--atom-primary-color)" />
-        <circle cx="16" cy="16" r="3.5" fill="#fff" />
-        <ellipse cx="16" cy="16" rx="10" ry="4" stroke="#fff" strokeWidth="1.5" opacity="0.65" />
-        <ellipse
-          cx="16"
-          cy="16"
-          rx="10"
-          ry="4"
-          stroke="#fff"
-          strokeWidth="1.5"
-          opacity="0.45"
-          transform="rotate(60 16 16)"
-        />
-        <ellipse
-          cx="16"
-          cy="16"
-          rx="10"
-          ry="4"
-          stroke="#fff"
-          strokeWidth="1.5"
-          opacity="0.3"
-          transform="rotate(120 16 16)"
-        />
-      </svg>
+    <span
+      className={"dashboard-logo" + (className ? ` ${className}` : "")}
+      style={{ height, width }}
+      aria-label="AtomizeUI"
+    >
+      <img
+        src="/atomizeui-light.svg"
+        alt=""
+        width={width}
+        height={height}
+        className="dashboard-logo-light"
+        draggable={false}
+      />
+      <img
+        src="/atomizeui-dark.svg"
+        alt=""
+        width={width}
+        height={height}
+        className="dashboard-logo-dark"
+        draggable={false}
+      />
     </span>
   );
 }

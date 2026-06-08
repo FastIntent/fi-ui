@@ -1,7 +1,22 @@
 /*
- * Atomize UI design tokens (light + dark). Imported once at the app root.
- * Each component's CSS is bundled automatically via tree-shaking when you
- * import from '@atomizeui/core'.
+ * globals.css — the foundation layer.
+ *
+ * Responsibilities:
+ *   - Reset (margins, box-sizing, link colors, button typography)
+ *   - Base typography (font-family, smoothing, line-height)
+ *   - Design tokens via `@atomizeui/core/design-system.css` (colors,
+ *     spacing scale, radii, shadows)
+ *   - Cross-page chrome that's not tied to the Dashboard layout
+ *     (e.g. the theme-toggle button used in the Header)
+ *
+ * Template-specific layout, panels, KPI grids, and page-level styles
+ * live in `dashboard.css`. Keep them separate so a consumer can swap
+ * one without disturbing the other.
+ *
+ * Component CSS is bundled automatically when you import the component
+ * — `@atomizeui/core` injects each component's stylesheet into its
+ * implementation chunk, so any bundler (Turbopack, webpack, Vite)
+ * pulls the right styles without explicit imports here.
  */
 @import "@atomizeui/core/design-system.css";
 

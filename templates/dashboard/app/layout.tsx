@@ -6,10 +6,10 @@ import { ThemeScript } from "./theme-script";
 
 export const metadata: Metadata = {
   title: {
-    default: "Atomize UI — Dashboard Kit",
-    template: "%s · Atomize UI",
+    default: "AtomizeUI — Dashboard Kit",
+    template: "%s · AtomizeUI",
   },
-  description: "Production-ready admin dashboard built with @atomizeui/core. Free, MIT licensed.",
+  description: "Production-ready admin dashboard built with AtomizeUI. Free, MIT licensed.",
 };
 
 export const viewport = {

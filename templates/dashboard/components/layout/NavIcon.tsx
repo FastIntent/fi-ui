@@ -152,6 +152,27 @@ export function NavIcon({ name, size = 16, style }: Props) {
           <path d="m3.27 6.96 8.73 5.04 8.73-5.04M12 22.08V12" />
         </svg>
       );
+    case "Menu":
+      return (
+        <svg {...common}>
+          <path d="M3 6h18M3 12h18M3 18h18" />
+        </svg>
+      );
+    case "More":
+      return (
+        <svg {...common}>
+          <circle cx="12" cy="12" r="1.25" />
+          <circle cx="19" cy="12" r="1.25" />
+          <circle cx="5" cy="12" r="1.25" />
+        </svg>
+      );
+    case "Mail":
+      return (
+        <svg {...common}>
+          <rect x="2" y="4" width="20" height="16" rx="2" />
+          <path d="m22 7-10 6L2 7" />
+        </svg>
+      );
     default:
       return (
         <svg {...common}>
