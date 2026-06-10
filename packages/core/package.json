@@ -1,6 +1,6 @@
 {
   "name": "@atomizeui/core",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "type": "module",
   "description": "Atomize UI — enterprise-class React component library for the Next.js App Router. Atomic, composable, themeable.",
   "homepage": "https://atomizeui.com",

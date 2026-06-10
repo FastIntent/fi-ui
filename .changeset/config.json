@@ -10,7 +10,7 @@
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["@atomizeui/docs", "@atomizeui/template-saas-starter"],
+  "ignore": ["@atomizeui/docs", "@atomizeui/template-dashboard"],
   "privatePackages": {
     "version": true,
     "tag": false
