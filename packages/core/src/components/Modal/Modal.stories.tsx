@@ -88,3 +88,71 @@ export const CustomFooter: Story = {
     title: 'Custom Footer',
   },
 };
+
+// Visual regression coverage for the rounded-corners contract.
+// The Modal clips `&-content` with `overflow: hidden`, so corners must
+// look identical whether or not a footer is rendered. These two
+// stories make that contract explicit.
+
+export const WithFooter: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Confirm-style modal — header, body, and default Ok/Cancel footer. ' +
+          'All four corners must read as rounded; the footer must not paint over ' +
+          'the bottom radii.',
+      },
+    },
+  },
+  render: (args) => {
+    const [open, setOpen] = useState(false);
+    return (
+      <>
+        <Button type="primary" onClick={() => setOpen(true)}>
+          Open Modal
+        </Button>
+        <Modal {...args} open={open} onCancel={() => setOpen(false)} onOk={() => setOpen(false)}>
+          <p>Are you sure you want to proceed with this operation?</p>
+        </Modal>
+      </>
+    );
+  },
+  args: {
+    title: 'Confirm action',
+    okText: 'OK',
+    cancelText: 'Cancel',
+  },
+};
+
+export const WithoutFooter: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Footer suppressed via `footer={null}`. The body now reaches the ' +
+          "modal's bottom edge — corners must still read as rounded thanks " +
+          'to `&-content` clipping.',
+      },
+    },
+  },
+  render: (args) => {
+    const [open, setOpen] = useState(false);
+    return (
+      <>
+        <Button type="primary" onClick={() => setOpen(true)}>
+          Open Modal
+        </Button>
+        <Modal {...args} open={open} onCancel={() => setOpen(false)} footer={null}>
+          <p style={{ paddingBottom: 24 }}>
+            This modal has no footer. The bottom of the body still respects the modal&apos;s rounded
+            corners — no square edges allowed.
+          </p>
+        </Modal>
+      </>
+    );
+  },
+  args: {
+    title: 'Borderless footer',
+  },
+};

@@ -92,18 +92,30 @@ export default function RootLayout({
 
 ## CSS Strategy
 
-The CSS for each component loads **automatically** when you import the
-component. No extra CSS imports needed.
+The package ships CSS in three layers. Two of them you import once at the app
+root; the third loads automatically per component.
+
+```css
+/* globals.css — or wherever your root stylesheet lives */
+@import '@atomizeui/core/design-system.css'; /* tokens (light + dark) */
+@import '@atomizeui/core/base.css'; /* reset + shared primitives */
+```
+
+| Layer                                      | What it contains                                                                                              | When to import          |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------- | ----------------------- |
+| `@atomizeui/core/design-system.css`        | Design tokens (colors, spacing, radii, typography) for both light and dark themes                             | once at the app root    |
+| `@atomizeui/core/base.css`                 | Reset + scrollbar styles + shared keyframes (`rotate`, slide animations) + floating-label utility (~850 B gz) | once at the app root    |
+| `@atomizeui/core/components/<X>/index.css` | The component's own visual rules                                                                              | automatic per component |
+
+The third layer is fully automatic — each component's JS file references its own
+CSS, and thanks to `"sideEffects": ["**/*.css"]` in `package.json` the bundler
+keeps that side-effect intact. **Only the CSS of components you actually use is
+included.**
 
 ```tsx
 // Button.css, Table.css, and Tooltip.css are included automatically
 import { Button, Table, Tooltip } from '@atomizeui/core';
 ```
-
-This works because each component's JS file references its own CSS. The bundler
-follows the reference, and thanks to `"sideEffects": ["**/*.css"]` in
-`package.json`, CSS files are never tree-shaken away. **Only the CSS of
-components you actually use is included.**
 
 ```
 import { Button } from '@atomizeui/core'
@@ -117,15 +129,22 @@ dist/components/Input/index.js    <- not imported, its CSS is excluded
 dist/components/Card/index.js     <- not imported, its CSS is excluded
 ```
 
+> **Why `base.css` is separate.** Keyframes like `@keyframes rotate` and
+> `@keyframes fiSlideUpIn` are shared by two or more components. If each
+> component shipped its own copy the consumer's bundle would ship the same rule
+> multiple times. `base.css` collects every shared primitive into a single file
+> so it loads once, regardless of how many components you use.
+
 ### Smaller CSS for single-component imports
 
-If you only need a couple of components, import the design tokens once and pull
-each component from its sub-path. The bundler still resolves transitive CSS for
-you:
+If you only need a couple of components, import the two root stylesheets once
+and pull each component from its sub-path. The bundler still resolves transitive
+CSS for you:
 
 ```tsx
 // Layout (load once across the app)
 import '@atomizeui/core/design-system.css';
+import '@atomizeui/core/base.css';
 
 // Page or component file — bundler resolves the rest
 import { ImageManager } from '@atomizeui/core/components/ImageManager';
@@ -138,6 +157,7 @@ For environments without a bundler (CDN, plain HTML, Webpack v4):
 ```tsx
 import '@atomizeui/core/dist/index.css'; // all components
 import '@atomizeui/core/dist/design-system.css'; // design tokens only
+import '@atomizeui/core/dist/styles/base.css'; // reset + shared primitives
 ```
 
 ---

@@ -1,133 +1,80 @@
 @use "../../styles/_variables.scss" as *;
 
+// `.atom-image-picker-input` wraps a core Input and floats the action
+// button (clear/browse) above its right edge. The button is a sibling
+// of the Input — NOT a child of the Input's suffix slot — so rc-input
+// can't steal the first click on it.
+//
+// We reserve right padding inside the Input so the typed/displayed
+// value can never run underneath the action button.
 .#{$prefix}-image-picker-input {
   position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: $spacing-sm;
+  display: inline-block;
   width: 100%;
-  min-height: 56px;
-  padding: $spacing-sm $spacing-md;
-  background: $bg-container;
-  border: 1px solid $border-color-secondary;
-  border-radius: $border-radius-base;
-  font-family: $font-family;
-  font-size: $font-size-base;
-  color: $text-color;
-  text-align: left;
-  cursor: pointer;
-  transition:
-    border-color $transition-fast,
-    box-shadow $transition-fast;
 
-  &:hover {
-    border-color: $primary-color;
-  }
-
-  &:focus-visible {
-    border-color: $primary-color;
-    box-shadow: 0 0 0 2px $primary-color-outline;
-    outline: none;
+  // The Input itself fills the wrapper. We target both the direct
+  // child (normal mode) and the descendant inside a float-label wrap
+  // (floating mode) so the padding-right that reserves space for the
+  // action button applies in both cases.
+  .#{$prefix}-input,
+  .#{$prefix}-input-affix-wrapper {
+    width: 100%;
+    padding-right: 36px;
+    cursor: pointer;
   }
 
   &-disabled {
     cursor: not-allowed;
-    background: $fill-quaternary;
-    color: $text-color-disabled;
 
-    &:hover {
-      border-color: $border-color-secondary;
-    }
-  }
-
-  &-placeholder {
-    display: inline-flex;
-    align-items: center;
-    gap: $spacing-xs;
-    color: $text-color-placeholder;
-
-    svg {
-      width: 18px;
-      height: 18px;
-    }
-  }
-
-  &-previews {
-    display: inline-flex;
-    align-items: center;
-    gap: $spacing-xs;
-    flex-wrap: wrap;
-    flex: 1 1 auto;
-    min-width: 0;
-  }
-
-  &-preview {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    gap: $spacing-xs;
-    padding: $spacing-xxs $spacing-sm $spacing-xxs $spacing-xxs;
-    background: $fill-quaternary;
-    border-radius: $border-radius-sm;
-    max-width: 220px;
-    min-width: 0;
-
-    img {
-      width: 32px;
-      height: 32px;
-      object-fit: cover;
-      border-radius: $border-radius-sm;
-      flex: 0 0 32px;
-    }
-
-    &-fallback {
-      width: 32px;
-      height: 32px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: $fill-tertiary;
-      color: $text-color-quaternary;
-      border-radius: $border-radius-sm;
-      flex: 0 0 32px;
-
-      svg {
-        width: 18px;
-        height: 18px;
-      }
-    }
-
-    &-name {
-      font-size: $font-size-sm;
-      color: $text-color;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      min-width: 0;
-    }
-  }
-
-  &-clear {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: auto;
-    color: $text-color-tertiary;
-    font-size: $font-size-lg;
-    cursor: pointer;
-    transition: color $transition-fast;
-
-    &:hover {
-      color: $text-color;
+    .#{$prefix}-input,
+    .#{$prefix}-input-affix-wrapper {
+      cursor: not-allowed;
     }
   }
 }
 
-[dir="rtl"] .#{$prefix}-image-picker-input {
-  text-align: right;
+// Highest specificity wins: target the button by tag + class so browser
+// UA `button {…}` styles (background, border, padding) get fully
+// overridden even when something else loads a global button reset
+// after our CSS.
+button.#{$prefix}-image-picker-input-action {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
 
-  &-clear {
-    margin-left: 0;
-    margin-right: auto;
+  appearance: none;
+  -webkit-appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--#{$prefix}-color-text-tertiary, #{$text-color-tertiary});
+  border-radius: var(--#{$prefix}-border-radius-sm, #{$border-radius-sm});
+  font: inherit;
+  cursor: pointer;
+  transition:
+    background $transition-fast,
+    color $transition-fast;
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  &:hover:not(:disabled) {
+    background: var(--#{$prefix}-color-fill-tertiary, #{$fill-tertiary});
+    color: var(--#{$prefix}-color-text, #{$text-color});
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
   }
 }

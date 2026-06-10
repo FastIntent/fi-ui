@@ -69,6 +69,21 @@ export const Status: Story = {
   ),
 };
 
+/**
+ * Side-by-side prefix and suffix. Side-by-side prefix and suffix.
+ * `prefix` is rendered on the left of the number (currency, units),
+ * `suffix` on the right ("%", "kg", "ms"). Border and focus ring move
+ * to the wrapper so the affix lives inside the same input shell.
+ */
+export const WithPrefixAndSuffix: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: '16px', width: 400 }}>
+      <InputNumber prefix="$" defaultValue={100} style={{ flex: 1 }} />
+      <InputNumber suffix="%" defaultValue={50} style={{ flex: 1 }} />
+    </div>
+  ),
+};
+
 export const Disabled: Story = {
   args: {
     disabled: true,

@@ -58,6 +58,18 @@ export interface InputNumberProps<T extends ValueType = ValueType> extends Omit<
 
   /** Color personalizado del label cuando está activo. */
   labelColor?: string;
+
+  /**
+   * Contenido (texto o ReactNode) que se muestra antes del valor numérico
+   * — típicamente una unidad monetaria ("$"), divisa ("€"), o icono.
+   */
+  prefix?: React.ReactNode;
+
+  /**
+   * Contenido (texto o ReactNode) que se muestra después del valor —
+   * típicamente una unidad ("%", "kg", "ms").
+   */
+  suffix?: React.ReactNode;
 }
 
 export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>((props, ref) => {
@@ -70,6 +82,8 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>((props
     floating = false,
     label,
     labelColor,
+    prefix,
+    suffix,
     ...restProps
   } = props;
 
@@ -113,7 +127,7 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>((props
     restProps.onChange?.(val);
   };
 
-  const inputNumberNode = (
+  const rawInputNumber = (
     <RcInputNumber
       {...restProps}
       ref={ref}
@@ -141,6 +155,33 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>((props
         </span>
       }
     />
+  );
+
+  // When `prefix` or `suffix` is provided, wrap the field in an
+  // `affix-wrapper`. The border / focus visual moves to the wrapper so
+  // the prefix and suffix live inside the same focus ring as the input.
+  const hasAffix = prefix !== undefined || suffix !== undefined;
+
+  const inputNumberNode = hasAffix ? (
+    <span
+      className={classNames(
+        `${prefixCls}-affix-wrapper`,
+        {
+          [`${prefixCls}-affix-wrapper-lg`]: mergedSize === 'large',
+          [`${prefixCls}-affix-wrapper-sm`]: mergedSize === 'small',
+          [`${prefixCls}-affix-wrapper-focused`]: focused,
+          [`${prefixCls}-affix-wrapper-disabled`]: disabled,
+          [`${prefixCls}-affix-wrapper-status-${status}`]: status,
+        },
+        className
+      )}
+    >
+      {prefix !== undefined && <span className={`${prefixCls}-prefix`}>{prefix}</span>}
+      {rawInputNumber}
+      {suffix !== undefined && <span className={`${prefixCls}-suffix`}>{suffix}</span>}
+    </span>
+  ) : (
+    rawInputNumber
   );
 
   if (!floating) return inputNumberNode;

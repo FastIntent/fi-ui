@@ -427,7 +427,11 @@
     &.#{$prefix}-slide-up-appear.#{$prefix}-picker-dropdown-placement-topRight {
       &.#{$prefix}-slide-up-enter-active,
       &.#{$prefix}-slide-up-appear-active {
-        animation-name: fiSlideDownIn;
+        // Picker's own variant: opens upward anchored to bottom-right,
+        // unlike the generic `fiSlideDownIn` in base.css which anchors
+        // to bottom-left. Keeping it local + uniquely named avoids the
+        // @keyframes name collision the old `fiSlideDownIn` had.
+        animation-name: fiPickerSlideDownIn;
         animation-play-state: running;
       }
     }
@@ -448,7 +452,7 @@
     &.#{$prefix}-slide-up-leave.#{$prefix}-slide-up-leave-active {
       &.#{$prefix}-picker-dropdown-placement-topLeft,
       &.#{$prefix}-picker-dropdown-placement-topRight {
-        animation-name: fiSlideDownOut;
+        animation-name: fiPickerSlideDownOut;
       }
       &.#{$prefix}-picker-dropdown-placement-bottomLeft,
       &.#{$prefix}-picker-dropdown-placement-bottomRight {
@@ -457,19 +461,14 @@
       animation-play-state: running;
     }
 
-    @keyframes fiSlideUpIn {
-      0% {
-        transform: scaleY(0.8);
-        transform-origin: 0% 0%;
-        opacity: 0;
-      }
-      100% {
-        transform: scaleY(1);
-        transform-origin: 0% 0%;
-        opacity: 1;
-      }
-    }
-    @keyframes fiSlideDownIn {
+    // `fiSlideUpIn / fiSlideUpOut` live in @atomizeui/core/base.css
+    // (identical to the picker's previous local copies).
+    //
+    // `fiSlideDownIn / fiSlideDownOut` here use a `transform-origin` of
+    // 100% 100% instead of base.css's 0% 100% — different visual
+    // intent (right-anchored vs left-anchored). They stay local with a
+    // unique name to avoid the name collision the old definitions had.
+    @keyframes fiPickerSlideDownIn {
       0% {
         transform: scaleY(0.8);
         transform-origin: 100% 100%;
@@ -481,19 +480,7 @@
         opacity: 1;
       }
     }
-    @keyframes fiSlideUpOut {
-      0% {
-        transform: scaleY(1);
-        transform-origin: 0% 0%;
-        opacity: 1;
-      }
-      100% {
-        transform: scaleY(0.8);
-        transform-origin: 0% 0%;
-        opacity: 0;
-      }
-    }
-    @keyframes fiSlideDownOut {
+    @keyframes fiPickerSlideDownOut {
       0% {
         transform: scaleY(1);
         transform-origin: 100% 100%;

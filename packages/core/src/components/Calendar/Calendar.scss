@@ -206,18 +206,27 @@
 
     .#{$prefix}-calendar-date {
       min-height: auto;
-      padding: $spacing-xxs;
+      padding: 2px;
       border-top: none;
       text-align: center;
     }
 
+    // Mini-mode cell: square with rounded corners (not a circle).
+    // `min-width: 24px` so single-digit days stay compact and
+    // two-digit days expand as needed instead of cramping.
     .#{$prefix}-calendar-date-value {
       text-align: center;
-      width: 28px;
-      height: 28px;
-      line-height: $line-height-lg;
-      border-radius: 50%;
+      min-width: 24px;
+      height: 24px;
+      line-height: 24px;
+      border-radius: var(--#{$prefix}-border-radius);
       display: inline-block;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .#{$prefix}-calendar-cell:not(.#{$prefix}-calendar-cell-selected)
+      .#{$prefix}-calendar-date-value:hover {
+      background: var(--#{$prefix}-control-item-bg-hover, #{$control-item-bg-hover});
     }
 
     .#{$prefix}-calendar-cell-selected .#{$prefix}-calendar-date-value {
@@ -229,8 +238,10 @@
       background: transparent;
     }
 
+    // Today's outline reads as a subtle ring around the date — the
+    // selected fill still wins when both are true (specificity).
     .#{$prefix}-calendar-cell-today .#{$prefix}-calendar-date-value {
-      border: 1px solid var(--#{$prefix}-primary-color, #{$primary-color});
+      box-shadow: inset 0 0 0 1px var(--#{$prefix}-primary-color, #{$primary-color});
     }
 
     .#{$prefix}-calendar-cell-today .#{$prefix}-calendar-date {
@@ -240,6 +251,11 @@
     .#{$prefix}-calendar-column-header {
       text-align: center;
       padding-right: 0;
+      padding-bottom: 6px;
+      color: var(--#{$prefix}-color-text-tertiary, #{$text-color-tertiary});
+      font-size: $font-size-sm;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
     }
 
     .#{$prefix}-calendar-date-content {

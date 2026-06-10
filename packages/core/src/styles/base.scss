@@ -1,4 +1,30 @@
+// base.scss — shared primitives layer for @atomizeui/core.
+//
+// Compiled to `dist/base.css`. Exposed as `@atomizeui/core/base.css`.
+//
+// Companion to `@atomizeui/core/design-system.css`:
+//   design-system.css → tokens (colors, spacing, typography)
+//   base.css          → reset + scrollbar + shared keyframes +
+//                        floating-label — anything that two or more
+//                        components depend on
+//
+// Consumers import both, once, at the app root:
+//
+//   @import "@atomizeui/core/design-system.css";
+//   @import "@atomizeui/core/base.css";
+//
+// Each component's own CSS still ships with the component's barrel,
+// but the shared primitives never get duplicated across multiple
+// component CSS files.
+
 @use "./_variables.scss" as *;
+
+/* Shared keyframes (rotate, slide-up/down) used by 2+ components */
+@use "motions";
+
+/* Floating-label utility shared by Input / Select / InputNumber /
+   DatePicker when the `floating` prop is set */
+@use "floating";
 
 /* Base Reset & Global Styles */
 html,

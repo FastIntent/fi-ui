@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Form } from './Form';
 import { Input } from '../Input/Input';
@@ -10,7 +10,36 @@ import { Select, Option } from '../Select/Select';
 import { InputNumber } from '../InputNumber/InputNumber';
 import { Radio } from '../Radio/Radio';
 import { RadioGroup } from '../Radio/RadioGroup';
+import { ImagePickerInput } from '../ImagePickerInput';
+import type { ImageManagerActions, ListResult, ServerImage } from '../ImageManager/types';
 import { useForm } from '@rc-component/form';
+
+function makeImg(name: string, url: string): ServerImage {
+  return {
+    name,
+    path: name,
+    url,
+    thumbnailUrl: url,
+    size: 200_000,
+    mtime: Date.now(),
+  };
+}
+
+function useMockImageActions(): ImageManagerActions {
+  const cache = useRef<ListResult>({
+    folders: [],
+    images: [
+      makeImg('hero.png', 'https://picsum.photos/seed/form-hero/600/400'),
+      makeImg('logo.svg', 'https://picsum.photos/seed/form-logo/600/400'),
+      makeImg('cover.webp', 'https://picsum.photos/seed/form-cover/600/400'),
+    ],
+  });
+  const list = useCallback(async () => {
+    await new Promise((r) => setTimeout(r, 60));
+    return cache.current;
+  }, []);
+  return useMemo(() => ({ list }), [list]);
+}
 
 const meta: Meta<typeof Form> = {
   title: 'Components/Form',
@@ -30,6 +59,7 @@ export const AllFieldsValidation: StoryObj<typeof Form> = {
   name: 'All Fields Validation',
   render: () => {
     const [form] = useForm();
+    const imageActions = useMockImageActions();
 
     const onFinish = (values: Record<string, unknown>) => {
       alert(JSON.stringify(values, null, 2));
@@ -112,6 +142,30 @@ export const AllFieldsValidation: StoryObj<typeof Form> = {
           rules={[{ required: true, message: 'Please select a date range' }]}
         >
           <DatePicker.RangePicker style={{ width: '100%' }} />
+        </Form.Item>
+
+        <Form.Item
+          label="Profile picture"
+          name="profilePicture"
+          required
+          rules={[
+            { required: true, message: 'Please pick a profile picture' },
+            {
+              validator: (_, value: string | undefined) => {
+                if (!value) return Promise.resolve();
+                return /\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i.test(value)
+                  ? Promise.resolve()
+                  : Promise.reject(new Error('Must be a .png, .jpg, .webp, .gif or .svg image'));
+              },
+            },
+          ]}
+        >
+          <ImagePickerInput
+            actions={imageActions}
+            rootDir="/uploads"
+            placeholder="Pick an image…"
+            editable
+          />
         </Form.Item>
 
         <Form.Item
@@ -274,6 +328,70 @@ export const Inline: StoryObj<typeof Form> = {
   ),
   args: {
     layout: 'inline',
+  },
+};
+
+/**
+ * Focuses on the `ImagePickerInput` inside a Form. Demonstrates:
+ *
+ * • A required rule (Form.Item enforces it).
+ * • A custom `validator` that rejects URLs without an image extension.
+ * • The floating-label variant participating in the same validation
+ *   flow — the label tint flips to red when the field is in error.
+ */
+export const ImagePickerValidation: StoryObj<typeof Form> = {
+  name: 'ImagePickerInput Validation',
+  render: () => {
+    const [form] = useForm();
+    const imageActions = useMockImageActions();
+
+    const onFinish = (values: Record<string, unknown>) => {
+      alert(JSON.stringify(values, null, 2));
+    };
+
+    const imageRules = [
+      { required: true, message: 'Please pick an image' },
+      {
+        validator: (_: unknown, value: string | undefined) => {
+          if (!value) return Promise.resolve();
+          return /\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i.test(value)
+            ? Promise.resolve()
+            : Promise.reject(new Error('Must be a .png, .jpg, .webp, .gif or .svg image'));
+        },
+      },
+    ];
+
+    return (
+      <Form form={form} layout="vertical" onFinish={onFinish} style={{ maxWidth: 560 }}>
+        <Form.Item label="Hero (standard)" name="hero" required rules={imageRules}>
+          <ImagePickerInput
+            actions={imageActions}
+            rootDir="/uploads"
+            placeholder="Pick a hero image…"
+            editable
+          />
+        </Form.Item>
+
+        <Form.Item name="cover" required rules={imageRules}>
+          <ImagePickerInput
+            floating
+            label="Cover (floating)"
+            actions={imageActions}
+            rootDir="/uploads"
+            editable
+          />
+        </Form.Item>
+
+        <Form.Item style={{ marginTop: 8 }}>
+          <span style={{ display: 'inline-flex', gap: 8 }}>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+            <Button onClick={() => form.resetFields()}>Reset</Button>
+          </span>
+        </Form.Item>
+      </Form>
+    );
   },
 };
 

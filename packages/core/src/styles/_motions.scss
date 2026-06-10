@@ -1,0 +1,84 @@
+// Shared motion primitives.
+//
+// Live in `base.scss`, distributed as `@atomizeui/core/base.css`.
+// Consumers import once at the app root; every component that depends
+// on these animations just references them by name.
+//
+// Rule of thumb for new keyframes:
+//   • Used by exactly one component → keep it inside that component's SCSS.
+//   • Used by two or more sibling components → promote it here.
+//
+// Pre-existing duplicates that this file replaces:
+//   `rotate`             → was in Button.scss and Switch.scss
+//   `fiSlideUpIn/Out`    → was in Dropdown.scss and DatePicker.scss
+//   `fiSlideDownIn/Out`  → was in Dropdown.scss and DatePicker.scss
+//
+// DatePicker had its own variant of the Down* animations (different
+// `transform-origin`) — those stay local to DatePicker under unique
+// names so they don't collide with the globals here.
+
+// Generic continuous rotation. Used by Button (loading spinner) and
+// Switch (loading state).
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Opening downwards from a top-anchored origin. Used by Dropdown and
+// DatePicker (default panel).
+@keyframes fiSlideUpIn {
+  0% {
+    transform: scaleY(0.8);
+    transform-origin: 0% 0%;
+    opacity: 0;
+  }
+  100% {
+    transform: scaleY(1);
+    transform-origin: 0% 0%;
+    opacity: 1;
+  }
+}
+
+@keyframes fiSlideUpOut {
+  0% {
+    transform: scaleY(1);
+    transform-origin: 0% 0%;
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(0.8);
+    transform-origin: 0% 0%;
+    opacity: 0;
+  }
+}
+
+// Opening upwards from a bottom-anchored origin. Used by Dropdown.
+@keyframes fiSlideDownIn {
+  0% {
+    transform: scaleY(0.8);
+    transform-origin: 0% 100%;
+    opacity: 0;
+  }
+  100% {
+    transform: scaleY(1);
+    transform-origin: 0% 100%;
+    opacity: 1;
+  }
+}
+
+@keyframes fiSlideDownOut {
+  0% {
+    transform: scaleY(1);
+    transform-origin: 0% 100%;
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(0.8);
+    transform-origin: 0% 100%;
+    opacity: 0;
+  }
+}

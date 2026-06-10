@@ -136,11 +136,14 @@
     }
   }
 
+  // 8px breathing room between the affix and the input text. The
+  // token `$spacing-sm` is 4px which was producing the "stuck to the
+  // border" look — too tight visually.
   &-prefix {
-    margin-right: $spacing-sm;
+    margin-right: 8px;
   }
   &-suffix {
-    margin-left: $spacing-sm;
+    margin-left: 8px;
   }
 
   // Sizes

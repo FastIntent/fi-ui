@@ -8,6 +8,9 @@ const shared = {
     'src/components/*/index.{ts,tsx}',
     'src/server/index.ts',
     'src/styles/global.scss',
+    // Shared primitives layer (reset + scrollbar + keyframes + floating).
+    // Compiled to dist/base.css and exposed as `@atomizeui/core/base.css`.
+    'src/styles/base.scss',
   ],
   sourcemap: process.env.SOURCE_MAP === 'true',
   minify: true,

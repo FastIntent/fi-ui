@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import classNames from 'classnames';
 import { getDefaultPrefixCls } from '../ConfigProvider/prefix';
 import { useConfig } from '../ConfigProvider';
+import type { InputSize } from '../Input/Input';
 
 /**
  * Propiedades del componente InputOTP.
@@ -39,10 +40,12 @@ export interface InputOTPProps {
   disabled?: boolean;
 
   /**
-   * El tamaño visual de los cuadros.
+   * El tamaño visual de los cuadros. Hereda el `componentSize` del
+   * ConfigProvider más cercano si no se especifica explícitamente,
+   * igual que `<Input>`.
    * @default 'middle'
    */
-  size?: 'large' | 'middle' | 'small';
+  size?: InputSize;
 
   /**
    * Determina el tipo de input de cada cuadro y el comportamiento de validación.
@@ -71,14 +74,20 @@ export const InputOTP: React.FC<InputOTPProps> = ({
   onChange,
   status = '',
   disabled = false,
-  size = 'middle',
+  size,
   inputType = 'text',
   className,
   style,
 }) => {
-  const { getPrefixCls } = useConfig();
+  const { getPrefixCls, size: contextSize } = useConfig();
   const prefixCls = getPrefixCls?.('otp') || getDefaultPrefixCls('otp');
   const inputRefs = useRef<HTMLInputElement[]>([]);
+
+  // Resolution order matches <Input>: explicit prop > ConfigProvider
+  // context > built-in default ('middle'). The InputOTP previously
+  // ignored the context — wrapping a tree in
+  // `<ConfigProvider componentSize="large">` left every OTP at middle.
+  const mergedSize: InputSize = size || contextSize || 'middle';
 
   // Split value into array, padding with empty strings
   const values = value.split('').slice(0, length);
@@ -132,7 +141,7 @@ export const InputOTP: React.FC<InputOTPProps> = ({
   const containerClasses = classNames(
     prefixCls,
     {
-      [`${prefixCls}-${size}`]: size !== 'middle',
+      [`${prefixCls}-${mergedSize}`]: mergedSize !== 'middle',
       [`${prefixCls}-status-${status}`]: status,
       [`${prefixCls}-disabled`]: disabled,
     },

@@ -26,9 +26,13 @@
 }
 
 .#{$prefix}-modal {
+  // The dialog wrapper that rc-dialog renders. Holds positioning and
+  // text inheritance for the panel below; no background, no padding —
+  // any padding here paints as a coloured strip outside the actual
+  // panel and is what produced the "ghost band" under the modal.
   box-sizing: border-box;
   margin: 0 auto;
-  padding: 0 0 $spacing-lg;
+  padding: 0;
   color: var(--#{$prefix}-color-text, #{$text-color});
   font-size: $font-size-md;
   line-height: $line-height;
@@ -37,6 +41,18 @@
   top: 100px;
   width: auto;
 
+  // The actual rounded panel rc-dialog renders inside `.atom-modal`.
+  // This is the element the user sees as "the modal". It carries the
+  // background, border-radius, shadow and the `overflow: hidden` that
+  // clips every direct child (header / body / footer) to the rounded
+  // corners. The close button is positioned absolutely inside the
+  // bounds (top: 16px, right: 24px), so the clip never hides it.
+  //
+  // `.atom-modal-content` and `.atom-modal-section` are kept as
+  // additional selectors for backward compatibility with any consumer
+  // that may have targeted those names — rc-dialog does not render
+  // them, but the rule does no harm.
+  &-container,
   &-content,
   &-section {
     position: relative;
@@ -47,6 +63,7 @@
     box-shadow: var(--#{$prefix}-modal-shadow, #{$shadow-xl});
     display: flex;
     flex-direction: column;
+    overflow: hidden;
   }
 
   &-close {
@@ -86,8 +103,7 @@
       --#{$prefix}-modal-header-bg,
       var(--#{$prefix}-modal-color-bg, #{$bg-container})
     );
-    border-radius: var(--#{$prefix}-modal-border-radius, #{$border-radius-lg})
-      var(--#{$prefix}-modal-border-radius, #{$border-radius-lg}) 0 0;
+    // Corner rounding is owned by `&-content` via `overflow: hidden`.
   }
 
   &-title {
@@ -103,9 +119,11 @@
     font-size: $font-size-md;
     line-height: $line-height;
     word-wrap: break-word;
-    background: var(--#{$prefix}-modal-color-bg, #{$bg-container}); // Fallback directly on body
-    border-radius: 0 0 var(--#{$prefix}-modal-border-radius, #{$border-radius-lg})
-      var(--#{$prefix}-modal-border-radius, #{$border-radius-lg});
+    background: var(--#{$prefix}-modal-color-bg, #{$bg-container});
+    // Corner rounding is owned by `&-content` via `overflow: hidden`.
+    // A bottom-radius here was producing a doubled rounding when a
+    // footer existed (footer also rounds its bottom), which broke the
+    // look of confirm-style modals.
 
     & > * {
       margin: 0;
@@ -118,9 +136,8 @@
     background: var(
       --#{$prefix}-modal-footer-bg,
       var(--#{$prefix}-modal-color-bg, #{$bg-container})
-    ); // Fallback directly on footer
-    border-radius: 0 0 var(--#{$prefix}-modal-border-radius, #{$border-radius-lg})
-      var(--#{$prefix}-modal-border-radius, #{$border-radius-lg});
+    );
+    // Corner rounding is owned by `&-content` via `overflow: hidden`.
 
     .#{$prefix}-btn + .#{$prefix}-btn {
       margin-inline-start: $spacing-sm;

@@ -432,15 +432,12 @@
 // is plain text with a consistent vertical rhythm. No border between
 // columns — gap does the separation.
 
-// The Modal's `.atom-modal-body` ships with `padding: 0 lg` (no top, no
-// bottom) and no bottom border-radius. When the preview uses `footer={null}`
-// the body reaches the modal's bottom edge as a square, hiding the
-// content's rounded corners. Clip the content and add a bottom pad to
-// the body so the preview sits inside symmetric rounded corners.
+// The core Modal now clips `.atom-modal-container` (the real rc-dialog
+// panel) with `overflow: hidden`, so the preview's rounded corners are
+// honoured automatically. We still add a bottom pad on the body because
+// the preview uses `footer={null}` — without a footer the body reaches
+// the panel's bottom edge with zero padding underneath the canvas.
 .#{$prefix}-image-manager-preview-modal {
-  .#{$prefix}-modal-content {
-    overflow: hidden;
-  }
   .#{$prefix}-modal-body {
     padding-bottom: $spacing-lg;
   }

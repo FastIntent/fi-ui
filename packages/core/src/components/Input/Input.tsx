@@ -1,6 +1,8 @@
 import React, { forwardRef, useState, useEffect, useRef, useCallback } from 'react';
 import RcInput from '@rc-component/input';
 import type { InputRef } from '@rc-component/input';
+
+export type { InputRef };
 import classNames from 'classnames';
 import { useConfig } from '../ConfigProvider';
 import defaultLocale from '../locale/en_US';

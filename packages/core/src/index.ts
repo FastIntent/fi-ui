@@ -22,7 +22,7 @@ export { Form, FormItem, useForm } from './components/Form';
 export type { FormProps, FormItemProps } from './components/Form';
 
 export { Input, TextArea } from './components/Input';
-export type { InputProps, InputSize, TextAreaProps } from './components/Input';
+export type { InputProps, InputSize, InputRef, TextAreaProps } from './components/Input';
 
 export { Modal } from './components/Modal';
 export type { ModalProps } from './components/Modal';

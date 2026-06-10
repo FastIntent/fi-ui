@@ -1,6 +1,6 @@
 {
   "name": "@atomizeui/core",
-  "version": "2.0.0",
+  "version": "2.1.4",
   "type": "module",
   "description": "Atomize UI — enterprise-class React component library for the Next.js App Router. Atomic, composable, themeable.",
   "homepage": "https://atomizeui.com",
@@ -32,6 +32,7 @@
       "require": "./dist/design-system.cjs"
     },
     "./design-system.css": "./dist/design-system.css",
+    "./base.css": "./dist/styles/base.css",
     "./global": {
       "types": "./dist/styles/global.d.ts",
       "import": "./dist/styles/global.js",

@@ -175,3 +175,100 @@
     }
   }
 }
+
+// ── Affix wrapper (prefix / suffix) ────────────────────────────────
+// When the consumer passes `prefix` or `suffix`, the field is wrapped
+// in `.atom-input-number-affix-wrapper`. The border and focus ring
+// move to the wrapper; the inner `.atom-input-number` loses its own
+// border so prefix and suffix sit inside the same focus ring as the
+// number input.
+.#{$prefix}-input-number-affix-wrapper {
+  display: inline-flex;
+  width: 100%;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0 var(--#{$prefix}-padding-inline-md, 11px);
+  height: var(--#{$prefix}-control-height-md, 32px);
+  background-color: var(--#{$prefix}-input-color-bg, #{$bg-container});
+  border: 1px solid var(--#{$prefix}-input-color-border, #{$border-color});
+  border-radius: var(--#{$prefix}-input-border-radius, #{$border-radius-base});
+  transition: $transition-base;
+
+  // The wrapped InputNumber gives up its border and padding — those
+  // now belong to the wrapper. Background is transparent so the
+  // wrapper's fill shows through.
+  .#{$prefix}-input-number {
+    border: none;
+    box-shadow: none !important;
+    padding: 0;
+    background: transparent;
+    height: 100%;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .#{$prefix}-input-number-input {
+    padding: 0;
+    height: 100%;
+    background: transparent;
+  }
+
+  &:hover {
+    border-color: var(--#{$prefix}-input-hover-border-color, #{$primary-color-hover});
+    box-shadow: $shadow-sm;
+  }
+
+  &-focused {
+    border-color: var(--#{$prefix}-input-active-border-color, #{$primary-color});
+    box-shadow: var(--#{$prefix}-input-active-shadow, 0 0 0 4px #{$primary-color-outline});
+  }
+
+  &-status-error {
+    border-color: $error-color !important;
+  }
+
+  &-status-warning {
+    border-color: $warning-color !important;
+  }
+
+  &-disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  // Size variants
+  &-lg {
+    height: var(--#{$prefix}-control-height-lg, 40px);
+    font-size: $font-size-lg;
+  }
+
+  &-sm {
+    height: var(--#{$prefix}-control-height-sm, 24px);
+    font-size: $font-size-sm;
+  }
+}
+
+.#{$prefix}-input-number-prefix,
+.#{$prefix}-input-number-suffix {
+  display: flex;
+  flex: none;
+  align-items: center;
+  color: $text-color-secondary;
+  font-size: $font-size-md;
+  white-space: nowrap;
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+// 8px breathing room between the affix and the number — matching the
+// fix applied to Input.
+.#{$prefix}-input-number-prefix {
+  margin-right: 8px;
+}
+
+.#{$prefix}-input-number-suffix {
+  margin-left: 8px;
+}
