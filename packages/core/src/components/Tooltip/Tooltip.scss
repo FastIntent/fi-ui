@@ -11,6 +11,9 @@
     0 9px 28px 8px rgba(0, 0, 0, 0.05);
   --#{$prefix}-tooltip-arrow-width: 8px;
   --#{$prefix}-tooltip-arrow-height: 5px;
+  /* Derivados de la escala global de spacing (xs=4px, sm=8px). */
+  --#{$prefix}-tooltip-padding-v: var(--#{$prefix}-spacing-xs);
+  --#{$prefix}-tooltip-padding-h: var(--#{$prefix}-spacing-sm);
 }
 
 .#{$prefix}-tooltip {
@@ -38,7 +41,7 @@
   &-container {
     min-width: 32px;
     min-height: 32px;
-    padding: $spacing-xs $spacing-sm;
+    padding: var(--#{$prefix}-tooltip-padding-v) var(--#{$prefix}-tooltip-padding-h);
     color: var(--#{$prefix}-tooltip-color);
     text-align: start;
     text-decoration: none;
@@ -99,7 +102,8 @@
       border-width: calc(var(--#{$prefix}-tooltip-arrow-width) #{"/"} 2) 0
         calc(var(--#{$prefix}-tooltip-arrow-width) #{"/"} 2) var(--#{$prefix}-tooltip-arrow-height);
       border-left-color: var(--#{$prefix}-tooltip-bg);
-      transform: translateX(2px);
+      // Solapa 2px hacia el container (que queda a la IZQUIERDA del arrow).
+      transform: translateX(-2px);
     }
   }
 
@@ -113,7 +117,8 @@
         var(--#{$prefix}-tooltip-arrow-height) calc(var(--#{$prefix}-tooltip-arrow-width) #{"/"} 2)
         0;
       border-right-color: var(--#{$prefix}-tooltip-bg);
-      transform: translateX(-2px);
+      // Solapa 2px hacia el container (que queda a la DERECHA del arrow).
+      transform: translateX(2px);
     }
   }
 

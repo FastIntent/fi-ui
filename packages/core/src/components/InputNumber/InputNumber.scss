@@ -1,5 +1,14 @@
 @use "../../styles/_variables.scss" as *;
 
+// --- InputNumber Design Tokens ---
+:root {
+  // Flechas up/down de los handlers: son glifos decorativos, no texto.
+  // Deben caber en media altura del control sm (24px / 2 − 1px de border
+  // ≈ 11px de celda), por eso van muy por debajo de la escala tipográfica.
+  --#{$prefix}-input-number-handler-font-size: 8px;
+  --#{$prefix}-input-number-handler-width: 22px;
+}
+
 .#{$prefix}-input-number {
   box-sizing: border-box;
   margin: 0;
@@ -87,7 +96,7 @@
     top: 0;
     bottom: 0;
     right: 0;
-    width: 22px;
+    width: var(--#{$prefix}-input-number-handler-width);
     background: $bg-container;
     border-left: 1px solid $border-color;
     border-radius: 0 $border-radius-base $border-radius-base 0;
@@ -116,7 +125,7 @@
     color: $text-color-tertiary;
     cursor: pointer;
     transition: all $transition-fast;
-    font-size: $font-size-sm;
+    font-size: var(--#{$prefix}-input-number-handler-font-size);
     line-height: 1;
 
     &:hover {
@@ -193,6 +202,7 @@
   border: 1px solid var(--#{$prefix}-input-color-border, #{$border-color});
   border-radius: var(--#{$prefix}-input-border-radius, #{$border-radius-base});
   transition: $transition-base;
+  position: relative;
 
   // The wrapped InputNumber gives up its border and padding — those
   // now belong to the wrapper. Background is transparent so the
@@ -205,12 +215,42 @@
     height: 100%;
     width: 100%;
     min-width: 0;
+    // static para que las actions (absolute) se anclen al WRAPPER y
+    // queden en su borde derecho, después del suffix.
+    position: static;
   }
 
   .#{$prefix}-input-number-input {
     padding: 0;
     height: 100%;
     background: transparent;
+  }
+
+  // Handlers en modo affix: viven en el borde derecho del wrapper.
+  // Entran con fade + deslizamiento desde la izquierda al hover/focus;
+  // el suffix se desplaza para dejarles sitio (ver más abajo).
+  .#{$prefix}-input-number-actions {
+    border-radius: 0 calc(var(--#{$prefix}-input-border-radius, #{$border-radius-base}) - 1px)
+      calc(var(--#{$prefix}-input-border-radius, #{$border-radius-base}) - 1px) 0;
+    transform: translateX(-6px);
+    transition:
+      opacity $transition-fast,
+      transform $transition-fast;
+  }
+
+  &:hover .#{$prefix}-input-number-actions,
+  &-focused .#{$prefix}-input-number-actions {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .#{$prefix}-input-number-suffix {
+    transition: margin-right $transition-fast;
+  }
+
+  &:hover .#{$prefix}-input-number-suffix,
+  &-focused .#{$prefix}-input-number-suffix {
+    margin-right: var(--#{$prefix}-input-number-handler-width);
   }
 
   &:hover {
