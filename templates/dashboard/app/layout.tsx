@@ -3,6 +3,7 @@ import NextTopLoader from "nextjs-toploader";
 import { ConfigProvider } from "@atomizeui/core";
 import "./globals.css";
 import "./dashboard.css";
+import "./themes/index.css";
 import { ThemeScript } from "./theme-script";
 
 export const metadata: Metadata = {
@@ -24,13 +25,13 @@ export const viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" data-kit-theme="ember" suppressHydrationWarning>
       <head>
         <ThemeScript />
       </head>
       <body>
         <NextTopLoader
-          color="#6BBF00"
+          color="var(--atom-primary-color)"
           initialPosition={0.08}
           crawlSpeed={200}
           height={4}
@@ -38,7 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           showSpinner={false}
           easing="ease"
           speed={200}
-          shadow="0 0 10px #6BBF00, 0 0 5px #6BBF00"
+          shadow="0 0 10px var(--atom-primary-color), 0 0 5px var(--atom-primary-color)"
         />
         <ConfigProvider>{children}</ConfigProvider>
       </body>

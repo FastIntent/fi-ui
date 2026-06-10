@@ -1,0 +1,67 @@
+/*
+ * Kit Theme: EMBER
+ * ───────────────────────────────────────────────────────────────────
+ * Acento de UI naranja (#ff6a00) sobre aside carbón cálido y header
+ * con tinte tenue. Re-tonaliza todo lo que deriva de
+ * --atom-primary-color: botones primarios, tabs, focus rings, gráficas.
+ *
+ * USO (archivo autocontenido — cópialo a tu proyecto tal cual):
+ *   1. Importa este archivo después de dashboard.css:
+ *        import "./themes/ember.css";
+ *   2. Activa el theme en <html>:
+ *        <html data-kit-theme="ember">
+ *      (o vía el picker de Settings → Appearance, que lo persiste).
+ */
+
+[data-kit-theme="ember"] {
+  /* ── Acento de UI: naranja (sustituye al verde de marca).
+       -outline se deriva solo vía color-mix en design-system.css. */
+  --atom-primary-color: #ff6a00;
+  --atom-primary-color-hover: #ff8226;
+  --atom-primary-color-active: #d95800;
+
+  /* ── Aside carbón cálido */
+  --kit-sidebar-bg: #1d1412;
+  --kit-sidebar-border: rgba(255, 255, 255, 0.07);
+  --kit-sidebar-title: rgba(214, 187, 180, 0.7);
+  --kit-sidebar-item: #b9a49e;
+  --kit-sidebar-item-hover: #ffece7;
+  --kit-sidebar-item-hover-bg: rgba(255, 255, 255, 0.06);
+  --kit-sidebar-item-active: #ffffff;
+  --kit-sidebar-item-active-bg: rgba(255, 106, 0, 0.16);
+  --kit-sidebar-item-active-hover-bg: rgba(255, 106, 0, 0.24);
+  /* Rail un paso más claro que el primario para leerse sobre el carbón. */
+  --kit-sidebar-rail: #ff8b40;
+  --kit-sidebar-badge-bg: rgba(255, 255, 255, 0.09);
+  --kit-sidebar-badge: #e3cdc7;
+
+  /* ── Header claro con tinte cálido */
+  --kit-header-bg: rgba(255, 244, 236, 0.64);
+  --kit-header-bg-opaque: #fff4ec;
+  --kit-header-border: #f8e2d2;
+
+  /* Acento de datavis alineado al nuevo primario (ver dashboard.css). */
+  --kit-accent-soft: #f29053;
+}
+
+[data-theme="dark"][data-kit-theme="ember"] {
+  --kit-sidebar-bg: #170f0d;
+  --kit-sidebar-border: rgba(255, 255, 255, 0.05);
+  --kit-header-bg: rgba(23, 15, 13, 0.62);
+  --kit-header-bg-opaque: #170f0d;
+  --kit-header-border: rgba(255, 139, 64, 0.12);
+  /* El naranja sube un paso de luminancia para fondos oscuros. */
+  --atom-primary-color: #ff8226;
+  --atom-primary-color-hover: #ff9b4d;
+  --atom-primary-color-active: #e06f1a;
+  --kit-accent-soft: #ffa066;
+}
+
+/* El aside siempre es oscuro: variante dark del logo también en light. */
+[data-kit-theme="ember"] .dashboard-sidebar .dashboard-logo-light {
+  display: none;
+}
+
+[data-kit-theme="ember"] .dashboard-sidebar .dashboard-logo-dark {
+  display: block;
+}

@@ -32,6 +32,35 @@
      primary actions) clearly stand out against bars, sparklines and
      progress fills. See VISUAL_PRINCIPLES.md. */
   --kit-accent-soft: #5cbf3a;
+
+  /* ── Zone variables ─────────────────────────────────────────────────
+     Sidebar (aside) and header read ONLY from these. Kit themes
+     (app/themes/*.css) override them under [data-kit-theme="…"] to
+     recombine zones without touching layout rules. Defaults map to the
+     base palette so the kit looks identical with no theme applied. */
+  --kit-sidebar-bg: var(--kit-bg-elevated);
+  --kit-sidebar-border: var(--kit-border-soft);
+  --kit-sidebar-title: var(--atom-color-text-secondary);
+  --kit-sidebar-item: var(--atom-color-text-secondary);
+  --kit-sidebar-item-hover: var(--atom-color-text);
+  --kit-sidebar-item-hover-bg: var(--kit-bg-hover);
+  --kit-sidebar-item-active: var(--atom-primary-color);
+  --kit-sidebar-item-active-bg: color-mix(
+    in srgb,
+    var(--atom-primary-color) 8%,
+    transparent
+  );
+  --kit-sidebar-item-active-hover-bg: color-mix(
+    in srgb,
+    var(--atom-primary-color) 10%,
+    transparent
+  );
+  --kit-sidebar-rail: var(--atom-primary-color);
+  --kit-sidebar-badge-bg: var(--kit-bg-hover);
+  --kit-sidebar-badge: var(--atom-color-text-secondary);
+  --kit-header-bg: var(--kit-bg-header);
+  --kit-header-bg-opaque: var(--kit-bg-canvas);
+  --kit-header-border: var(--kit-border-soft);
 }
 
 [data-theme="dark"] {
@@ -75,8 +104,8 @@
 .dashboard-sidebar {
   display: flex;
   flex-direction: column;
-  background: var(--kit-bg-elevated);
-  border-right: 1px solid var(--kit-border-soft);
+  background: var(--kit-sidebar-bg);
+  border-right: 1px solid var(--kit-sidebar-border);
   padding: var(--atom-spacing-md) 0 var(--atom-spacing-md);
   position: sticky;
   top: 0;
@@ -140,7 +169,7 @@
 
 .dashboard-sidebar-group-title {
   font-size: 10px;
-  color: var(--atom-color-text-secondary);
+  color: var(--kit-sidebar-title);
   text-transform: uppercase;
   letter-spacing: 0.12em;
   font-weight: 600;
@@ -165,7 +194,7 @@
   padding: 8px 10px 8px 8px;
   border-left: 3px solid transparent;
   border-radius: var(--atom-border-radius);
-  color: var(--atom-color-text-secondary);
+  color: var(--kit-sidebar-item);
   font-size: 13.5px;
   font-weight: 500;
   transition:
@@ -176,14 +205,14 @@
 }
 
 .dashboard-sidebar-item:hover {
-  background: var(--kit-bg-hover);
-  color: var(--atom-color-text);
+  background: var(--kit-sidebar-item-hover-bg);
+  color: var(--kit-sidebar-item-hover);
 }
 
 .dashboard-sidebar-item-active {
-  background: color-mix(in srgb, var(--atom-primary-color) 8%, transparent);
-  color: var(--atom-primary-color);
-  border-left-color: var(--atom-primary-color);
+  background: var(--kit-sidebar-item-active-bg);
+  color: var(--kit-sidebar-item-active);
+  border-left-color: var(--kit-sidebar-rail);
   /* Square edges on the active item so the 2px primary marker reads as a
      full-height rail rather than a floating chip. Pattern used by Linear,
      Notion, Vercel dashboard. */
@@ -191,8 +220,8 @@
 }
 
 .dashboard-sidebar-item-active:hover {
-  background: color-mix(in srgb, var(--atom-primary-color) 10%, transparent);
-  color: var(--atom-primary-color);
+  background: var(--kit-sidebar-item-active-hover-bg);
+  color: var(--kit-sidebar-item-active);
   border-radius: 0;
 }
 
@@ -222,13 +251,13 @@
   padding: 2px 6px;
   font-size: 11px;
   border-radius: var(--atom-border-radius-sm);
-  background: var(--kit-bg-hover);
-  color: var(--atom-color-text-secondary);
+  background: var(--kit-sidebar-badge-bg);
+  color: var(--kit-sidebar-badge);
 }
 
 .dashboard-sidebar-footer {
   padding: 0 var(--atom-spacing-sm);
-  border-top: 1px solid var(--kit-border-soft);
+  border-top: 1px solid var(--kit-sidebar-border);
   padding-top: var(--atom-spacing-md);
   margin-top: var(--atom-spacing-md);
 }
@@ -239,7 +268,7 @@
   gap: 10px;
   padding: 8px 10px;
   border-radius: var(--atom-border-radius);
-  color: var(--atom-color-text-tertiary);
+  color: var(--kit-sidebar-item);
   font-size: 13px;
   transition:
     color 0.15s,
@@ -247,8 +276,8 @@
 }
 
 .dashboard-sidebar-footer-link:hover {
-  background: var(--kit-bg-hover);
-  color: var(--atom-color-text);
+  background: var(--kit-sidebar-item-hover-bg);
+  color: var(--kit-sidebar-item-hover);
 }
 
 /* ── Header ──────────────────────────────────────────────────────── */
@@ -272,10 +301,10 @@
      write the -webkit- prefix first and the unprefixed version last,
      ensuring the modern property survives minification while Safari
      (which understands both) still gets a working filter. */
-  background: var(--kit-bg-header);
+  background: var(--kit-header-bg);
   -webkit-backdrop-filter: saturate(100%) blur(8px);
   backdrop-filter: saturate(100%) blur(8px);
-  border-bottom: 1px solid var(--kit-border-soft);
+  border-bottom: 1px solid var(--kit-header-border);
 }
 
 /* Fallback for browsers without backdrop-filter support: keep the header
@@ -284,7 +313,7 @@
   (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
 ) {
   .dashboard-header {
-    background: var(--kit-bg-canvas);
+    background: var(--kit-header-bg-opaque);
   }
 }
 
@@ -2034,4 +2063,89 @@
   .notfound-title {
     font-size: 20px;
   }
+}
+
+/* ── Kit theme picker (Settings → Appearance) ─────────────────────── */
+
+.kit-theme-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--atom-spacing-sm);
+}
+
+.kit-theme-swatch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 6px;
+  border: 1px solid var(--kit-border-soft);
+  border-radius: var(--atom-border-radius);
+  background: var(--kit-bg-card);
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+
+.kit-theme-swatch:hover {
+  border-color: var(--atom-color-border);
+}
+
+.kit-theme-swatch-active {
+  border-color: var(--atom-primary-color);
+  box-shadow: 0 0 0 1px var(--atom-primary-color);
+}
+
+.kit-theme-swatch-preview {
+  display: flex;
+  width: 72px;
+  height: 48px;
+  border-radius: var(--atom-border-radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--kit-border-soft);
+}
+
+.kit-theme-swatch-aside {
+  width: 22px;
+  flex-shrink: 0;
+}
+
+.kit-theme-swatch-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.kit-theme-swatch-header {
+  height: 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.kit-theme-swatch-body {
+  flex: 1;
+  background: #ffffff;
+  display: flex;
+  align-items: flex-end;
+  padding: 4px;
+}
+
+[data-theme="dark"] .kit-theme-swatch-body {
+  background: #141a1f;
+}
+
+.kit-theme-swatch-accent {
+  width: 16px;
+  height: 5px;
+  border-radius: 2px;
+}
+
+.kit-theme-swatch-name {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--atom-color-text-secondary);
+}
+
+.kit-theme-swatch-active .kit-theme-swatch-name {
+  color: var(--atom-color-text);
 }

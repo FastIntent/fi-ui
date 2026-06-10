@@ -1,0 +1,56 @@
+/*
+ * Kit Theme: AZURE
+ * ───────────────────────────────────────────────────────────────────
+ * Chrome unificado en gris claro (#f8f8f8) — aside Y header comparten
+ * superficie y el contenido respira en blanco — con acento de UI azul
+ * (#1677ff) que re-tonaliza botones, tabs, paginación, focus rings y
+ * gráficas. El aside es CLARO: no necesita swap de logo y los estados
+ * activos se derivan solos del primario (via color-mix en las variables
+ * de zona por defecto).
+ *
+ * USO (archivo autocontenido — cópialo a tu proyecto tal cual):
+ *   1. Importa este archivo después de dashboard.css:
+ *        import "./themes/azure.css";
+ *   2. Activa el theme en <html>:
+ *        <html data-kit-theme="azure">
+ *      (o vía el picker de Settings → Appearance, que lo persiste).
+ */
+
+[data-kit-theme="azure"] {
+  /* ── Acento de UI: azul (sustituye al verde de marca).
+       -outline se deriva solo vía color-mix en design-system.css. */
+  --atom-primary-color: #1677ff;
+  --atom-primary-color-hover: #4096ff;
+  --atom-primary-color-active: #0958d9;
+
+  /* ── Canvas blanco: el contenido respira en blanco puro y el chrome
+       gris queda un paso atrás (invierte la profundidad del kit base). */
+  --atom-color-bg-layout: #ffffff;
+
+  /* ── Aside gris claro — items, hover y activo heredan de la base:
+       el activo se tiñe azul automáticamente porque las variables de
+       zona por defecto derivan de --atom-primary-color. */
+  --kit-sidebar-bg: #f0f0f0;
+  --kit-sidebar-border: #e4e4e4;
+
+  /* ── Header en la misma superficie que el aside (chrome unificado). */
+  --kit-header-bg: rgba(240, 240, 240, 0.72);
+  --kit-header-bg-opaque: #f0f0f0;
+  --kit-header-border: #e4e4e4;
+
+  /* Acento de datavis alineado al nuevo primario (ver dashboard.css). */
+  --kit-accent-soft: #5a9bff;
+}
+
+[data-theme="dark"][data-kit-theme="azure"] {
+  --kit-sidebar-bg: #141414;
+  --kit-sidebar-border: rgba(255, 255, 255, 0.06);
+  --kit-header-bg: rgba(20, 20, 20, 0.66);
+  --kit-header-bg-opaque: #141414;
+  --kit-header-border: rgba(255, 255, 255, 0.06);
+  /* El azul sube un paso de luminancia para fondos oscuros. */
+  --atom-primary-color: #4096ff;
+  --atom-primary-color-hover: #69b1ff;
+  --atom-primary-color-active: #2478e6;
+  --kit-accent-soft: #69b1ff;
+}

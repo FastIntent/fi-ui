@@ -1,0 +1,74 @@
+/*
+ * Kit Theme: CARBON
+ * ───────────────────────────────────────────────────────────────────
+ * Aside Y header en negro carbón permanente — la cromática de la
+ * navegación no cambia entre light y dark; solo el área de contenido
+ * sigue al modo de la UI. Patrón tipo GitHub/Grafana.
+ *
+ * USO (archivo autocontenido — cópialo a tu proyecto tal cual):
+ *   1. Importa este archivo después de dashboard.css:
+ *        import "./themes/carbon.css";
+ *   2. Activa el theme en <html>:
+ *        <html data-kit-theme="carbon">
+ *      (o vía el picker de Settings → Appearance, que lo persiste).
+ *
+ * Nota: el header contiene componentes de @atomizeui/core (búsqueda,
+ * botones de icono). Este archivo redefine los tokens --atom-* SOLO
+ * dentro del header para que esos componentes adopten el fondo oscuro
+ * sin tocar el resto de la página.
+ */
+
+[data-kit-theme="carbon"] {
+  --kit-sidebar-bg: #111113;
+  --kit-sidebar-border: rgba(255, 255, 255, 0.07);
+  --kit-sidebar-title: rgba(161, 161, 170, 0.8);
+  --kit-sidebar-item: #a1a1aa;
+  --kit-sidebar-item-hover: #f4f4f5;
+  --kit-sidebar-item-hover-bg: rgba(255, 255, 255, 0.06);
+  --kit-sidebar-item-active: #fafafa;
+  --kit-sidebar-item-active-bg: rgba(255, 255, 255, 0.09);
+  --kit-sidebar-item-active-hover-bg: rgba(255, 255, 255, 0.12);
+  --kit-sidebar-rail: var(--atom-primary-color);
+  --kit-sidebar-badge-bg: rgba(255, 255, 255, 0.08);
+  --kit-sidebar-badge: #d4d4d8;
+
+  /* Header sólido — mismo carbón que el aside para que la esquina
+     superior izquierda lea como una sola pieza de chrome. */
+  --kit-header-bg: #111113;
+  --kit-header-bg-opaque: #111113;
+  --kit-header-border: rgba(255, 255, 255, 0.07);
+}
+
+/* Sin frosted-blur: sobre contenido claro el backdrop translúcido lava
+   el carbón a gris y desempata con el aside. Header 100% opaco. */
+[data-kit-theme="carbon"] .dashboard-header {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+/* Componentes de la librería dentro del header: re-tokenizados al
+   fondo carbón. Alcance mínimo — nada fuera del header se ve afectado. */
+[data-kit-theme="carbon"] .dashboard-header {
+  --atom-color-text: #e4e4e7;
+  --atom-color-text-secondary: #a1a1aa;
+  --atom-color-text-tertiary: #8b8b93;
+  --atom-color-bg-container: #1b1b1f;
+  --atom-color-border: rgba(255, 255, 255, 0.12);
+  --atom-color-border-secondary: rgba(255, 255, 255, 0.08);
+  --atom-color-fill-tertiary: rgba(255, 255, 255, 0.08);
+  /* Los botones del header (iconos, user pill, theme toggle) leen de
+     las variables de profundidad del kit — también van al carbón. */
+  --kit-bg-elevated: #1b1b1f;
+  --kit-bg-hover: rgba(255, 255, 255, 0.08);
+  --kit-border-soft: rgba(255, 255, 255, 0.1);
+  color: var(--atom-color-text);
+}
+
+/* Aside y header siempre oscuros: variante dark del logo en ambos. */
+[data-kit-theme="carbon"] .dashboard-logo-light {
+  display: none;
+}
+
+[data-kit-theme="carbon"] .dashboard-logo-dark {
+  display: block;
+}

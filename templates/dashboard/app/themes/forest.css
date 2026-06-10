@@ -1,0 +1,53 @@
+/*
+ * Kit Theme: FOREST
+ * ───────────────────────────────────────────────────────────────────
+ * Aside en verde bosque profundo + header con tinte verdoso suave +
+ * UI clara. Lleva el color de marca a la navegación sin saturar el
+ * contenido. En dark mode la tinta verde se mantiene, más apagada.
+ *
+ * USO (archivo autocontenido — cópialo a tu proyecto tal cual):
+ *   1. Importa este archivo después de dashboard.css:
+ *        import "./themes/forest.css";
+ *   2. Activa el theme en <html>:
+ *        <html data-kit-theme="forest">
+ *      (o vía el picker de Settings → Appearance, que lo persiste).
+ */
+
+[data-kit-theme="forest"] {
+  --kit-sidebar-bg: #0d2818;
+  --kit-sidebar-border: rgba(255, 255, 255, 0.08);
+  --kit-sidebar-title: rgba(178, 220, 190, 0.65);
+  --kit-sidebar-item: #9ec7ae;
+  --kit-sidebar-item-hover: #eafff0;
+  --kit-sidebar-item-hover-bg: rgba(255, 255, 255, 0.07);
+  --kit-sidebar-item-active: #ffffff;
+  --kit-sidebar-item-active-bg: rgba(255, 255, 255, 0.1);
+  --kit-sidebar-item-active-hover-bg: rgba(255, 255, 255, 0.14);
+  /* Rail más claro que el primario: sobre fondo verde oscuro el verde
+     de marca pierde contraste — se eleva dos pasos de luminancia. */
+  --kit-sidebar-rail: #8ce99a;
+  --kit-sidebar-badge-bg: rgba(255, 255, 255, 0.1);
+  --kit-sidebar-badge: #c9e8d2;
+
+  /* Header claro con tinte del bosque. */
+  --kit-header-bg: rgba(240, 253, 244, 0.66);
+  --kit-header-bg-opaque: #f0fdf4;
+  --kit-header-border: #d9f0de;
+}
+
+[data-theme="dark"][data-kit-theme="forest"] {
+  --kit-sidebar-bg: #0a2013;
+  --kit-sidebar-border: rgba(255, 255, 255, 0.06);
+  --kit-header-bg: rgba(10, 32, 19, 0.62);
+  --kit-header-bg-opaque: #0a2013;
+  --kit-header-border: rgba(140, 233, 154, 0.12);
+}
+
+/* El aside siempre es oscuro: variante dark del logo también en light. */
+[data-kit-theme="forest"] .dashboard-sidebar .dashboard-logo-light {
+  display: none;
+}
+
+[data-kit-theme="forest"] .dashboard-sidebar .dashboard-logo-dark {
+  display: block;
+}

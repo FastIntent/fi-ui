@@ -1,0 +1,16 @@
+/*
+ * Kit Themes — barrel de importación.
+ *
+ * Cada theme vive en su propio archivo autocontenido para que puedas
+ * copiar/compartir solo el que necesites. En tu proyecto basta con
+ * importar UN archivo de theme y poner data-kit-theme="nombre" en
+ * <html>; este index importa todos únicamente para la demo del kit y
+ * su picker en Settings → Appearance.
+ */
+
+@import "./midnight.css";
+@import "./carbon.css";
+@import "./forest.css";
+@import "./ocean.css";
+@import "./ember.css";
+@import "./azure.css";

@@ -1,0 +1,68 @@
+/*
+ * Kit Theme: OCEAN
+ * ───────────────────────────────────────────────────────────────────
+ * Combinación completa de las tres capas: aside índigo profundo +
+ * header con tinte azulado + ACENTO DE UI re-tonalizado a azul
+ * (botones primarios, links activos, focus rings — todo lo que deriva
+ * de --atom-primary-color). Es el ejemplo de cómo un theme del kit
+ * puede recolorear también la librería, no solo el chrome.
+ *
+ * USO (archivo autocontenido — cópialo a tu proyecto tal cual):
+ *   1. Importa este archivo después de dashboard.css:
+ *        import "./themes/ocean.css";
+ *   2. Activa el theme en <html>:
+ *        <html data-kit-theme="ocean">
+ *      (o vía el picker de Settings → Appearance, que lo persiste).
+ */
+
+[data-kit-theme="ocean"] {
+  /* ── Acento de UI: azul océano (sustituye al verde de marca).
+       -outline se deriva solo vía color-mix en design-system.css. */
+  --atom-primary-color: #3b6ef5;
+  --atom-primary-color-hover: #5c87f7;
+  --atom-primary-color-active: #2f58c4;
+
+  /* ── Aside índigo profundo */
+  --kit-sidebar-bg: #111a36;
+  --kit-sidebar-border: rgba(255, 255, 255, 0.08);
+  --kit-sidebar-title: rgba(165, 180, 218, 0.7);
+  --kit-sidebar-item: #9fb0d8;
+  --kit-sidebar-item-hover: #e8eeff;
+  --kit-sidebar-item-hover-bg: rgba(255, 255, 255, 0.06);
+  --kit-sidebar-item-active: #ffffff;
+  --kit-sidebar-item-active-bg: rgba(91, 134, 247, 0.22);
+  --kit-sidebar-item-active-hover-bg: rgba(91, 134, 247, 0.3);
+  --kit-sidebar-rail: #74a0ff;
+  --kit-sidebar-badge-bg: rgba(255, 255, 255, 0.09);
+  --kit-sidebar-badge: #c3cfee;
+
+  /* ── Header claro con tinte azulado */
+  --kit-header-bg: rgba(238, 242, 255, 0.64);
+  --kit-header-bg-opaque: #eef2ff;
+  --kit-header-border: #dde5f8;
+
+  /* Acento de datavis alineado al nuevo primario (ver dashboard.css). */
+  --kit-accent-soft: #6f96f0;
+}
+
+[data-theme="dark"][data-kit-theme="ocean"] {
+  --kit-sidebar-bg: #0d1430;
+  --kit-sidebar-border: rgba(255, 255, 255, 0.06);
+  --kit-header-bg: rgba(13, 20, 48, 0.62);
+  --kit-header-bg-opaque: #0d1430;
+  --kit-header-border: rgba(116, 160, 255, 0.12);
+  /* El azul sube un paso de luminancia para leerse sobre fondos oscuros. */
+  --atom-primary-color: #5c87f7;
+  --atom-primary-color-hover: #7da0f9;
+  --atom-primary-color-active: #4a6fd0;
+  --kit-accent-soft: #7da0f9;
+}
+
+/* El aside siempre es oscuro: variante dark del logo también en light. */
+[data-kit-theme="ocean"] .dashboard-sidebar .dashboard-logo-light {
+  display: none;
+}
+
+[data-kit-theme="ocean"] .dashboard-sidebar .dashboard-logo-dark {
+  display: block;
+}

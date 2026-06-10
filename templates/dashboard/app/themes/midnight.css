@@ -1,0 +1,50 @@
+/*
+ * Kit Theme: MIDNIGHT
+ * ───────────────────────────────────────────────────────────────────
+ * Aside oscuro (slate) + header claro + UI clara. El clásico de los
+ * paneles de administración: la navegación gana jerarquía visual y el
+ * contenido respira en claro. En dark mode el aside se funde un paso
+ * más profundo que el canvas.
+ *
+ * USO (archivo autocontenido — cópialo a tu proyecto tal cual):
+ *   1. Importa este archivo después de dashboard.css:
+ *        import "./themes/midnight.css";
+ *   2. Activa el theme en <html>:
+ *        <html data-kit-theme="midnight">
+ *      (o vía el picker de Settings → Appearance, que lo persiste).
+ *
+ * Variables que sobreescribe: solo las de zona (--kit-sidebar-*,
+ * --kit-header-*) y el swap de logo. No toca tokens globales de la UI.
+ */
+
+[data-kit-theme="midnight"] {
+  --kit-sidebar-bg: #0f172a;
+  --kit-sidebar-border: rgba(255, 255, 255, 0.07);
+  --kit-sidebar-title: rgba(148, 163, 184, 0.85);
+  --kit-sidebar-item: #94a3b8;
+  --kit-sidebar-item-hover: #e2e8f0;
+  --kit-sidebar-item-hover-bg: rgba(255, 255, 255, 0.06);
+  --kit-sidebar-item-active: #f8fafc;
+  --kit-sidebar-item-active-bg: rgba(255, 255, 255, 0.09);
+  --kit-sidebar-item-active-hover-bg: rgba(255, 255, 255, 0.12);
+  --kit-sidebar-rail: var(--atom-primary-color);
+  --kit-sidebar-badge-bg: rgba(255, 255, 255, 0.08);
+  --kit-sidebar-badge: #cbd5e1;
+}
+
+/* En dark mode el aside baja un paso por debajo del canvas para
+   conservar la sensación de profundidad del kit base. */
+[data-theme="dark"][data-kit-theme="midnight"] {
+  --kit-sidebar-bg: #0a1020;
+  --kit-sidebar-border: rgba(255, 255, 255, 0.05);
+}
+
+/* El aside siempre es oscuro: usa la variante dark del logo aunque la
+   UI esté en claro. */
+[data-kit-theme="midnight"] .dashboard-sidebar .dashboard-logo-light {
+  display: none;
+}
+
+[data-kit-theme="midnight"] .dashboard-sidebar .dashboard-logo-dark {
+  display: block;
+}

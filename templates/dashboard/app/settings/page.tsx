@@ -6,6 +6,7 @@ import { SettingsRow } from "@/components/settings/SettingsRow";
 import { SaveButton } from "@/components/settings/SaveButton";
 import { SimpleSelect } from "@/components/settings/SimpleSelect";
 import { ThemeRadio } from "@/components/settings/ThemeRadio";
+import { KitThemePicker } from "@/components/settings/KitThemePicker";
 import { DangerDelete } from "@/components/settings/DangerDelete";
 
 const LANGUAGES = [
@@ -73,6 +74,11 @@ export default function GeneralSettingsPage() {
             label="Theme"
             description="Switch between light and dark modes, or follow your OS preference."
             control={<ThemeRadio />}
+          />
+          <SettingsRow
+            label="Dashboard theme"
+            description="Combinations of sidebar, header and UI accent. Each theme is a standalone CSS file you can copy into your own project (app/themes/)."
+            control={<KitThemePicker />}
           />
         </SettingsSection>
 
