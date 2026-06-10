@@ -19,6 +19,7 @@
  * pulls the right styles without explicit imports here.
  */
 @import "@atomizeui/core/design-system.css";
+@import "@atomizeui/core/base.css";
 
 html,
 body {

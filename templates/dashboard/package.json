@@ -6,9 +6,9 @@
   "homepage": "https://atomizeui.com/templates/dashboard",
   "license": "MIT",
   "scripts": {
-    "dev": "next dev -p 3001",
+    "dev": "next dev -p 3005",
     "build": "next build",
-    "start": "next start -p 3001",
+    "start": "next start -p 3005",
     "typecheck": "tsc --noEmit",
     "lint": "next lint"
   },
