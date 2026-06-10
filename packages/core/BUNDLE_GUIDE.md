@@ -1,40 +1,74 @@
 # Atomize UI — Import Guide & Bundle Governance
 
+## Bundler compatibility — read this first
+
+> **Barrel imports are fully tree-shakeable (JS and CSS) on Next.js
+> (webpack/Turbopack) and Vite/Rollup.** **Subpath imports are recommended when
+> bundling with plain esbuild.**
+
+Component CSS rides along through the JS module graph (`import './index.css'`
+inside each component entry, declared via `"sideEffects": ["**/*.css"]`).
+webpack and Rollup (and therefore Vite) prune the CSS of components you do not
+import. Plain esbuild honors `sideEffects` for JS but keeps side-effectful CSS
+imports nested behind unused re-exports, so the barrel drags in every
+component's CSS.
+
+Measured impact — `import { Button }` only (enforced in CI by
+`scripts/treeshake-check.mjs`):
+
+| Bundler                               | Import style                                | JS      | CSS        |
+| ------------------------------------- | ------------------------------------------- | ------- | ---------- |
+| Next.js 16 + Turbopack (`next build`) | barrel `@atomizeui/core`                    | ~5.4 KB | ~6.1 KB ✅ |
+| webpack (Next.js)                     | barrel `@atomizeui/core`                    | ~5.4 KB | ~6.2 KB ✅ |
+| Vite production (Rollup)              | barrel `@atomizeui/core`                    | ~6.7 KB | ~6.2 KB ✅ |
+| esbuild                               | barrel `@atomizeui/core`                    | ~19 KB  | ~228 KB ❌ |
+| esbuild                               | subpath `@atomizeui/core/components/Button` | ~19 KB  | ~6 KB ✅   |
+
+The Turbopack row was measured with a real `next build` (Next.js 16.2.7) on a
+minimal app whose only page renders one `<Button>`: a single emitted CSS file of
+6,067 bytes containing only `.atom-btn` + Wave styles, and a 5.4 KB library JS
+chunk. The webpack/rollup/esbuild rows are re-measured on every
+`pnpm run size-check` by `scripts/treeshake-check.mjs`.
+
 ## Recommended Import Patterns
 
-### ✅ Named imports from root (tree-shakeable)
-
-The library's `package.json` declares `"sideEffects": ["**/*.css"]`, meaning
-bundlers (webpack, Vite, esbuild, Turbopack) will automatically tree-shake any
-component you do **not** import.
+### ✅ Next.js / webpack / Turbopack / Vite — named imports from the barrel
 
 ```tsx
-// ✅ Best practice — only the components you use are bundled
 import { Button, Input, Modal } from '@atomizeui/core';
-import '@atomizeui/core/index.css'; // full token + reset sheet (~22 KB gzip)
+// Each component's CSS is pulled in automatically through the module graph.
+// Shared layers, once, at the app root:
+import '@atomizeui/core/design-system.css'; // tokens (CSS custom properties)
+import '@atomizeui/core/base.css'; // reset + shared keyframes + floating-label
 ```
 
-### ✅ Per-component CSS (maximum tree-shaking)
-
-For performance-critical apps, import only the CSS for each component you use:
+### ✅ Plain esbuild — per-component subpath imports
 
 ```tsx
-import { Button } from '@atomizeui/core';
-import { Modal } from '@atomizeui/core';
-import { DatePicker } from '@atomizeui/core';
+import { Button } from '@atomizeui/core/components/Button';
+import { Modal } from '@atomizeui/core/components/Modal';
+// CSS still rides along automatically — only for the components you import.
+import '@atomizeui/core/design-system.css';
+import '@atomizeui/core/base.css';
+```
 
-import '@atomizeui/core/Button/index.css';
-import '@atomizeui/core/Modal/index.css';
-import '@atomizeui/core/DatePicker/index.css';
-// plus always the design tokens:
-import '@atomizeui/core/design-system.css'; // ~3.8 KB gzip — CSS vars & tokens only
+### ✅ Manual per-component CSS (surgical control)
+
+If you prefer to manage CSS yourself (e.g. strict CSP, custom pipelines):
+
+```tsx
+import '@atomizeui/core/components/Button/index.css';
+import '@atomizeui/core/components/Modal/index.css';
+// plus always the shared layers:
+import '@atomizeui/core/design-system.css';
+import '@atomizeui/core/base.css';
 ```
 
 ### ✅ Design tokens only (zero component JS)
 
 ```tsx
 import '@atomizeui/core/design-system.css';
-// Gives you all CSS custom properties: --fi-color-primary, --fi-spacing-*, etc.
+// Gives you all CSS custom properties: --atom-color-primary, --atom-spacing-*, etc.
 ```
 
 ### ❌ Avoid — barrel default import (defeats tree-shaking)
@@ -42,6 +76,13 @@ import '@atomizeui/core/design-system.css';
 ```tsx
 // ❌ Never do this — imports every component including ones you don't use
 import AtomizeUI from '@atomizeui/core';
+```
+
+### ❌ Avoid — barrel imports under plain esbuild
+
+```tsx
+// ❌ esbuild keeps the CSS of ALL components when importing the barrel (~223 KB raw)
+import { Button } from '@atomizeui/core';
 ```
 
 ---

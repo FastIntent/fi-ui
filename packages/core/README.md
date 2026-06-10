@@ -112,6 +112,21 @@ CSS, and thanks to `"sideEffects": ["**/*.css"]` in `package.json` the bundler
 keeps that side-effect intact. **Only the CSS of components you actually use is
 included.**
 
+> **Bundler compatibility.** CSS pruning from the barrel works on Next.js
+> (webpack/Turbopack) and Vite/Rollup. Plain esbuild keeps side-effectful CSS
+> imports behind unused re-exports — when bundling with esbuild directly, use
+> subpath imports instead:
+>
+> ```tsx
+> // Next.js / webpack / Turbopack / Vite
+> import { Button } from '@atomizeui/core';
+>
+> // Plain esbuild
+> import { Button } from '@atomizeui/core/components/Button';
+> ```
+>
+> See [BUNDLE_GUIDE.md](./BUNDLE_GUIDE.md) for measured numbers.
+
 ```tsx
 // Button.css, Table.css, and Tooltip.css are included automatically
 import { Button, Table, Tooltip } from '@atomizeui/core';

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import classNames from 'classnames';
-import { Menu } from '../Menu/Menu';
-import { MenuItem, SubMenu, ItemGroup, Divider } from '../Menu/Menu';
+import { Menu, MenuItem, SubMenu } from '../Menu/Menu';
+import { ItemGroup, Divider } from '../Menu';
 import { Drawer } from '../Drawer/Drawer';
 import { Input } from '../Input/Input';
 import { IconPanelOpen, IconPanelClose, IconSearch, IconBell, IconHelp } from './Icons';

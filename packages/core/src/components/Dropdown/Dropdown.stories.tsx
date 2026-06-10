@@ -1,7 +1,8 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Dropdown } from './Dropdown';
-import { Menu, MenuItem, Divider } from '../Menu/Menu';
+import { Menu, MenuItem } from '../Menu/Menu';
+import { Divider } from '../Menu';
 import { Button } from '../Button/Button';
 import { SpaceWithCompact as Space } from '../Space/Space';
 import { Tooltip } from '../Tooltip/Tooltip';

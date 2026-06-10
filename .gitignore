@@ -8,6 +8,7 @@ lib
 es
 .next
 *.tsbuildinfo
+.turbo
 
 # MacOS
 .DS_Store

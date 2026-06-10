@@ -2,8 +2,6 @@ import React from 'react';
 import RcMenu, {
   SubMenu as RcSubMenu,
   MenuItem as RcMenuItem,
-  MenuItemGroup as RcMenuItemGroup,
-  Divider as RcDivider,
   MenuProps as RcMenuProps,
   SubMenuProps as RcSubMenuProps,
 } from '@rc-component/menu';
@@ -165,5 +163,3 @@ export const SubMenu = React.forwardRef<HTMLLIElement, SubMenuProps>(
   }
 );
 SubMenu.displayName = 'SubMenu';
-
-export { RcMenuItemGroup as ItemGroup, RcDivider as Divider };

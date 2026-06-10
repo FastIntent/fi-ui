@@ -1,5 +1,7 @@
 import { AtomizeUILocale } from './interface';
-import 'dayjs/locale/es';
+// Extension required: in strict-ESM resolution (webpack `fullySpecified`,
+// Node ESM) the extensionless specifier fails to resolve from dist ESM output.
+import 'dayjs/locale/es.js';
 
 export const esES: AtomizeUILocale = {
   locale: 'es',

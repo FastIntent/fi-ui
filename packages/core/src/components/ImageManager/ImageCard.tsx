@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { useDraggable } from '@dnd-kit/core';
 import { Checkbox } from '../Checkbox';
 import { Dropdown } from '../Dropdown';
-import { Menu, MenuItem } from '../Menu';
+import { Menu, MenuItem } from '../Menu/Menu';
 import { EyeOutlined, MoreOutlined, PictureOutlined } from '../_icons';
 import type { ServerImage } from './types';
 import { formatBytes } from './utils';

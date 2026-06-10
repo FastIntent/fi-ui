@@ -34,7 +34,11 @@
     "size-check": {
       "dependsOn": ["build"],
       "outputs": [],
-      "inputs": ["dist/**", "scripts/bundle-size-check.mjs"]
+      "inputs": [
+        "dist/**",
+        "scripts/bundle-size-check.mjs",
+        "scripts/treeshake-check.mjs"
+      ]
     },
     "size-baseline": {
       "dependsOn": ["build"],

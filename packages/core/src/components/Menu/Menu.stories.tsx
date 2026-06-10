@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Menu, SubMenu, MenuItem, ItemGroup, Divider } from './Menu';
+import { Menu, SubMenu, MenuItem } from './Menu';
+import { ItemGroup, Divider } from './index';
 import { Button } from '../Button';
 
 const meta: Meta<typeof Menu> = {

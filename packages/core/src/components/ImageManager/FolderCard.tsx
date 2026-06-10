@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import classNames from 'classnames';
 import { useDraggable, useDroppable } from '@dnd-kit/core';
 import { Dropdown } from '../Dropdown';
-import { Menu, MenuItem } from '../Menu';
+import { Menu, MenuItem } from '../Menu/Menu';
 import { FolderOutlined, MoreOutlined } from '../_icons';
 import type { ServerFolder } from './types';
 
