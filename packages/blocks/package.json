@@ -1,6 +1,6 @@
 {
   "name": "@atomizeui/blocks",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "type": "module",
   "description": "Atomize UI Blocks — production-ready composed components (Hero, Pricing, LoginCard, etc.). Coming soon.",
