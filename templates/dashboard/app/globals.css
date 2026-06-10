@@ -83,3 +83,8 @@ button {
 .dashboard-theme-toggle-icon {
   display: inline-flex;
 }
+
+#nprogress {
+  position: relative;
+  z-index: 1600;
+}
