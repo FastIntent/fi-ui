@@ -113,6 +113,15 @@
       cursor: pointer;
       transition: color $transition-base;
 
+      & > span {
+        position: relative;
+        display: block;
+        min-width: calc(2 * var(--#{$prefix}-font-size-md));
+        font-size: var(--#{$prefix}-font-size-md);
+        line-height: var(--#{$prefix}-line-height);
+        cursor: pointer;
+      }
+
       &:not(:last-child) {
         border-right: 1px solid var(--#{$prefix}-color-border-secondary, #{$border-color-secondary});
       }

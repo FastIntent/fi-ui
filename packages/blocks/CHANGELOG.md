@@ -1,5 +1,12 @@
 # @atomizeui/blocks
 
+## 0.0.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @atomizeui/core@2.1.7
+
 ## 0.0.2
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @atomizeui/core
 
+## 2.1.7
+
+### Patch Changes
+
+- Card actions: action items now expose a proper content block (`> span`) sized
+  with `--atom-font-size-md`/`--atom-line-height` tokens, so the click/hover
+  area covers the breathing room around each action icon and inter-action
+  separators span the footer height.
+
 ## 2.1.6
 
 ### Patch Changes
